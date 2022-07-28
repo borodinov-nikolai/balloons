@@ -1,0 +1,267 @@
+.create_main_row {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Gilroy", sans-serif;
+  margin-top: 35px;
+  @media (max-width: 1023px) {
+    flex-flow: column;
+  }
+}
+
+.header {
+  height: 18rem;
+  overflow: hidden;
+  position: relative;
+  background: #0C0B0B;
+}
+
+.header_bg {
+  position: absolute;
+  left: -2rem;
+  top: -2rem;
+  right: -2rem;
+  bottom: -2rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  filter: blur(15px);
+  -webkit-filter: blur(15px);
+  transform: scale(1.1);
+  opacity: .6;
+}
+
+.header_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header_avatar {
+  width: 30%;
+  margin: 2rem 2rem 0 0;
+}
+
+.header_user_block {
+  padding: 2rem;
+  flex-grow: 1;
+  color: white;
+}
+
+.header_user_title {
+}
+
+.right_column {
+  width: 580px;
+  font-family: Gilroy, sans-serif;
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+
+.block_form_input_group_create_profile {
+  @media (max-width: 767px) {
+    width: 100%;
+    flex-flow: column;
+  }
+}
+
+.form_description {
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 150%;
+  color: #252525;
+
+  opacity: 0.7;
+}
+
+.create_form_add_btn {
+  margin-top: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+
+  color: #0000FF;
+}
+
+.block_form_input_row_half {
+  width: 48%;
+  outline: none;
+  @media (max-width: 767px) {
+    width: 100% !important;
+  }
+}
+
+.create_form_radio-row {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  @media (max-width: 767px) {
+    flex-flow: wrap;
+  }
+}
+
+.create_form_radio_item {
+  margin-right: 40px;
+
+  &:last-of-type {
+    margin-right: 10px;
+  }
+
+  @media (max-width: 767px) {
+    &:first-of-type {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.create_form_radio_label {
+  display: flex;
+  position: relative;
+  font-family: Gilroy, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  cursor: pointer;
+
+  color: #050505;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.create_form_radio {
+  position: absolute;
+  visibility: hidden;
+
+  &:checked + .create_form_radio_label_checkbox::before {
+    opacity: 1;
+  }
+}
+
+.create_form_radio_label_checkbox {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #D4AA00;
+  border-radius: 50%;
+  margin-right: 8px;
+
+  &::before {
+    content: '';
+    opacity: 0;
+    width: 8px;
+    height: 8px;
+    background: #D4AA00;
+    border-radius: 50%;
+  }
+}
+
+.create_form_label {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+
+  color: #252525;
+  opacity: 0.5;
+}
+
+.create_form_btn_row {
+  margin-top: 60px;
+  display: flex;
+
+  .tl_btn {
+    width: 140px;
+    margin-right: 10px;
+    background: #D5D5D5;
+
+    &:first-of-type {
+      background: #D4AA00;
+    }
+
+    &:last-of-type {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 767px) {
+    flex-flow: wrap;
+    .tl_btn {
+      width: 48%;
+
+      &:first-of-type {
+        background: #D4AA00;
+        order: 1;
+        width: 100%;
+        max-width: 100%;
+        margin: 10px 0 0;
+      }
+
+      &:last-of-type {
+        margin-left: auto;
+        margin-right: 0;
+
+      }
+    }
+  }
+}
+
+.btn {
+  margin-right: 1rem;
+  min-width: 10rem;
+}
+
+.help_btn {
+  cursor: pointer;
+
+  circle {
+    stroke: lightgray;
+    opacity: 1;
+  }
+
+  path {
+    fill: lightgray;
+    opacity: 1;
+  }
+
+  &:hover {
+    circle {
+      stroke: #D4AA00;
+      opacity: 1;
+    }
+
+    path {
+      fill: #D4AA00;
+      opacity: 1;
+    }
+  }
+}
+
+.help_btn_position_left {
+  position: absolute;
+  top: 56%;
+  left: 35%;
+
+  @media (max-width: 767px) {
+    top: 53%;
+    left: 90%;
+  }
+}
+
+.block_form_input_row_with_help {
+  &:focus + .help-btn {
+    display: none;
+  }
+}

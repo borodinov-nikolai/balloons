@@ -1,0 +1,33 @@
+{
+  "name": "link-music",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "develop:backend": "yarn --cwd backend develop",
+    "develop:frontend": "wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
+    "develop": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*",
+    "build:backend": "yarn --cwd backend build",
+    "build:frontend": "yarn --cwd frontend build",
+    "build": "cross-env FORCE_COLOR=1 yarn workspaces run build",
+    "start:backend": "yarn --cwd backend start",
+    "start:frontend": "yarn --cwd frontend start",
+    "start": "cross-env FORCE_COLOR=1 yarn workspaces run start"
+  },
+  "devDependencies": {
+    "cross-env": "7.0.3",
+    "eslint": "8.21.0",
+    "eslint-config-next": "12.2.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "npm-run-all": "4.1.5",
+    "prettier": "^2.7.1",
+    "wait-on": "6.0.1"
+  },
+  "dependencies": {
+    "sharp": "^0.30.7"
+  }
+}

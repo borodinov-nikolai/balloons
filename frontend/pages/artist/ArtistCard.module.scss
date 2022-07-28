@@ -1,0 +1,220 @@
+//<!-- block-artist-card --!>
+.blockArtistCard {
+}
+
+.artistCard__wrapper {
+  display: flex;
+  max-width: 1205px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+  @media (max-width: 767px) {
+    max-width: 320px;
+
+  }
+}
+
+.artistCard__titlePart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 767px) {
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+
+
+  }
+
+}
+
+.artistCard__titleTextPart {
+  display: flex;
+  flex-flow: column;
+  margin-left: 55px;
+  color: #FFFFFF;
+  max-width: 400px;
+  width: 100%;
+  @media (max-width: 767px) {
+    margin-left: 0;
+    color: #0C0B0B;
+    font-size: 12px;
+  }
+
+}
+
+.artistCard__imgBgWrapper {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #5A5A5A;
+  @media (max-width: 767px) {
+    clip-path: polygon(0 0, 100% 0%, 100% 37%, 0 37%);
+  }
+}
+
+.artistCard__imgBg {
+  background: url("#") center no-repeat;
+  background-size: cover;
+  filter: blur(15px) brightness(40%);
+  width: 105%;
+  height: 105%;
+  @media (max-width: 767px) {
+    filter: blur(20px) brightness(40%);
+  }
+}
+
+.artistCard__titleImg {
+  max-width: 476px;
+  width: 100%;
+  max-height: 476px;
+  height: 100%;
+  margin: 35px 0 -35px;
+  @media (max-width: 767px) {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px 0 0;
+  }
+}
+
+.artistCard__title {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 600;
+  font-size: 60px;
+  line-height: 1;
+  position: relative;
+
+  @media (max-width: 767px) {
+    font-size: 30px;
+    color: #FFFFFF;
+    margin: 57px 20px 0 0;
+    align-self: flex-end;
+  }
+}
+
+
+.artistCard__titleName {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-top: 13px;
+  font-weight: 100;
+  opacity: 0.9;
+  @media (max-width: 767px) {
+    font-size: 12px;
+    margin-top: 75px;
+  }
+}
+
+.artistCard__titleLink {
+  margin-top: 20px;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: ease-in-out all 0.3s;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 767px) {
+    color: #0000FF;
+    margin-top: 10px;
+  }
+}
+
+.artistCard__titleBtn {
+  margin-top: 50px;
+  max-width: 264px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 280px;
+    margin: 40px 0 0 0;
+    font-size: 12px;
+    height: 40px;
+  }
+}
+
+.blockArtistCard__releases {
+  margin-top: 130px;
+  @media (max-width: 767px) {
+    margin-top: 50px;
+  }
+}
+
+.tl_btn_myReleases {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  svg {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      display: block;
+    }
+  }
+}
+
+.blockArtistCard__releasesList {
+  @media (max-width: 1023px) and (min-width: 768px) {
+    display: block;
+  }
+  @media (max-width: 767px) {
+    display: flex;
+    flex-flow: column;
+  }
+}
+
+.catalogRow_artistCard {
+  @media (max-width: 1023px) and (min-width: 768px) {
+    max-width: 1000px;
+    .slick-list {
+      overflow: hidden;
+    }
+
+    .slick-track {
+      display: flex;
+    }
+  }
+  @media (max-width: 767px) {
+    flex-flow: column;
+  }
+}
+
+.catalogRow__item_artistCard {
+  @media (max-width: 1023px) {
+    min-width: 253px;
+  }
+}

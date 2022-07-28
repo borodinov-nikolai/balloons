@@ -1,0 +1,66 @@
+.link_item {
+  padding: 0 1rem;
+  display: flex;
+  background: #8C8C8C;
+  fill: #8C8C8C;
+  transition: ease-in-out all 0.3s;
+  cursor: pointer;
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  &:hover {
+    background: #FFFFFF;
+  }
+}
+
+.links_vk_bw {
+  -webkit-mask: url("images/vk_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 25px;
+  height: 20px;
+  background: #8C8C8C;
+}
+
+.links_odnoklassniki_bw {
+  -webkit-mask: url("images/odnoklassniki_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 25px;
+  height: 20px;
+}
+
+.links_youtube_bw {
+  -webkit-mask: url("images/youtube_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 20px;
+  height: 20px;
+}
+
+.links_rutube_bw {
+  -webkit-mask: url("images/rutube_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 20px;
+  height: 20px;
+}
+
+.links_telegram_bw {
+  -webkit-mask: url("images/telegram_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 20px;
+  height: 20px;
+}
+
+.links_facebook_bw {
+  -webkit-mask: url("images/facebook_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 20px;
+  height: 20px;
+}
+
+.links_instagram_bw {
+  -webkit-mask: url("images/instagram_bw_icon.svg") no-repeat center;
+  -webkit-mask-size: contain;
+  width: 20px;
+  height: 22px;
+}

@@ -1,0 +1,160 @@
+//<!-- block-release --!>
+.block_release {
+  align-items: center;
+  position: relative;
+}
+
+.block_release_bg_img {
+  width: 100vw;
+  height: 100vh;
+  max-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: url("#") center center no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  z-index: -1;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+  }
+}
+
+.release_wrapper {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+}
+
+.release_column_img { //Todo Сделать обложку квадратной
+  max-width: 580px;
+  max-height: 455px;
+  margin-top: 40px;
+}
+
+.release_column {
+  padding: 2rem;
+  background: #FFFFFF;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 10px 10px;
+  max-width: 580px;
+  width: 100%;
+  @media (max-width: 767px) {
+    padding: 1rem;
+  }
+}
+
+.release_logo {
+  padding: 2rem 1rem 1rem;
+  background: #FFFFFF;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  max-width: 580px;
+  width: 100%;
+  @media (max-width: 767px) {
+    padding: 1rem;
+  }
+}
+
+.release_column_video {
+  width: 100%;
+  cursor: pointer;
+  transition: ease-in-out all 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  .catalog_videos_img {
+    width: 100%;
+    max-width: unset;
+    margin-top: 50px;
+  }
+
+}
+
+.release_column_tracks_list {
+  margin-top: 50px;
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  @media (max-width: 767px) {
+    margin-top: 20px;
+
+  }
+
+}
+
+.release_column_track_row {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 0;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px dashed #8C8C8C;
+  @media (max-width: 767px) {
+    padding: 15px 0;
+  }
+}
+
+.release_column_track_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 144px;
+  @media (max-width: 767px) {
+    width: 100px;
+    font-size: 10px;
+    height: 34px;
+  }
+}
+
+.release_column_track_img {
+  width: 36px;
+  max-height: 36px;
+  margin-right: 17px;
+  @media (max-width: 767px) {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+  }
+
+}
+
+.release_column_track_img_apple {
+  max-height: 44px;
+  position: relative;
+  bottom: 5px;
+
+  @media (max-width: 767px) {
+    bottom: 8px;
+  }
+}
+
+.release_column_track_item {
+  display: flex;
+  align-items: center;
+
+}
+
+.release_column_track_name {
+  font-size: 18px;
+  font-family: 'Gilroy', sans-serif;
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+
+}

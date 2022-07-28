@@ -1,0 +1,89 @@
+.logo {
+  display: block;
+  width: 158px;
+  height: 47px;
+  position: relative;
+  bottom: 10px;
+
+  &:hover {
+    .logo__lines path:nth-child(1) {
+      animation: equalizer 0.5s 0.1s cubic-bezier(0.1, -0.6, 0.2, 0) backwards;
+    }
+
+    .logo__lines path:nth-child(2) {
+      animation: equalizer 0.5s 0.2s cubic-bezier(0.1, -0.6, 0.2, 0) backwards;
+    }
+
+    .logo__lines path:nth-child(3) {
+      animation: equalizer 0.5s 0.3s cubic-bezier(0.1, -0.6, 0.2, 0) backwards;
+    }
+
+    .logo__lines path:nth-child(4) {
+      animation: equalizerMin 0.5s 0.4s cubic-bezier(0.1, -0.6, 0.2, 0) backwards;
+    }
+  }
+
+  svg {
+    width: 100%;
+  }
+
+  @media (max-width: 1023px) {
+    width: 130px;
+    height: 40px;
+    bottom: 0;
+  }
+  @media (max-width: 767px) {
+    width: 95px;
+    height: 30px;
+  }
+}
+
+.logo_release {
+  padding: 30px 0;
+  margin: 10px 0 50px;
+  max-width: 580px;
+  width: 100%;
+  height: auto;
+  position: static;
+  background: #FFFFFF;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 15%);
+
+  svg {
+    max-width: 255px;
+    width: 100%;
+    max-height: 75px;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    svg {
+      height: 36px;
+      width: 123px;
+    }
+
+  }
+}
+
+
+@keyframes equalizer {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    fill: #0000FF;
+    transform: translateY(-30px) scale(1, 1.5);
+  }
+}
+
+@keyframes equalizerMin {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    fill: #0000FF;
+    transform: translateY(-20px) scale(1, 1.5);
+  }
+}
