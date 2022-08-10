@@ -8,7 +8,6 @@ function useGetCaptchaImage() {
   const [error, setError] = useState("")
 
   const fetchCaptchaImg = useCallback(async (width: number, height: number) => {
-    console.log("fetchCaptchaImg")
     setLoading(true)
     try {
       const { data } = await API.get(getQueryStr("/captcha", { width, height }))
@@ -30,12 +29,10 @@ function useCheckCaptcha() {
   const [error, setError] = useState("")
 
   const checkCaptcha = useCallback(async (receivedCaptcha: string) => {
-    console.log("checkCaptcha")
     setLoading(true)
     try {
       const { data } = await API.post("/captcha", { receivedCaptcha })
-      console.log(data)
-      setCaptchaVerified(!!data)
+      setCaptchaVerified(data)
     } catch (e) {
       setError("Что-то пошло не так, перезагрузите страницу")
     }

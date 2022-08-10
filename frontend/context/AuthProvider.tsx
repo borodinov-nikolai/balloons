@@ -13,7 +13,7 @@ import {
 } from "types/auth"
 import Cookies from "js-cookie"
 import { useRouter } from "next/router"
-import { CreateProfileFormType, UpdateProfileFormType } from "types/general"
+import { UpdateProfileFormType } from "types/general"
 import { API } from "lib/api"
 
 const AuthContext = createContext<AuthContextType>({
@@ -24,7 +24,6 @@ const AuthContext = createContext<AuthContextType>({
   login: () => {},
   logout: () => {},
   signUp: () => {},
-  createProfile: () => {},
   updateProfile: () => {},
 })
 
@@ -37,26 +36,26 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    async function loadUserFromCookies() {
+    async function loadUser() {
       setLoading(true)
       const token = Cookies.get("token")
-      if (token) {
-        console.log("Got a token in the cookies, let's see if it is valid")
-        API.defaults.headers.common.Authorization = `Bearer ${token}`
-        const { data } = await API.get("users/me")
 
-        if (data) setUser(data)
-        else {
+      if (token) {
+        try {
+          API.defaults.headers.common.Authorization = `Bearer ${token}`
+          const { data } = await API.get("users/me")
+          setUser(data)
+        } catch (e: any) {
+          setError(e.message)
           setUser(null)
           API.defaults.headers.common.Authorization = ""
-          setLoading(false)
-          await router.push("/login")
         }
       }
+
       setLoading(false)
     }
 
-    loadUserFromCookies()
+    loadUser()
   }, [router])
 
   const login = async (form: loginFormType) => {
@@ -70,6 +69,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       Cookies.set("token", jwt, { expires: 60 })
       API.defaults.headers.common.Authorization = `Bearer ${jwt}`
       setUser(user)
+      await router.push("/artist/new")
     }
 
     setLoading(false)
@@ -87,32 +87,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const signUp = async (form: signUpFormType) => {
     setLoading(true)
 
-    const {
-      data: { jwt, user },
-    } = await API.post("auth/local/register", form)
+    try {
+      const {
+        data: { jwt, user },
+      } = await API.post("auth/local/register", {
+        ...form,
+        username: "username",
+      })
 
-    // if (data?.createUser.message) {
-    //   setError("Ошибка регистрации")
-    // }
-    //
-    // if (data?.createUser) {
-    //   await login({
-    //     email: form.email,
-    //     password: form.password,
-    //   })
-    // }
-  }
-
-  const createProfile = async (form: CreateProfileFormType) => {
-    // const { data } = await updateProfileMutation({
-    //   variables: {
-    //     userId: user?.id,
-    //     form: {
-    //       ...form,
-    //       avatar: { upload: form.avatar?.item(0) },
-    //     },
-    //   },
-    // })
+      if (jwt) {
+        Cookies.set("token", jwt, { expires: 60 })
+        API.defaults.headers.common.Authorization = `Bearer ${jwt}`
+        setUser(user)
+        await router.push("/artist/new")
+      }
+    } catch (e) {
+      setError("Ошибка регистрации")
+    }
   }
 
   const updateProfile = async (form: UpdateProfileFormType) => {
@@ -137,7 +128,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         login,
         logout,
         signUp,
-        createProfile,
         updateProfile,
       }}
     >

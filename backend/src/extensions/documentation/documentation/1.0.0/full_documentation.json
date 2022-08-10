@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-08-10T11:04:03.178Z"
+    "x-generation-date": "2022-08-10T19:49:17.663Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -4102,9 +4102,6 @@
                             "attributes": {
                               "type": "object",
                               "properties": {
-                                "username": {
-                                  "type": "string"
-                                },
                                 "email": {
                                   "type": "string",
                                   "format": "email"
@@ -4548,6 +4545,12 @@
                                   }
                                 },
                                 "phone": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "username": {
                                   "type": "string"
                                 },
                                 "releases": {
@@ -6053,9 +6056,6 @@
                           "attributes": {
                             "type": "object",
                             "properties": {
-                              "username": {
-                                "type": "string"
-                              },
                               "email": {
                                 "type": "string",
                                 "format": "email"
@@ -6499,6 +6499,12 @@
                                 }
                               },
                               "phone": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "username": {
                                 "type": "string"
                               },
                               "releases": {
@@ -10408,9 +10414,6 @@
                                           "attributes": {
                                             "type": "object",
                                             "properties": {
-                                              "username": {
-                                                "type": "string"
-                                              },
                                               "email": {
                                                 "type": "string",
                                                 "format": "email"
@@ -10448,6 +10451,12 @@
                                                 }
                                               },
                                               "phone": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "username": {
                                                 "type": "string"
                                               },
                                               "releases": {
@@ -11724,9 +11733,6 @@
                                         "attributes": {
                                           "type": "object",
                                           "properties": {
-                                            "username": {
-                                              "type": "string"
-                                            },
                                             "email": {
                                               "type": "string",
                                               "format": "email"
@@ -11764,6 +11770,12 @@
                                               }
                                             },
                                             "phone": {
+                                              "type": "string"
+                                            },
+                                            "name": {
+                                              "type": "string"
+                                            },
+                                            "username": {
                                               "type": "string"
                                             },
                                             "releases": {
@@ -12783,9 +12795,6 @@
                                                         "attributes": {
                                                           "type": "object",
                                                           "properties": {
-                                                            "username": {
-                                                              "type": "string"
-                                                            },
                                                             "email": {
                                                               "type": "string",
                                                               "format": "email"
@@ -12823,6 +12832,12 @@
                                                               }
                                                             },
                                                             "phone": {
+                                                              "type": "string"
+                                                            },
+                                                            "name": {
+                                                              "type": "string"
+                                                            },
+                                                            "username": {
                                                               "type": "string"
                                                             },
                                                             "releases": {
@@ -14128,9 +14143,6 @@
                                                       "attributes": {
                                                         "type": "object",
                                                         "properties": {
-                                                          "username": {
-                                                            "type": "string"
-                                                          },
                                                           "email": {
                                                             "type": "string",
                                                             "format": "email"
@@ -14168,6 +14180,12 @@
                                                             }
                                                           },
                                                           "phone": {
+                                                            "type": "string"
+                                                          },
+                                                          "name": {
+                                                            "type": "string"
+                                                          },
+                                                          "username": {
                                                             "type": "string"
                                                           },
                                                           "releases": {
@@ -15368,13 +15386,10 @@
           "data": {
             "required": [
               "email",
-              "slug"
+              "phone"
             ],
             "type": "object",
             "properties": {
-              "username": {
-                "type": "string"
-              },
               "email": {
                 "type": "string",
                 "format": "email"
@@ -15413,6 +15428,12 @@
               "phone": {
                 "type": "string"
               },
+              "name": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
               "releases": {
                 "type": "array",
                 "items": {
@@ -15448,9 +15469,6 @@
                 "attributes": {
                   "type": "object",
                   "properties": {
-                    "username": {
-                      "type": "string"
-                    },
                     "email": {
                       "type": "string",
                       "format": "email"
@@ -15839,9 +15857,6 @@
                                           "attributes": {
                                             "type": "object",
                                             "properties": {
-                                              "username": {
-                                                "type": "string"
-                                              },
                                               "email": {
                                                 "type": "string",
                                                 "format": "email"
@@ -15879,6 +15894,12 @@
                                                 }
                                               },
                                               "phone": {
+                                                "type": "string"
+                                              },
+                                              "name": {
+                                                "type": "string"
+                                              },
+                                              "username": {
                                                 "type": "string"
                                               },
                                               "releases": {
@@ -16702,6 +16723,12 @@
                     "phone": {
                       "type": "string"
                     },
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
                     "releases": {
                       "type": "object",
                       "properties": {
@@ -16809,9 +16836,6 @@
               "attributes": {
                 "type": "object",
                 "properties": {
-                  "username": {
-                    "type": "string"
-                  },
                   "email": {
                     "type": "string",
                     "format": "email"
@@ -17200,9 +17224,6 @@
                                         "attributes": {
                                           "type": "object",
                                           "properties": {
-                                            "username": {
-                                              "type": "string"
-                                            },
                                             "email": {
                                               "type": "string",
                                               "format": "email"
@@ -17240,6 +17261,12 @@
                                               }
                                             },
                                             "phone": {
+                                              "type": "string"
+                                            },
+                                            "name": {
+                                              "type": "string"
+                                            },
+                                            "username": {
                                               "type": "string"
                                             },
                                             "releases": {
@@ -18061,6 +18088,12 @@
                     }
                   },
                   "phone": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
                     "type": "string"
                   },
                   "releases": {

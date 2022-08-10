@@ -6,9 +6,8 @@ export default [
     config: {
       enabled: true,
       origin: [
-        "http://localhost:*",
+        "http://localhost:3000",
         "http://localhost:1337",
-        "http://linkmusic.ru",
         "https://linkmusic.ru",
       ],
     },
@@ -20,5 +19,4 @@ export default [
   "strapi::session",
   "strapi::favicon",
   "strapi::public",
-  "strapi::session",
 ]

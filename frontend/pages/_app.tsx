@@ -1,4 +1,4 @@
-import { createContext } from "react"
+import { createContext, useEffect, useState } from "react"
 import App, { AppContext, AppProps } from "next/app"
 import Head from "next/head"
 import { getStrapiMedia } from "lib/media"
@@ -6,18 +6,31 @@ import { API } from "lib/api"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import { ThemeProvider } from "@mui/material/styles"
-import { AuthProvider, useAuth } from "context/AuthProvider"
+import { AuthProvider } from "context/AuthProvider"
 import ruLocale from "date-fns/locale/ru"
 import Loader from "components/Loader"
 import theme from "styles/theme"
 import "styles/globals.scss"
 import getQueryStr from "lib/queryStr"
+import { useRouter } from "next/router"
 
 export const GlobalContext = createContext({})
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps
-  const { loading } = useAuth()
+  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    const handleStart = (url: string) => {
+      url !== router.pathname ? setLoading(true) : setLoading(false)
+    }
+    const handleComplete = (url: string) => setLoading(false)
+
+    router.events.on("routeChangeStart", handleStart)
+    router.events.on("routeChangeComplete", handleComplete)
+    router.events.on("routeChangeError", handleComplete)
+  }, [loading, router])
 
   return (
     <>

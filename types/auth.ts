@@ -37,7 +37,6 @@ export type AuthContextType = {
   login: Function
   logout: Function
   signUp: Function
-  createProfile: Function
   updateProfile: Function
 }
 

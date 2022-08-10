@@ -1,5 +1,5 @@
 import bcrypt from "bcryptjs"
-import { createImg } from "../../../../src/utils/createCaptcha"
+import { createImg } from "../../../utils/createCaptcha"
 
 export default {
   getCaptchaImage: async (ctx) => {

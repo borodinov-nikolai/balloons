@@ -13,13 +13,6 @@
     "timestamps": true
   },
   "attributes": {
-    "username": {
-      "type": "string",
-      "minLength": 3,
-      "unique": true,
-      "configurable": false,
-      "required": false
-    },
     "email": {
       "type": "email",
       "minLength": 6,
@@ -65,8 +58,22 @@
     },
     "phone": {
       "type": "string",
-      "minLength": 6,
+      "minLength": 11,
       "configurable": false,
+      "required": true,
+      "private": true
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "unique": true,
+      "required": false,
+      "private": false
+    },
+    "username": {
+      "type": "string",
+      "unique": false,
+      "required": false,
       "private": true
     },
     "releases": {
@@ -77,8 +84,8 @@
     },
     "slug": {
       "type": "uid",
-      "targetField": "username",
-      "required": true
+      "targetField": "name",
+      "required": false
     }
   }
 }

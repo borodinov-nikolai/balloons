@@ -12,7 +12,7 @@ export default ({ env }) => ({
       ssl: env.bool("DATABASE_SSL", false),
       filename: path.join(
         __dirname,
-        "..",
+        "../..",
         env("DATABASE_FILENAME", ".tmp/data.db")
       ),
     },

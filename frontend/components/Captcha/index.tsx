@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useCheckCaptcha, useGetCaptchaImage } from "hooks/captcha.hooks"
 import useDebounce from "hooks/debounce.hooks"
 
@@ -6,7 +6,6 @@ import styles from "./Captcha.module.scss"
 
 function Captcha(props: any) {
   const { setCaptchaVerified } = props
-
   const [captchaInput, setCaptchaInput] = useState("")
   const debouncedCaptchaInput = useDebounce(captchaInput, 1500)
   const [error, updateError] = useState("")
@@ -19,26 +18,34 @@ function Captcha(props: any) {
     loading: fetchImgLoading,
     error: fetchImgError,
   } = useGetCaptchaImage()
+
   const {
     checkCaptcha,
     isCaptchaVerified,
     loading: checkCaptchaLoading,
-    error: errorCaptchaLoading,
+    error: errorCheckCaptcha,
   } = useCheckCaptcha()
 
-  const reloadCaptcha = (e: SyntheticEvent) => {
-    e.preventDefault()
+  const reloadCaptcha = async () => {
     setCaptchaVerified(false)
     updateError("")
-    fetchCaptchaImg(sizeOptions.current.width, sizeOptions.current.height)
+    await fetchCaptchaImg(sizeOptions.current.width, sizeOptions.current.height)
   }
 
   useEffect(() => {
-    if (debouncedCaptchaInput.length > 0) checkCaptcha(debouncedCaptchaInput)
-  }, [checkCaptcha, debouncedCaptchaInput])
+    if (debouncedCaptchaInput.length > 0) {
+      checkCaptcha(debouncedCaptchaInput)
+      console.log("isCaptchaVerified", isCaptchaVerified)
+      setCaptchaVerified(isCaptchaVerified)
+    }
+  }, [
+    checkCaptcha,
+    debouncedCaptchaInput,
+    isCaptchaVerified,
+    setCaptchaVerified,
+  ])
 
   useEffect(() => {
-    setCaptchaVerified(false)
     sizeOptions.current = {
       width: Math.floor(
         captchaImgBlockRef.current?.getBoundingClientRect().width || 0
@@ -47,13 +54,14 @@ function Captcha(props: any) {
         captchaImgBlockRef.current?.getBoundingClientRect().height || 0
       ),
     }
+
     fetchCaptchaImg(sizeOptions.current.width, sizeOptions.current.height)
-  }, [fetchCaptchaImg, setCaptchaVerified]) // set first-render captchaImg
+  }, [fetchCaptchaImg])
 
   useEffect(() => {
-    if (fetchImgError) updateError(fetchImgError)
-    if (errorCaptchaLoading) updateError(errorCaptchaLoading)
-  }, [fetchImgError, errorCaptchaLoading]) // add errors
+    if (fetchImgError) updateError("Ошибка загрузки изображения")
+    if (errorCheckCaptcha) updateError("Капча введена неправильно")
+  }, [fetchImgError, errorCheckCaptcha]) // add errors
 
   useEffect(() => {
     if (
@@ -62,6 +70,8 @@ function Captcha(props: any) {
       !checkCaptchaLoading
     ) {
       updateError("Капча введена неправильно")
+    } else {
+      updateError("")
     }
   }, [
     isCaptchaVerified,
@@ -120,7 +130,7 @@ function Captcha(props: any) {
             <img src={captchaImg} alt="" />
           )}
         </button>
-        {fetchImgLoading || checkCaptchaLoading}
+
         <button
           type="button"
           className={

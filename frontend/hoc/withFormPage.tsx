@@ -209,22 +209,22 @@ const withFormPage = (FormComponent: FunctionComponent) => (props: any) => {
         </svg>
       </div>
       <img
-        src="/images/music-services4.svg"
+        src="/assets/music-services4.svg"
         alt=""
         className="music-services music-services_reg1"
       />
       <img
-        src="/images/music-services1.png"
+        src="/assets/music-services1.png"
         alt=""
         className="music-services music-services_reg2"
       />
       <img
-        src="/images/music-services5.svg"
+        src="/assets/music-services5.svg"
         alt=""
         className="music-services music-services_reg3"
       />
       <img
-        src="/images/music-services6.png"
+        src="/assets/music-services6.png"
         alt=""
         className="music-services music-services_reg4"
       />
