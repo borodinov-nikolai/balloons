@@ -8,13 +8,13 @@
   ],
   "scripts": {
     "develop:backend": "ENV_PATH=../.env.local yarn --cwd backend develop",
-    "develop:frontend": "env-cmd ../.env.local wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
+    "develop:frontend": "ENV_PATH=../.env.local wait-on http://localhost:1337/admin && yarn --cwd frontend develop",
     "develop": "cross-env FORCE_COLOR=1 npm-run-all -l -p develop:*",
     "build:backend": "ENV_PATH=../.env yarn --cwd backend build",
-    "build:frontend": "env-cmd ../.env yarn --cwd frontend build",
+    "build:frontend": "ENV_PATH=../.env yarn --cwd frontend build",
     "build": "cross-env FORCE_COLOR=1 yarn workspaces run build",
     "start:backend": "ENV_PATH=../.env yarn --cwd backend start",
-    "start:frontend": "env-cmd ../.env yarn --cwd frontend start",
+    "start:frontend": "ENV_PATH=../.env yarn --cwd frontend start",
     "start": "cross-env FORCE_COLOR=1 yarn workspaces run start"
   },
   "devDependencies": {

@@ -14,7 +14,6 @@ import {
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import { useForm } from "react-hook-form"
 import { CreateProfileFormType } from "types/general"
-import { useAuth } from "context/AuthProvider"
 import Margin from "components/Form/Margin"
 import LoadImage from "components/Form/LoadImage"
 
@@ -26,10 +25,9 @@ function NewProfile() {
     watch,
     formState: { errors },
   } = useForm<CreateProfileFormType>()
-  const { createProfile } = useAuth()
 
   const submitHandler = (data: CreateProfileFormType) => {
-    createProfile(data)
+    console.log(data)
   }
 
   return (
