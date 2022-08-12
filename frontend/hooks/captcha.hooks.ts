@@ -1,6 +1,5 @@
 import { API } from "lib/api"
 import { useCallback, useState } from "react"
-import getQueryStr from "lib/queryStr"
 
 function useGetCaptchaImage() {
   const [captchaImg, setCaptchaImg] = useState("")
@@ -10,7 +9,7 @@ function useGetCaptchaImage() {
   const fetchCaptchaImg = useCallback(async (width: number, height: number) => {
     setLoading(true)
     try {
-      const { data } = await API.get(getQueryStr("/captcha", { width, height }))
+      const { data } = await API.get("/captcha", { params: { width, height } })
       setCaptchaImg(data)
       setError("")
     } catch (e) {

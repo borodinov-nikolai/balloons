@@ -56,7 +56,7 @@ function Registration(props: any) {
       />
 
       <TextField
-        placeholder="Телефон"
+        label="Телефон"
         error={!!errors.phone}
         helperText={errors.phone?.message}
         type="tel"

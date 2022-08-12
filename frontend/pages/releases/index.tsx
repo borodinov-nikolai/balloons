@@ -16,7 +16,7 @@ const Releases: NextPage<ReleasesProps> = ({ releases }) => {
   const searchQuery = router.query?.search || ""
   const offset = page * limit - limit
   const loading = false
-  console.log("releases", releases)
+  // console.log("releases", releases)
   // const pageCount = Math.floor(data?.releasesCount + limit - 1) || 0
   // const releaseItems = loading ? (
   //   <div>Идет загрузка</div>

@@ -35,7 +35,6 @@ function Captcha(props: any) {
   useEffect(() => {
     if (debouncedCaptchaInput.length > 0) {
       checkCaptcha(debouncedCaptchaInput)
-      console.log("isCaptchaVerified", isCaptchaVerified)
       setCaptchaVerified(isCaptchaVerified)
     }
   }, [

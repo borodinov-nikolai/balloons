@@ -9,8 +9,6 @@ function withPrivateRoute<T>(Component: NextComponentType<T>) {
     const { isAuthenticated, user, loading } = useAuth()
     const router = useRouter()
 
-    console.log("user", user)
-
     useEffect(() => {
       if (
         !loading &&

@@ -11,7 +11,6 @@ import ruLocale from "date-fns/locale/ru"
 import Loader from "components/Loader"
 import theme from "styles/theme"
 import "styles/globals.scss"
-import getQueryStr from "lib/queryStr"
 import { useRouter } from "next/router"
 
 export const GlobalContext = createContext({})
@@ -62,14 +61,14 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(ctx)
   // Fetch global site settings from Strapi
-  const { data: globals } = await API.get(
-    getQueryStr("/global", {
+  const { data: globals } = await API.get("/global", {
+    params: {
       populate: {
         favicon: "*",
         defaultSeo: { populate: "*" },
       },
-    })
-  )
+    },
+  })
   // Pass the data to our page via props
   return {
     ...appProps,
