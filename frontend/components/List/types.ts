@@ -1,7 +1,9 @@
+import { ImageType } from "types/general"
+
 export type ListItemType = {
-  img?: string;
-  title?: string;
-  link?: string;
-  subTitle?: string;
-  placeholder?: string;
-};
+  img?: ImageType
+  title?: string
+  link?: string
+  subTitle?: string
+  placeholder?: string
+}

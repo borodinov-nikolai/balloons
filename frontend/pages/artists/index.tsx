@@ -5,32 +5,41 @@ import { UserType } from "types/auth"
 import { useRouter } from "next/router"
 import { Grid } from "@mui/material"
 import ArtistItem from "pages/artists/ArtistItem"
+import { useEffect, useState } from "react"
+import { API } from "lib/api"
 
 function Artists() {
   const limit = 8
   const router = useRouter()
   const page = Number(router.query.page) || 1
   const searchQuery = router.query.search || ""
+  const [artists, setArtists] = useState<UserType[]>([])
   const offset = page * limit - limit
 
-  // const { data, loading, refetch } = useQuery(GET_ARTISTS, {
-  //   variables: {
-  //     offset,
-  //     limit,
-  //     search: searchQuery,
-  //   },
-  // })
-
   const loading = false
-  const artists: UserType[] = []
 
   const pageCount = Math.floor(10 + limit - 1) || 0
 
-  const artistItems = loading ? (
-    <div>Идет загрузка</div>
-  ) : (
-    artists.map((it: UserType) => <ArtistItem key={it.id} artist={it} />)
-  )
+  const artistItems = loading
+    ? [<div key={1}>Идет загрузка</div>]
+    : artists.map((it: UserType) => <ArtistItem key={it.id} artist={it} />)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await API.get("/users", {
+          params: { populate: { avatar: "*" } },
+        })
+        setArtists(data)
+        console.log("data", data)
+        // setError("")
+      } catch (e) {
+        // setError("Что-то пошло не так, перезагрузите страницу")
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -40,19 +49,19 @@ function Artists() {
       />
 
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        {/* @ts-ignore*/}
         <List count={Math.trunc(pageCount / limit)} pageSize={limit}>
-          {artists.length ? (
-            artistItems
-          ) : (
-            <Grid
-              container
-              style={{ fontSize: "2rem", margin: "2rem 0" }}
-              justifyContent="center"
-            >
-              Артистов с именем {searchQuery} не найдено
-            </Grid>
-          )}
+          {artists.length
+            ? artistItems
+            : [
+                <Grid
+                  key={1}
+                  container
+                  style={{ fontSize: "2rem", margin: "2rem 0" }}
+                  justifyContent="center"
+                >
+                  Артистов с именем {searchQuery} не найдено
+                </Grid>,
+              ]}
         </List>
       </Grid>
 

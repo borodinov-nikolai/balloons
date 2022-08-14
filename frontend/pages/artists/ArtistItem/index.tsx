@@ -10,7 +10,7 @@ function ArtistItem(props: ArtistsItemType) {
     artist: { avatar, name, slug },
   } = props
 
-  return <ListItem img={avatar?.url} title={name} link={`/artist/${slug}`} />
+  return <ListItem img={avatar} title={name} link={`/artist/${slug}`} />
 }
 
 export default ArtistItem

@@ -49,7 +49,7 @@ function News() {
               style={{ fontSize: "2rem", margin: "2rem 0" }}
               justifyContent="center"
             >
-              Артистов с именем {searchQuery} не найдено
+              Новость {searchQuery} не найдена
             </Grid>
           )}
         </List>

@@ -1,4 +1,4 @@
-import { ImageType, ReleaseType, SocialLinkType } from "./general"
+import { ImageType, ReleaseType } from "./general"
 
 export type Session = {
   data: {
@@ -11,9 +11,8 @@ export type UserType = {
   id: string
   name?: string
   slug?: string
-  phone?: string
+  phone: string
   email: string
-  isAdmin?: boolean
   description?: string
   canBookPerformance: boolean
   vk?: string
@@ -26,7 +25,6 @@ export type UserType = {
   site?: string
   avatar?: ImageType
   releases?: ReleaseType[]
-  socialLinks?: SocialLinkType[]
 }
 
 export type AuthContextType = {

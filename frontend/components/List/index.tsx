@@ -1,10 +1,9 @@
 import { Grid, Pagination } from "@mui/material"
-import { ListItemType } from "components/List/types"
-import { ChangeEvent } from "react"
+import { ChangeEvent, ReactElement } from "react"
 import { useRouter } from "next/router"
 
 type ListProps = {
-  children: ListItemType[]
+  children: ReactElement[]
   pageSize: number
   count: number
 }

@@ -1,9 +1,9 @@
 import { getStrapiURL } from "./api"
-import { MediaType } from "types/general"
+import { ImageType } from "types/general"
 
-export function getStrapiMedia(media: MediaType) {
-  if (media?.data) {
-    const { url } = media.data.attributes
+export function getStrapiMedia(img: ImageType): string {
+  const url = img?.url
+  if (url) {
     return url.startsWith("/") ? getStrapiURL(url) : url
   }
   return ""
