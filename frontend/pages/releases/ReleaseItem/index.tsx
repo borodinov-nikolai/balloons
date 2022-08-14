@@ -11,12 +11,7 @@ function ReleaseItem(props: ReleaseItemType) {
   } = props
 
   return (
-    <ListItem
-      img={img?.url}
-      title={name}
-      subTitle={artistName}
-      link={`/${link}`}
-    />
+    <ListItem img={img} title={name} subTitle={artistName} link={`/${link}`} />
   )
 }
 

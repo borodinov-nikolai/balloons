@@ -31,18 +31,22 @@
       "type": "date"
     },
     "img": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "user": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "releases"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     }
   }
 }

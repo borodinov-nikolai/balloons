@@ -7,25 +7,47 @@ import Logo from "components/Logo"
 import { useAuth } from "context/AuthProvider"
 import Image from "next/image"
 import { ReleaseType } from "types/general"
+import { useEffect, useState } from "react"
+import { API } from "lib/api"
+import { getStrapiMedia } from "lib/media"
 
 function ReleasePage() {
   const router = useRouter()
   const { user } = useAuth()
   const { realese: realeseLink } = router.query
-  // const { data, loading } = useQuery<ReleaseData>(GET_RELEASE, {
-  //   variables: { link: realeseLink },
-  // })
+  const [release, setRelease] = useState<ReleaseType | null>(null)
+  const [loading, setLoading] = useState(false)
 
-  const loading = true
-  const release: ReleaseType = {
-    id: "asdfsadf",
-    name: "release",
-    type: "single",
-    date: 1231234,
-    link: "",
-    img: { url: "", extension: "png" },
-  }
+  useEffect(() => {
+    setLoading(true)
+    const fetchData = async () => {
+      try {
+        const {
+          data: { data },
+        } = await API.get("/releases", {
+          params: {
+            populate: { img: "*" },
+            "filters[slug][$eq]": realeseLink,
+          },
+        })
+        if (data.length > 0) {
+          setRelease({
+            id: data[0].id,
+            ...data[0].attributes,
+            img: { ...data[0].attributes.img.data.attributes },
+          })
+        }
+        console.log("data[0]", data[0])
+        // setError("")
+      } catch (e) {
+        // setError("Что-то пошло не так, перезагрузите страницу")
+      }
+    }
 
+    fetchData()
+    setLoading(false)
+  }, [realeseLink])
+  console.log("release", release)
   return loading ? (
     <Loader />
   ) : (
@@ -33,14 +55,16 @@ function ReleasePage() {
       <section className={`block ${styles.block_release}`}>
         <Grid
           className={styles.block_release_bg_img}
-          style={{ backgroundImage: `url(${release?.img.url})` }}
+          style={{
+            backgroundImage: `url(${getStrapiMedia(release?.img)})`,
+          }}
         />
         <Grid className="content">
           <Grid className={styles.release_wrapper}>
             <Grid className={styles.release_column_img}>
               {release?.img && (
                 <Image
-                  src={release?.img.url}
+                  src={getStrapiMedia(release?.img)}
                   alt="list img"
                   width={280}
                   height={280}
@@ -70,7 +94,7 @@ function ReleasePage() {
                   <Grid className={styles.release_column_track_item}>
                     <Grid className={styles.release_column_track_img}>
                       <Image
-                        src="/images/music-services6.png"
+                        src="/assets/music-services6.png"
                         alt="iTunes img"
                         width={50}
                         height={50}
@@ -89,7 +113,7 @@ function ReleasePage() {
                   <Grid className={styles.release_column_track_item}>
                     <Grid className={styles.release_column_track_img}>
                       <Image
-                        src="/images/music-services7.svg"
+                        src="/assets/music-services7.svg"
                         alt="iTunes img"
                         width={50}
                         height={50}
@@ -108,7 +132,7 @@ function ReleasePage() {
                   <Grid className={styles.release_column_track_item}>
                     <Grid className={styles.release_column_track_img}>
                       <Image
-                        src="/images/music-services5.svg"
+                        src="/assets/music-services5.svg"
                         alt="iTunes img"
                         width={50}
                         height={50}
@@ -127,7 +151,7 @@ function ReleasePage() {
                   <Grid className={styles.release_column_track_item}>
                     <Grid className={styles.release_column_track_img}>
                       <Image
-                        src="/images/music-services3.png"
+                        src="/assets/music-services3.png"
                         alt="iTunes img"
                         width={50}
                         height={50}
@@ -146,7 +170,7 @@ function ReleasePage() {
                   <Grid className={styles.release_column_track_item}>
                     <Grid className={styles.release_column_track_img}>
                       <Image
-                        src="/images/music-services2.png"
+                        src="/assets/music-services2.png"
                         alt="iTunes img"
                         width={50}
                         height={50}
@@ -165,7 +189,7 @@ function ReleasePage() {
                   <Grid className={styles.release_column_track_item}>
                     <Grid className={styles.release_column_track_img}>
                       <Image
-                        src="/images/music-services4.svg"
+                        src="/assets/music-services4.svg"
                         alt="iTunes img"
                         width={50}
                         height={50}

@@ -9,6 +9,7 @@ export default [
         "http://localhost:3000",
         "http://localhost:1337",
         "https://linkmusic.ru",
+        "http://linkmusic.ru",
       ],
     },
   },
@@ -16,10 +17,7 @@ export default [
   "strapi::logger",
   "strapi::query",
   "strapi::body",
-  {
-    name: "strapi::session",
-    config: { secure: false },
-  },
+  "strapi::session",
   "strapi::favicon",
   "strapi::public",
 ]
