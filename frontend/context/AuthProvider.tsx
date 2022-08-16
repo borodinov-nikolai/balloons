@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         data: { jwt, user },
       } = await API.post("auth/local/register", {
         ...form,
-        username: "username",
+        username: form.email,
       })
 
       if (jwt) {
