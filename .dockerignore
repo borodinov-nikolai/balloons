@@ -1,8 +1,3 @@
 node_modules/
 npm-debug.log
-
 .git/
-.keystone/
-.next/
-
-schema.*
