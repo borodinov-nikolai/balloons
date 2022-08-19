@@ -12,6 +12,7 @@ import Loader from "components/Loader"
 import theme from "styles/theme"
 import "styles/globals.scss"
 import { useRouter } from "next/router"
+import { StyledEngineProvider } from "@mui/material"
 
 export const GlobalContext = createContext({})
 
@@ -36,19 +37,20 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       <Head>
         <link rel="shortcut icon" href={getStrapiMedia(global?.favicon)} />
       </Head>
-
-      <GlobalContext.Provider value={global}>
-        <LocalizationProvider
-          adapterLocale={ruLocale}
-          dateAdapter={AdapterDateFns}
-        >
-          <ThemeProvider theme={theme}>
-            <AuthProvider>
-              {loading ? <Loader /> : <Component {...pageProps} />}
-            </AuthProvider>
-          </ThemeProvider>
-        </LocalizationProvider>
-      </GlobalContext.Provider>
+      <StyledEngineProvider injectFirst>
+        <GlobalContext.Provider value={global}>
+          <LocalizationProvider
+            adapterLocale={ruLocale}
+            dateAdapter={AdapterDateFns}
+          >
+            <ThemeProvider theme={theme}>
+              <AuthProvider>
+                {loading ? <Loader /> : <Component {...pageProps} />}
+              </AuthProvider>
+            </ThemeProvider>
+          </LocalizationProvider>
+        </GlobalContext.Provider>
+      </StyledEngineProvider>
     </>
   )
 }
