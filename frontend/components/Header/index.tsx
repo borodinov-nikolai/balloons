@@ -10,6 +10,7 @@ import AssignmentIndRoundedIcon from "@mui/icons-material/AssignmentIndRounded"
 import { useRouter } from "next/router"
 import { ClickAwayListener } from "@mui/base"
 import { useAuth } from "context/AuthProvider"
+import { getMediaUrl } from "lib/media"
 
 function Header() {
   const [hasBg, toggleBg] = useState(false)
@@ -57,7 +58,7 @@ function Header() {
         {isAuthenticated && !!user?.avatar?.url && (
           <Image
             className={styles.personalAreaButton}
-            src={user.avatar.url}
+            src={getMediaUrl(user.avatar)}
             width={43}
             height={43}
             alt=""

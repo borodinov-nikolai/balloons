@@ -17,6 +17,7 @@ import { UpdateProfileFormType } from "types/general"
 import { useAuth } from "context/AuthProvider"
 import Margin from "components/Form/Margin"
 import LoadImage from "components/Form/LoadImage"
+import Link from "next/link"
 
 function UpdateProfile() {
   const { updateProfile, user } = useAuth()
@@ -70,8 +71,8 @@ function UpdateProfile() {
                 errors={errors}
                 setValue={setValue}
                 watch={watch}
-                defaultValue={user?.avatar}
                 required
+                defaultValue={user?.avatar}
               />
 
               <Grid className={styles.right_column}>
@@ -156,7 +157,7 @@ function UpdateProfile() {
                       Создать
                     </Button>
                     <Button className={styles.btn} variant="outlined">
-                      Отменить
+                      <Link href={`/artist/${user?.slug}`}>Отменить</Link>
                     </Button>
                     <Button
                       className={styles.btn}

@@ -13,7 +13,7 @@ import {
 } from "@mui/material"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import { useForm } from "react-hook-form"
-import { CreateProfileFormType } from "types/general"
+import { UpdateProfileFormType } from "types/general"
 import Margin from "components/Form/Margin"
 import LoadImage from "components/Form/LoadImage"
 import { useAuth } from "context/AuthProvider"
@@ -25,10 +25,10 @@ function NewProfile() {
     setValue,
     watch,
     formState: { errors },
-  } = useForm<CreateProfileFormType>()
+  } = useForm<UpdateProfileFormType>()
   const { updateProfile } = useAuth()
 
-  const submitHandler = (data: CreateProfileFormType) => {
+  const submitHandler = (data: UpdateProfileFormType) => {
     updateProfile(data)
   }
 

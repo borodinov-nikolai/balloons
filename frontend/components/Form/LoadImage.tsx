@@ -1,19 +1,20 @@
-import { FormControl, FormHelperText, Grid, Typography } from "@mui/material";
-import Image from "next/image";
-import CloseIcon from "@mui/icons-material/Close";
-import styles from "./LoadImage.module.scss";
-import { ImageType } from "types/general";
-import { useEffect } from "react";
+import { FormControl, FormHelperText, Grid, Typography } from "@mui/material"
+import Image from "next/image"
+import CloseIcon from "@mui/icons-material/Close"
+import styles from "./LoadImage.module.scss"
+import { ImageType } from "types/general"
+import { useEffect } from "react"
+import { getMediaUrl } from "lib/media"
 
 type LoadImageProps = {
-  formFieldName: string;
-  register: Function;
-  setValue: Function;
-  watch: Function;
-  defaultValue?: ImageType | null;
-  errors?: Record<string, any>;
-  required?: boolean;
-};
+  formFieldName: string
+  register: Function
+  setValue: Function
+  watch: Function
+  defaultValue?: ImageType
+  errors?: Record<string, any>
+  required?: boolean
+}
 
 function LoadImage({
   formFieldName,
@@ -21,38 +22,38 @@ function LoadImage({
   errors,
   setValue,
   watch,
-  defaultValue = null,
+  defaultValue = undefined,
   required = false,
 }: LoadImageProps) {
-  const files = watch(formFieldName);
+  const files = watch(formFieldName)
 
   const onChange = (e: any) => {
-    const file = e.target?.files[0];
+    const file = e.target?.files.item(0)
 
     if (file.type && !file.type.startsWith("image/")) {
-      console.error("File is not an image.", file.type, file);
-      return;
+      console.error("File is not an image.", file.type, file)
+      return
     }
-  };
+  }
 
   const onClearHandler = () => {
-    setValue(formFieldName, null);
-  };
+    setValue(formFieldName, null)
+  }
 
   useEffect(() => {
     async function createFile() {
-      const dt = new DataTransfer();
-      const response = await fetch(defaultValue?.url || "");
-      const data = await response.blob();
-      const fileName = defaultValue?.url?.split("/")[4] || "filename.jpg";
+      const dt = new DataTransfer()
+      const response = await fetch(getMediaUrl(defaultValue))
+      const data = await response.blob()
+      const fileName = defaultValue?.url?.split("/")[4] || "filename.jpg"
+      const file = new File([data], fileName)
+      dt.items.add(file)
 
-      const file = new File([data], fileName);
-      dt.items.add(file);
-      setValue(formFieldName, dt.files);
+      setValue(formFieldName, dt.files)
     }
 
-    if (defaultValue) createFile();
-  }, [defaultValue, formFieldName, setValue]);
+    if (defaultValue) createFile()
+  }, [defaultValue, formFieldName, setValue])
 
   return (
     <Grid>
@@ -101,7 +102,7 @@ function LoadImage({
         {errors && errors[formFieldName]?.message}
       </Typography>
     </Grid>
-  );
+  )
 }
 
-export default LoadImage;
+export default LoadImage

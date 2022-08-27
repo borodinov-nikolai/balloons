@@ -95,23 +95,8 @@ export type CreateReleaseFormType = {
   user?: object
 }
 
-export type CreateProfileFormType = {
-  name: string
-  description?: string
-  site?: string
-  canBookPerformance: boolean
-  vk?: string
-  odnoklassniki?: string
-  youtube?: string
-  rutube?: string
-  telegram?: string
-  facebook?: string
-  instagram?: string
-  avatar?: FileList
-}
-
 export type UpdateProfileFormType = {
-  name?: string
+  name: string
   description?: string
   site?: string
   canBookPerformance?: boolean

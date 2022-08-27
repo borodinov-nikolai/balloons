@@ -110,8 +110,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const updateProfile = async (form: UpdateProfileFormType) => {
     try {
-      const { data } = await API.put("users/me", form)
-      console.log("data", data)
+      const { data } = await API.put(
+        "users/me",
+        {
+          ...form,
+          avatar: form.avatar?.item(0),
+        },
+        {
+          headers: { "Content-type": "multipart/form-data" },
+        }
+      )
       if (data.length) {
         const user = data[0]
 
