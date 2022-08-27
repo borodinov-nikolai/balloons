@@ -32,26 +32,26 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     router.events.on("routeChangeError", handleComplete)
   }, [loading, router])
 
-  return (
-    <>
+  return loading ? (
+    <Loader />
+  ) : (
+    <GlobalContext.Provider value={global}>
       <Head>
         <link rel="shortcut icon" href={getStrapiMedia(global?.favicon)} />
       </Head>
       <StyledEngineProvider injectFirst>
-        <GlobalContext.Provider value={global}>
-          <LocalizationProvider
-            adapterLocale={ruLocale}
-            dateAdapter={AdapterDateFns}
-          >
-            <ThemeProvider theme={theme}>
-              <AuthProvider>
-                {loading ? <Loader /> : <Component {...pageProps} />}
-              </AuthProvider>
-            </ThemeProvider>
-          </LocalizationProvider>
-        </GlobalContext.Provider>
+        <LocalizationProvider
+          adapterLocale={ruLocale}
+          dateAdapter={AdapterDateFns}
+        >
+          <ThemeProvider theme={theme}>
+            <AuthProvider>
+              <Component {...pageProps} />
+            </AuthProvider>
+          </ThemeProvider>
+        </LocalizationProvider>
       </StyledEngineProvider>
-    </>
+    </GlobalContext.Provider>
   )
 }
 

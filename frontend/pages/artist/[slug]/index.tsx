@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import withStandardLayout from "hoc/withStandardLayout"
 import styles from "pages/artist/Artist.module.scss"
 import withPrivateRoute from "hoc/withPrivateRoute"
@@ -9,22 +9,47 @@ import { useAuth } from "context/AuthProvider"
 import { useRouter } from "next/router"
 import { UserType } from "types/auth"
 import MyReleases from "components/MyReleases"
+import Cookies from "js-cookie"
+import { API } from "lib/api"
 
 function ArtistPage() {
   const { user: currentUser } = useAuth()
   const [user, setUser] = useState<UserType | null>(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [isCurrentUser, setIsCurrentUser] = useState(false)
   const router = useRouter()
   const { slug } = router.query
 
-  // const { data: userData } = useQuery(GET_USER_BY_SLUG, {
-  //   variables: { slug },
-  // })
+  useEffect(() => {
+    async function loadUser() {
+      setLoading(true)
+      const token = Cookies.get("token")
 
-  // useEffect(() => {
-  //   if (userData?.user) setUser(userData?.user)
-  //   if (userData?.user.id === currentUser?.id) setIsCurrentUser(true)
-  // }, [currentUser?.id, userData?.user])
+      if (token && slug && slug !== "null") {
+        try {
+          const { data } = await API.get(`users/${slug}`)
+          setUser(data)
+        } catch (e: any) {
+          setError(e.message)
+          setUser(null)
+        }
+      }
+
+      setLoading(false)
+    }
+
+    loadUser()
+  }, [slug])
+
+  useEffect(() => {
+    if (!loading && !user?.slug && router.pathname !== "/artist/new")
+      router.push("/artist/new")
+  }, [loading, router, user?.slug])
+
+  useEffect(() => {
+    if (user?.id === currentUser?.id) setIsCurrentUser(true)
+  }, [currentUser?.id, user])
 
   return (
     <section className={`${styles.block_create} block block_first-on-page`}>

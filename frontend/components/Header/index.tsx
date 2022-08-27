@@ -252,7 +252,12 @@ function Header() {
                   <Fade {...TransitionProps} in={open} timeout={350}>
                     <div>
                       <Grid className={styles.popper_item}>
-                        <Link passHref href={`/artist/${user?.slug}`}>
+                        <Link
+                          passHref
+                          href={
+                            user?.slug ? `/artist/${user?.slug}` : "/artist/new"
+                          }
+                        >
                           <a>Профиль</a>
                         </Link>
                       </Grid>
