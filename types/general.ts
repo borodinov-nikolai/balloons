@@ -99,7 +99,7 @@ export type UpdateProfileFormType = {
   name: string
   description?: string
   site?: string
-  canBookPerformance?: boolean
+  canBookPerformance: boolean
   vk?: string
   odnoklassniki?: string
   youtube?: string

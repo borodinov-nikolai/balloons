@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-08-27T11:05:00.131Z"
+    "x-generation-date": "2022-08-27T11:49:20.537Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -7205,6 +7205,12 @@
                           "username": {
                             "type": "string"
                           },
+                          "description": {
+                            "type": "string"
+                          },
+                          "canBookPerformance": {
+                            "type": "boolean"
+                          },
                           "createdAt": {
                             "type": "string",
                             "format": "date-time"
@@ -9780,6 +9786,12 @@
                           },
                           "username": {
                             "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "canBookPerformance": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -12390,6 +12402,12 @@
                           "username": {
                             "type": "string"
                           },
+                          "description": {
+                            "type": "string"
+                          },
+                          "canBookPerformance": {
+                            "type": "boolean"
+                          },
                           "createdAt": {
                             "type": "string",
                             "format": "date-time"
@@ -14965,6 +14983,12 @@
                           },
                           "username": {
                             "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "canBookPerformance": {
+                            "type": "boolean"
                           },
                           "createdAt": {
                             "type": "string",
@@ -22015,6 +22039,12 @@
                                         "username": {
                                           "type": "string"
                                         },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
+                                        },
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -23952,6 +23982,12 @@
                                         },
                                         "username": {
                                           "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
                                         },
                                         "createdAt": {
                                           "type": "string",
@@ -25924,6 +25960,12 @@
                                         "username": {
                                           "type": "string"
                                         },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
+                                        },
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -27861,6 +27903,12 @@
                                         },
                                         "username": {
                                           "type": "string"
+                                        },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
                                         },
                                         "createdAt": {
                                           "type": "string",
@@ -29822,6 +29870,12 @@
                                                       },
                                                       "username": {
                                                         "type": "string"
+                                                      },
+                                                      "description": {
+                                                        "type": "string"
+                                                      },
+                                                      "canBookPerformance": {
+                                                        "type": "boolean"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -31789,6 +31843,12 @@
                                                       },
                                                       "username": {
                                                         "type": "string"
+                                                      },
+                                                      "description": {
+                                                        "type": "string"
+                                                      },
+                                                      "canBookPerformance": {
+                                                        "type": "boolean"
                                                       },
                                                       "createdAt": {
                                                         "type": "string",
@@ -33790,6 +33850,12 @@
                                                       "username": {
                                                         "type": "string"
                                                       },
+                                                      "description": {
+                                                        "type": "string"
+                                                      },
+                                                      "canBookPerformance": {
+                                                        "type": "boolean"
+                                                      },
                                                       "createdAt": {
                                                         "type": "string",
                                                         "format": "date-time"
@@ -35757,6 +35823,12 @@
                                                       "username": {
                                                         "type": "string"
                                                       },
+                                                      "description": {
+                                                        "type": "string"
+                                                      },
+                                                      "canBookPerformance": {
+                                                        "type": "boolean"
+                                                      },
                                                       "createdAt": {
                                                         "type": "string",
                                                         "format": "date-time"
@@ -35988,7 +36060,8 @@
           "data": {
             "required": [
               "email",
-              "phone"
+              "phone",
+              "canBookPerformance"
             ],
             "type": "object",
             "properties": {
@@ -36087,6 +36160,12 @@
               },
               "username": {
                 "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "canBookPerformance": {
+                "type": "boolean"
               }
             }
           }
@@ -37894,6 +37973,12 @@
                                         "username": {
                                           "type": "string"
                                         },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
+                                        },
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -38676,6 +38761,12 @@
               },
               "username": {
                 "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "canBookPerformance": {
+                "type": "boolean"
               },
               "createdAt": {
                 "type": "string",
@@ -40525,6 +40616,12 @@
                                         "username": {
                                           "type": "string"
                                         },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
+                                        },
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -41307,6 +41404,12 @@
               },
               "username": {
                 "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "canBookPerformance": {
+                "type": "boolean"
               },
               "createdAt": {
                 "type": "string",
@@ -43189,6 +43292,12 @@
                                         "username": {
                                           "type": "string"
                                         },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
+                                        },
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -43971,6 +44080,12 @@
               },
               "username": {
                 "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "canBookPerformance": {
+                "type": "boolean"
               },
               "createdAt": {
                 "type": "string",
@@ -45820,6 +45935,12 @@
                                         "username": {
                                           "type": "string"
                                         },
+                                        "description": {
+                                          "type": "string"
+                                        },
+                                        "canBookPerformance": {
+                                          "type": "boolean"
+                                        },
                                         "createdAt": {
                                           "type": "string",
                                           "format": "date-time"
@@ -46602,6 +46723,12 @@
               },
               "username": {
                 "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "canBookPerformance": {
+                "type": "boolean"
               },
               "createdAt": {
                 "type": "string",

@@ -120,16 +120,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           headers: { "Content-type": "multipart/form-data" },
         }
       )
-      if (data.length) {
-        const user = data[0]
-
-        if (!user.name && router.pathname !== "/artist/new")
-          router.push("/artist/new")
-
-        setUser(user)
+      console.log("user", data)
+      if (data) {
+        setUser(data)
+        await router.push(`/artist/${data.slug}`)
       }
 
-      if (!data.length) setError("User not found")
+      if (!data) setError("User not found")
     } catch (e: any) {
       setError(e.message)
       setUser(null)

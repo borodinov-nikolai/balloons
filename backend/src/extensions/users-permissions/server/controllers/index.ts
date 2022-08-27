@@ -22,7 +22,7 @@ export const updateMe = async (ctx) => {
     "avatar",
   ])
 
-  newData.slug = slugify(newData.name)
+  newData.slug = slugify(newData.name.toLowerCase())
 
   if (ctx.request?.files?.avatar) {
     await strapi.service("plugin::upload.upload").upload({

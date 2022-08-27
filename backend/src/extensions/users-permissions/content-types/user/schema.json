@@ -107,6 +107,14 @@
       "type": "string",
       "required": false,
       "unique": false
+    },
+    "description": {
+      "type": "string"
+    },
+    "canBookPerformance": {
+      "type": "boolean",
+      "default": false,
+      "required": true
     }
   }
 }
