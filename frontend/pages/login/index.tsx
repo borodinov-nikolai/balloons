@@ -23,6 +23,7 @@ const Login: FunctionComponent = (props: any) => {
     // if (isCaptchaVerified) login(data)
     login(data)
   }
+
   // useEffect(() => {
   //   if (isAuthenticated && !loading) router.push("/artist/new")
   // }, [isAuthenticated, loading, router])

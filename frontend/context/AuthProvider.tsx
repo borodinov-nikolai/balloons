@@ -71,7 +71,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       Cookies.set("token", jwt, { expires: 60 })
       API.defaults.headers.common.Authorization = `Bearer ${jwt}`
       setUser(user)
-      await router.push("/artist/new")
+      if (user.slug) await router.push(`/artist/${user.slug}`)
+      if (!user.slug) await router.push("/artist/new")
     }
 
     setLoading(false)
@@ -101,7 +102,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         Cookies.set("token", jwt, { expires: 60 })
         API.defaults.headers.common.Authorization = `Bearer ${jwt}`
         setUser(user)
-        await router.push("/artist/new")
+        if (user.slug) await router.push(`/artist/${user.slug}`)
+        if (!user.slug) await router.push("/artist/new")
       }
     } catch (e) {
       setError("Ошибка регистрации")
