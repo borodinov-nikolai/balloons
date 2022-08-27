@@ -5,7 +5,7 @@ import { Grid, Typography } from "@mui/material"
 import LinkWrapper from "components/LinkWrapper"
 import { ReactElement } from "react"
 import Link from "next/link"
-import { getStrapiMedia } from "lib/media"
+import { getMediaUrl } from "lib/media"
 
 function ListItem(props: ListItemType) {
   const { img, title, link, subTitle, placeholder } = props
@@ -21,7 +21,7 @@ function ListItem(props: ListItemType) {
       <Grid container direction="column" className={styles.item}>
         <Grid className={styles.item_img}>
           <Image
-            src={img?.url ? getStrapiMedia(img) : placeholderUrl}
+            src={img?.url ? getMediaUrl(img) : placeholderUrl}
             alt="list img"
             width={img?.width}
             height={img?.height}

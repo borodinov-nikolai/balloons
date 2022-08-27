@@ -1,16 +1,16 @@
-import getController from "../../../../utils/getController"
 import _ from "lodash"
 import slugify from "slugify"
 
 export const updateMe = async (ctx) => {
-  const user = ctx.state.user
+  const authUser = ctx.state.user
 
-  // User has to be logged in to update themselves
-  if (!user) return ctx.unauthorized()
+  if (!authUser) return ctx.unauthorized()
 
-  // Pick only specific fields for security
   const newData = _.pick(ctx.request.body, [
     "name",
+    "slug",
+    "canBookPerformance",
+    "description",
     "vk",
     "odnoklassniki",
     "youtube",
@@ -19,15 +19,26 @@ export const updateMe = async (ctx) => {
     "facebook",
     "instagram",
     "site",
-    "slug",
+    "avatar",
   ])
 
   newData.slug = slugify(newData.name)
 
+  if (ctx.request?.files?.avatar) {
+    await strapi.service("plugin::upload.upload").upload({
+      data: {
+        ref: "plugin::users-permissions.user",
+        refId: authUser.id,
+        field: "avatar",
+      },
+      files: ctx.request?.files?.avatar,
+    })
+  }
+
   // Reconstruct context so we can pass to the controller
   ctx.request.body = newData
-  ctx.params = { id: user.id }
+  ctx.params = { id: authUser.id }
 
   // Update the user and return the sanitized data
-  return await getController("user").update(ctx)
+  return await strapi.controller("plugin::users-permissions.user").update(ctx)
 }

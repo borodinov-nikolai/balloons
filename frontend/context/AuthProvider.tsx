@@ -43,7 +43,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (token) {
         try {
           API.defaults.headers.common.Authorization = `Bearer ${token}`
-          const { data } = await API.get("users/me")
+          const { data } = await API.get("users/me", {
+            params: { populate: "*" },
+          })
           setUser(data)
         } catch (e: any) {
           setError(e.message)
@@ -107,15 +109,23 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   const updateProfile = async (form: UpdateProfileFormType) => {
-    // const { data } = await updateProfileMutation({
-    //   variables: {
-    //     userId: user?.id,
-    //     form: {
-    //       ...form,
-    //       avatar: { upload: form.avatar?.item(0) },
-    //     },
-    //   },
-    // })
+    try {
+      const { data } = await API.put("users/me", form)
+      console.log("data", data)
+      if (data.length) {
+        const user = data[0]
+
+        if (!user.name && router.pathname !== "/artist/new")
+          router.push("/artist/new")
+
+        setUser(user)
+      }
+
+      if (!data.length) setError("User not found")
+    } catch (e: any) {
+      setError(e.message)
+      setUser(null)
+    }
   }
 
   return (

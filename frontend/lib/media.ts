@@ -1,10 +1,10 @@
-import { getStrapiURL } from "./api"
 import { ImageType } from "types/general"
 
-export function getStrapiMedia(img?: ImageType): string {
+export function getMediaUrl(img?: ImageType): string {
   const url = img?.url
   if (url) {
-    return url.startsWith("/") ? getStrapiURL(url) : url
+    const baseURL = process.env.PUBLIC_URL
+    return `${baseURL || "http://localhost:1337"}${url}`
   }
   return ""
 }

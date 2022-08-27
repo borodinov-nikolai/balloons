@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form"
 import { CreateProfileFormType } from "types/general"
 import Margin from "components/Form/Margin"
 import LoadImage from "components/Form/LoadImage"
+import { useAuth } from "context/AuthProvider"
 
 function NewProfile() {
   const {
@@ -25,9 +26,10 @@ function NewProfile() {
     watch,
     formState: { errors },
   } = useForm<CreateProfileFormType>()
+  const { updateProfile } = useAuth()
 
   const submitHandler = (data: CreateProfileFormType) => {
-    console.log(data)
+    updateProfile(data)
   }
 
   return (

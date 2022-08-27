@@ -31,7 +31,6 @@ function Artists() {
           params: { populate: { avatar: "*" } },
         })
         setArtists(data)
-        console.log("data", data)
         // setError("")
       } catch (e) {
         // setError("Что-то пошло не так, перезагрузите страницу")

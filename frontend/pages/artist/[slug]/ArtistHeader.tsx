@@ -4,6 +4,7 @@ import styles from "pages/artist/Artist.module.scss"
 import SocialLinks from "components/SocialLinks"
 import Link from "next/link"
 import { UserType } from "types/auth"
+import { getMediaUrl } from "lib/media"
 
 type ArtistHeaderProps = {
   user: UserType | null
@@ -12,7 +13,7 @@ type ArtistHeaderProps = {
 
 function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
   return (
-    <div className="content content_full-screen">
+    <Grid className="content content_full-screen">
       <svg
         className="vector__bg_right-small"
         width="149"
@@ -79,13 +80,15 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
       <Grid className={styles.header}>
         <Grid
           className={styles.header_bg}
-          style={{ backgroundImage: `url(${user?.avatar?.url})` }}
+          style={{
+            backgroundImage: `url(${getMediaUrl(user?.avatar)})`,
+          }}
         />
       </Grid>
 
       <Grid container className={`${styles.header_content} content`}>
         <Grid className={styles.header_avatar}>
-          <img src={user?.avatar?.url} alt="" />
+          <img src={getMediaUrl(user?.avatar)} alt="" />
         </Grid>
 
         <Grid className={styles.header_user_block}>
@@ -104,7 +107,7 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
           )}
         </Grid>
       </Grid>
-    </div>
+    </Grid>
   )
 }
 

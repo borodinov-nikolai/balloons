@@ -9,7 +9,7 @@ import Image from "next/image"
 import { ReleaseType } from "types/general"
 import { useEffect, useState } from "react"
 import { API } from "lib/api"
-import { getStrapiMedia } from "lib/media"
+import { getMediaUrl } from "lib/media"
 
 function ReleasePage() {
   const router = useRouter()
@@ -37,7 +37,6 @@ function ReleasePage() {
             img: { ...data[0].attributes.img.data.attributes },
           })
         }
-        console.log("data[0]", data[0])
         // setError("")
       } catch (e) {
         // setError("Что-то пошло не так, перезагрузите страницу")
@@ -56,7 +55,7 @@ function ReleasePage() {
         <Grid
           className={styles.block_release_bg_img}
           style={{
-            backgroundImage: `url(${getStrapiMedia(release?.img)})`,
+            backgroundImage: `url(${getMediaUrl(release?.img)})`,
           }}
         />
         <Grid className="content">
@@ -64,7 +63,7 @@ function ReleasePage() {
             <Grid className={styles.release_column_img}>
               {release?.img && (
                 <Image
-                  src={getStrapiMedia(release?.img)}
+                  src={getMediaUrl(release?.img)}
                   alt="list img"
                   width={280}
                   height={280}

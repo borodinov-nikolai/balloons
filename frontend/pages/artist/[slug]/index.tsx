@@ -28,8 +28,20 @@ function ArtistPage() {
 
       if (token && slug && slug !== "null") {
         try {
-          const { data } = await API.get(`users/${slug}`)
-          setUser(data)
+          const { data } = await API.get("users", {
+            params: { slug, populate: "*" },
+          })
+
+          if (data.length) {
+            const user = data[0]
+
+            if (!user.name && router.pathname !== "/artist/new")
+              router.push("/artist/new")
+
+            setUser(user)
+          }
+
+          if (!data.length) setError("User not found")
         } catch (e: any) {
           setError(e.message)
           setUser(null)
@@ -40,12 +52,7 @@ function ArtistPage() {
     }
 
     loadUser()
-  }, [slug])
-
-  useEffect(() => {
-    if (!loading && !user?.slug && router.pathname !== "/artist/new")
-      router.push("/artist/new")
-  }, [loading, router, user?.slug])
+  }, [router, slug])
 
   useEffect(() => {
     if (user?.id === currentUser?.id) setIsCurrentUser(true)

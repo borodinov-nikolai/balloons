@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import App, { AppContext, AppProps } from "next/app"
 import Head from "next/head"
-import { getStrapiMedia } from "lib/media"
+import { getMediaUrl } from "lib/media"
 import { API } from "lib/api"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
@@ -37,7 +37,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   ) : (
     <GlobalContext.Provider value={global}>
       <Head>
-        <link rel="shortcut icon" href={getStrapiMedia(global?.favicon)} />
+        <link rel="shortcut icon" href={getMediaUrl(global?.favicon)} />
       </Head>
       <StyledEngineProvider injectFirst>
         <LocalizationProvider
