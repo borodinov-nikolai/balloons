@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { useCheckCaptcha, useGetCaptchaImage } from "hooks/captcha.hooks"
 import useDebounce from "hooks/debounce.hooks"
-
+import useGlobal from "context"
+import { FormHelperText, Grid, TextField } from "@mui/material"
 import styles from "./Captcha.module.scss"
 
-function Captcha(props: any) {
-  const { setCaptchaVerified } = props
+function Captcha() {
+  const { setCaptchaVerified } = useGlobal()
   const [captchaInput, setCaptchaInput] = useState("")
   const debouncedCaptchaInput = useDebounce(captchaInput, 1500)
   const [error, updateError] = useState("")
@@ -80,31 +81,11 @@ function Captcha(props: any) {
   ])
 
   return (
-    <div className={styles.captcha}>
-      <label
-        htmlFor=""
-        className={
-          error
-            ? `${styles.captcha__label} ${styles.captcha__label_error}`
-            : styles.captcha__label
-        }
-      >
-        {error
-          ? error
-          : checkCaptchaLoading
-          ? "Проверка..."
-          : isCaptchaVerified
-          ? ""
-          : "Введите указанное слово"}
-      </label>
-
-      <div className={styles.captcha__row}>
-        <input
-          type="text"
-          pattern="^[а-яА-ЯёЁ0-9]+$"
-          onChange={(e) => {
-            setCaptchaInput(e.target.value.toLowerCase())
-          }}
+    <Grid container direction="column" className={styles.captcha}>
+      <Grid container wrap="nowrap" alignItems="center">
+        <TextField
+          variant="outlined"
+          onChange={(e) => setCaptchaInput(e.target.value.toLowerCase())}
           className={
             error
               ? `${styles.captcha__input} ${styles.captcha__input_err}`
@@ -112,11 +93,9 @@ function Captcha(props: any) {
               ? `${styles.captcha__input} ${styles.captcha__input_done}`
               : styles.captcha__input
           }
-          required
         />
 
         <button
-          type="button"
           className={styles.captcha__img}
           disabled={fetchImgLoading || checkCaptchaLoading}
           onClick={reloadCaptcha}
@@ -131,7 +110,6 @@ function Captcha(props: any) {
         </button>
 
         <button
-          type="button"
           className={
             fetchImgLoading || checkCaptchaLoading
               ? `${styles.captcha__refreshBtn} ${styles.loading}`
@@ -140,8 +118,24 @@ function Captcha(props: any) {
           disabled={fetchImgLoading || checkCaptchaLoading}
           onClick={reloadCaptcha}
         />
-      </div>
-    </div>
+      </Grid>
+
+      <FormHelperText
+        className={
+          error
+            ? `${styles.captcha__label} ${styles.captcha__label_error}`
+            : styles.captcha__label
+        }
+      >
+        {error
+          ? error
+          : checkCaptchaLoading
+          ? "Проверка..."
+          : isCaptchaVerified
+          ? ""
+          : ""}
+      </FormHelperText>
+    </Grid>
   )
 }
 

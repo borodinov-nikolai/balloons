@@ -3,29 +3,33 @@ import styles from "./Form.module.scss"
 import {
   Button,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
   TextField,
   Typography,
 } from "@mui/material"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { MessageFormType } from "types/general"
-import Margin from "components/Form/Margin"
+import Margin from "components/FeedbackForm/Margin"
 import { useEffect, useRef } from "react"
 import IMask from "imask"
+import useGlobal from "context"
 
-function Form(props: any) {
-  const { isCaptchaVerified, setCaptchaVerified } = props
+function FeedbackForm() {
+  const { isCaptchaVerified } = useGlobal()
+
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm<MessageFormType>()
   const phoneInputRef = useRef()
 
   const submitHandler = () => {
+    console.log("isCaptchaVerified", isCaptchaVerified)
     return isCaptchaVerified
   }
 
@@ -33,6 +37,15 @@ function Form(props: any) {
     if (phoneInputRef.current)
       IMask(phoneInputRef.current, { mask: "+{7} (000) 000-00-00" })
   })
+
+  const messageThemes = [
+    { value: "1", text: "Создание страниц" },
+    { value: "2", text: "Менеджмент" },
+    { value: "3", text: "Организация мероприятий" },
+    { value: "4", text: "Дистрибуция" },
+    { value: "5", text: "Продвижение" },
+    { value: "6", text: "Прочие вопросы" },
+  ]
 
   return (
     <div className={`block ${styles.blockForm}`}>
@@ -57,26 +70,45 @@ function Form(props: any) {
               <Typography variant="h5">Напишите нам</Typography>
               <Margin />
 
-              <FormControl fullWidth className={styles.inputRow_select}>
-                <InputLabel id="message-form-label">Тема сообщения</InputLabel>
+              <FormControl fullWidth>
+                <InputLabel id="message-form-label" required>
+                  Тема сообщения
+                </InputLabel>
                 <Margin />
-                <Select
-                  labelId="message-form-label"
-                  id="message-form"
-                  {...register("messageTheme")}
-                >
-                  <MenuItem value={1}>Тема 1</MenuItem>
-                  <MenuItem value={2}>Тема 2</MenuItem>
-                  <MenuItem value={3}>Тема 3</MenuItem>
-                </Select>
+                <Controller
+                  rules={{ required: true }}
+                  name="messageTheme"
+                  defaultValue=""
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      displayEmpty
+                      labelId="message-form-label"
+                      defaultValue=""
+                      error={!!errors.messageTheme}
+                      {...field}
+                    >
+                      {messageThemes.map((it) => (
+                        <MenuItem key={it.value} value={it.value}>
+                          {it.text}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+                {!!errors.messageTheme && (
+                  <FormHelperText>Обязательное поле</FormHelperText>
+                )}
               </FormControl>
 
               <TextField
                 fullWidth
-                type="text"
                 label="Имя"
+                error={!!errors.name}
+                helperText={!!errors.name && "Обязательное поле"}
                 placeholder="Как к вам обращаться?"
-                {...register("name")}
+                required
+                {...register("name", { required: true })}
               />
 
               <div className={styles.inputGroup}>
@@ -84,18 +116,27 @@ function Form(props: any) {
                   fullWidth
                   label="Телефон"
                   inputRef={phoneInputRef}
-                  {...register("phone", { required: true })}
-                  required
+                  {...register("phone")}
                 />
 
                 <span style={{ width: "4rem" }} />
-                <TextField fullWidth label="E-mail" {...register("email")} />
+                <TextField
+                  fullWidth
+                  label="E-mail"
+                  error={!!errors.email}
+                  helperText={!!errors.email && "Обязательное поле"}
+                  {...register("email", { required: true })}
+                  required
+                />
               </div>
 
               <TextField
                 fullWidth
                 label="Сообщение"
-                {...register("message")}
+                error={!!errors.message}
+                helperText={!!errors.message && "Обязательное поле"}
+                {...register("message", { required: true })}
+                required
                 multiline
                 rows={3}
               />
@@ -143,10 +184,12 @@ function Form(props: any) {
                 </label>
               </div>
 
-              <Captcha setCaptchaVerified={setCaptchaVerified} />
+              <Captcha />
 
               <div className={styles.btnRow}>
-                <Button className={`tl_btn`}>Отправить</Button>
+                <Button fullWidth onClick={handleSubmit(submitHandler)}>
+                  Отправить
+                </Button>
 
                 <p className={styles.politic}>
                   Отправляя сообщение вы соглашаетесь с{" "}
@@ -251,4 +294,4 @@ function Form(props: any) {
   )
 }
 
-export default Form
+export default FeedbackForm

@@ -58,6 +58,14 @@ let theme = createTheme({
     MuiTextField: {
       defaultProps: { variant: "standard" },
     },
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: "#d32f2f",
+          marginLeft: 0,
+        },
+      },
+    },
   },
 })
 

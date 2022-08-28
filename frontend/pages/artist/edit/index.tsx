@@ -15,8 +15,8 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import { useForm } from "react-hook-form"
 import { UpdateProfileFormType } from "types/general"
 import { useAuth } from "context/AuthProvider"
-import Margin from "components/Form/Margin"
-import LoadImage from "components/Form/LoadImage"
+import Margin from "components/FeedbackForm/Margin"
+import LoadImage from "components/FeedbackForm/LoadImage"
 import Link from "next/link"
 
 function UpdateProfile() {

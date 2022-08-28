@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import App, { AppContext, AppProps } from "next/app"
 import Head from "next/head"
 import { getMediaUrl } from "lib/media"
@@ -13,13 +13,13 @@ import theme from "styles/theme"
 import "styles/globals.scss"
 import { useRouter } from "next/router"
 import { StyledEngineProvider } from "@mui/material"
-
-export const GlobalContext = createContext({})
+import { GlobalContext } from "context"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
+  const [isCaptchaVerified, setCaptchaVerified] = useState<boolean>(false)
 
   useEffect(() => {
     const handleStart = (url: string) => {
@@ -35,7 +35,13 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return loading ? (
     <Loader />
   ) : (
-    <GlobalContext.Provider value={global}>
+    <GlobalContext.Provider
+      value={{
+        ...global,
+        setCaptchaVerified,
+        isCaptchaVerified,
+      }}
+    >
       <Head>
         <link rel="shortcut icon" href={getMediaUrl(global?.favicon)} />
       </Head>

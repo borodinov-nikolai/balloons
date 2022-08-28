@@ -14,8 +14,8 @@ import {
   Typography,
 } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
-import LoadImage from "components/Form/LoadImage"
-import Margin from "components/Form/Margin"
+import LoadImage from "components/FeedbackForm/LoadImage"
+import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
 import { CreateReleaseFormType } from "types/general"

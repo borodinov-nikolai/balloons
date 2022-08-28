@@ -7,7 +7,8 @@ import { useRouter } from "next/router"
 import { Button, TextField, Typography } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { loginFormType } from "types/auth"
-import { FunctionComponent } from "react"
+import { FunctionComponent, useEffect } from "react"
+import Captcha from "components/Captcha"
 
 const Login: FunctionComponent = (props: any) => {
   const { isCaptchaVerified, setCaptchaVerified } = props
@@ -24,9 +25,9 @@ const Login: FunctionComponent = (props: any) => {
     login(data)
   }
 
-  // useEffect(() => {
-  //   if (isAuthenticated && !loading) router.push("/artist/new")
-  // }, [isAuthenticated, loading, router])
+  useEffect(() => {
+    if (isAuthenticated && !loading) router.push("/artist/new")
+  }, [isAuthenticated, loading, router])
 
   return (
     <form className={styles.formPage} onSubmit={handleSubmit(submitHandler)}>
@@ -34,8 +35,8 @@ const Login: FunctionComponent = (props: any) => {
 
       <TextField
         label="E-mail"
-        // error={!!errors.email}
-        // helperText={errors.email?.message}
+        error={!!errors.identifier}
+        helperText={errors.identifier && "Обязательное поле"}
         autoFocus
         className={styles.formPage__input}
         {...register("identifier", {
@@ -51,7 +52,7 @@ const Login: FunctionComponent = (props: any) => {
       <TextField
         label="Пароль"
         error={!!errors.password}
-        helperText={errors.password?.message}
+        helperText={errors.password && "Обязательное поле"}
         type="password"
         className={styles.formPage__input}
         {...register("password", {
@@ -67,7 +68,7 @@ const Login: FunctionComponent = (props: any) => {
         <a className={styles.forgotPassword}>Забыли пароль?</a>
       </Link>
 
-      {/*<Captcha setCaptchaVerified={setCaptchaVerified} />*/}
+      <Captcha />
 
       <p className={styles.formPage__text}>
         Нет аккаунта?
