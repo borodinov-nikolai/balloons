@@ -47,6 +47,33 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
+    },
+    "itunes": {
+      "type": "string"
+    },
+    "appleMusic": {
+      "type": "string"
+    },
+    "spotify": {
+      "type": "string"
+    },
+    "yandexMusic": {
+      "type": "string"
+    },
+    "sberZvuk": {
+      "type": "string"
+    },
+    "youtubeMusic": {
+      "type": "string"
+    },
+    "facebookPixel": {
+      "type": "string"
+    },
+    "vkPixel": {
+      "type": "string"
+    },
+    "video": {
+      "type": "string"
     }
   }
 }

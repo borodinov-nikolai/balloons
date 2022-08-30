@@ -122,7 +122,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           headers: { "Content-type": "multipart/form-data" },
         }
       )
-      console.log("user", data)
+
       if (data) {
         setUser(data)
         await router.push(`/artist/${data.slug}`)

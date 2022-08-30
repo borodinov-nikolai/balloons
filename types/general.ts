@@ -58,13 +58,13 @@ export type UserSocialLinksType = {
   instagram?: string
 }
 
-export type MessageFormType = {
-  messageTheme: string
+export type FeedbackFormType = {
+  messageSubject: string
   name: string
   message: string
-  phone: string
+  phone?: string
   email: string
-  file: FileList | File | null
+  file?: FileList
 }
 
 export type NewsArticleType = {
@@ -83,16 +83,15 @@ export type CreateReleaseFormType = {
   link: string
   img: FileList
   artistName?: string
-  vk?: string
+  itunes?: string
+  appleMusic?: string
+  spotify?: string
+  yandexMusic?: string
+  sberZvuk?: string
+  youtubeMusic?: string
+  video?: string
   vkPixel?: string
-  odnoklassniki?: string
-  youtube?: string
-  rutube?: string
-  telegram?: string
-  facebook?: string
   facebookPixel?: string
-  instagram?: string
-  user?: object
 }
 
 export type UpdateProfileFormType = {

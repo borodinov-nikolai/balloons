@@ -51,8 +51,6 @@ function NewRelease() {
   // }, [refetch, trigger, watchLink])
 
   const submitHandler = async (form: CreateReleaseFormType) => {
-    if (user) form.user = { connect: { id: user.id } }
-
     await router.push(`/artist/${user?.slug}`)
   }
 
@@ -166,16 +164,28 @@ function NewRelease() {
                     Этот релиз на цифровых витринах
                   </Typography>
 
-                  <TextField label="VK" {...register("vk")} />
+                  <TextField label="Itunes" {...register("itunes")} />
+                  <TextField label="Apple music" {...register("appleMusic")} />
+                  <TextField label="Spotify" {...register("spotify")} />
                   <TextField
-                    label="Одноклассники"
-                    {...register("odnoklassniki")}
+                    label="Яндекс Музыка"
+                    {...register("yandexMusic")}
                   />
-                  <TextField label="Youtube" {...register("youtube")} />
-                  <TextField label="Rutube" {...register("rutube")} />
-                  <TextField label="Telegram" {...register("telegram")} />
-                  <TextField label="Facebook" {...register("facebook")} />
-                  <TextField label="Instagram" {...register("instagram")} />
+                  <TextField label="Сбер.Звук" {...register("sberZvuk")} />
+                  <TextField
+                    label="YouTube Music"
+                    {...register("youtubeMusic")}
+                  />
+                  <Margin />
+                </Grid>
+
+                <Grid container direction="column">
+                  <Typography variant="h5">Видео</Typography>
+
+                  <TextField
+                    label="Ссылка на видео в YouTube / Vimeo"
+                    {...register("video")}
+                  />
                   <Margin />
                 </Grid>
 
@@ -230,7 +240,7 @@ function NewRelease() {
 
                   <TextField
                     label="Вставить код пикселя Вконтакте"
-                    {...register("vk")}
+                    {...register("vkPixel")}
                   />
                   <Margin />
                   <Margin />
@@ -238,7 +248,7 @@ function NewRelease() {
 
                   <TextField
                     label="Вставить код пикселя Facebook"
-                    {...register("youtube")}
+                    {...register("facebookPixel")}
                   />
                 </Grid>
 

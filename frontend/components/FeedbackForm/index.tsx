@@ -11,11 +11,12 @@ import {
   Typography,
 } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
-import { MessageFormType } from "types/general"
+import { FeedbackFormType } from "types/general"
 import Margin from "components/FeedbackForm/Margin"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import IMask from "imask"
 import useGlobal from "context"
+import { API } from "lib/api"
 
 function FeedbackForm() {
   const { isCaptchaVerified } = useGlobal()
@@ -25,12 +26,26 @@ function FeedbackForm() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<MessageFormType>()
+  } = useForm<FeedbackFormType>()
   const phoneInputRef = useRef()
+  const [error, setError] = useState("")
 
-  const submitHandler = () => {
-    console.log("isCaptchaVerified", isCaptchaVerified)
-    return isCaptchaVerified
+  const submitHandler = async (form: FeedbackFormType) => {
+    if (!isCaptchaVerified)
+      try {
+        await API.post(
+          "feedbacks",
+          {
+            ...form,
+            file: form.file?.item(0),
+          },
+          {
+            headers: { "Content-type": "multipart/form-data" },
+          }
+        )
+      } catch (e: any) {
+        setError(e.message)
+      }
   }
 
   useEffect(() => {
@@ -39,12 +54,12 @@ function FeedbackForm() {
   })
 
   const messageThemes = [
-    { value: "1", text: "Создание страниц" },
-    { value: "2", text: "Менеджмент" },
-    { value: "3", text: "Организация мероприятий" },
-    { value: "4", text: "Дистрибуция" },
-    { value: "5", text: "Продвижение" },
-    { value: "6", text: "Прочие вопросы" },
+    { value: "Создание страниц", text: "Создание страниц" },
+    { value: "Менеджмент", text: "Менеджмент" },
+    { value: "Организация мероприятий", text: "Организация мероприятий" },
+    { value: "Дистрибуция", text: "Дистрибуция" },
+    { value: "Продвижение", text: "Продвижение" },
+    { value: "Прочие вопросы", text: "Прочие вопросы" },
   ]
 
   return (
@@ -77,7 +92,7 @@ function FeedbackForm() {
                 <Margin />
                 <Controller
                   rules={{ required: true }}
-                  name="messageTheme"
+                  name="messageSubject"
                   defaultValue=""
                   control={control}
                   render={({ field }) => (
@@ -85,7 +100,7 @@ function FeedbackForm() {
                       displayEmpty
                       labelId="message-form-label"
                       defaultValue=""
-                      error={!!errors.messageTheme}
+                      error={!!errors.messageSubject}
                       {...field}
                     >
                       {messageThemes.map((it) => (
@@ -96,7 +111,7 @@ function FeedbackForm() {
                     </Select>
                   )}
                 />
-                {!!errors.messageTheme && (
+                {!!errors.messageSubject && (
                   <FormHelperText>Обязательное поле</FormHelperText>
                 )}
               </FormControl>
