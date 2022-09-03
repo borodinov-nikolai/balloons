@@ -31,13 +31,13 @@ function FeedbackForm() {
   const [error, setError] = useState("")
 
   const submitHandler = async (form: FeedbackFormType) => {
-    if (!isCaptchaVerified)
+    if (isCaptchaVerified)
       try {
         await API.post(
           "feedbacks",
           {
-            ...form,
-            file: form.file?.item(0),
+            data: JSON.stringify({...form, file: undefined}),
+            "files.file": form.file?.item(0),
           },
           {
             headers: { "Content-type": "multipart/form-data" },
