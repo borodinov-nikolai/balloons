@@ -19,40 +19,65 @@ import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
 import { CreateReleaseFormType } from "types/general"
-import randomString from "lib/randomLnk"
 import { useRouter } from "next/router"
+import useReleaseLink from "hooks/releaseLink.hooks"
+import { SyntheticEvent, useEffect, useMemo } from "react"
+import { API } from "lib/api"
 
 function NewRelease() {
+  const { uniqueLink, isUniqueLink } = useReleaseLink()
+
   const {
     register,
     control,
     handleSubmit,
     watch,
     setValue,
-    trigger,
     formState: { errors },
   } = useForm<CreateReleaseFormType>({
     defaultValues: {
       date: new Date(),
-      link: randomString(),
+      link: useMemo(() => uniqueLink, [uniqueLink]),
     },
   })
+
   const { user } = useAuth()
-  const watchLink = watch("link")
   const router = useRouter()
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     await refetch()
-  //     await trigger("link")
-  //   }
-  //
-  //   fetchData()
-  // }, [refetch, trigger, watchLink])
-
   const submitHandler = async (form: CreateReleaseFormType) => {
-    await router.push(`/artist/${user?.slug}`)
+    console.log("submitHandler", form)
+    try {
+      const { data } = await API.put(
+        "users/me",
+        {
+          ...form,
+          avatar: form.avatar?.item(0),
+        },
+        {
+          headers: { "Content-type": "multipart/form-data" },
+        }
+      )
+
+      if (data) {
+        setUser(data)
+        await router.push(`/artist/${data.slug}`)
+      }
+
+      if (!data) setError("User not found")
+    } catch (e: any) {
+      setError(e.message)
+      setUser(null)
+    }
+    // await router.push(`/artist/${user?.slug}`)
   }
+
+  const onChangeLinkHandler = (ev: SyntheticEvent) => {
+    console.log("value", ev.target.value)
+  }
+
+  useEffect(() => {
+    setValue("link", uniqueLink)
+  }, [setValue, uniqueLink])
 
   return (
     <>
@@ -214,16 +239,16 @@ function NewRelease() {
                         {...register("link", {
                           required: "Обязательное поле",
                           minLength: {
-                            value: 7,
-                            message: "Ссылка не может быть короче 7 символов",
+                            value: 3,
+                            message: "Ссылка не может быть короче 3 символов",
                           },
                           pattern: {
                             value: /[a-zA-Z0-9_]/,
                             message: "Ссылка содержит недопустимые символы",
                           },
+                          onChange: onChangeLinkHandler,
                           validate: () =>
-                            // @ts-ignore
-                            uniqLinkData?.releases.length > 0
+                            !isUniqueLink
                               ? "Релиз с такой ссылкой уже существует"
                               : true,
                         })}
