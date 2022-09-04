@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-09-04T09:31:25.606Z"
+    "x-generation-date": "2022-09-04T13:45:59.390Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -8576,7 +8576,8 @@
           "data": {
             "required": [
               "type",
-              "img"
+              "img",
+              "link"
             ],
             "type": "object",
             "properties": {
@@ -8619,9 +8620,6 @@
                 ],
                 "example": "string or id"
               },
-              "slug": {
-                "type": "string"
-              },
               "itunes": {
                 "type": "string"
               },
@@ -8647,6 +8645,9 @@
                 "type": "string"
               },
               "video": {
+                "type": "string"
+              },
+              "link": {
                 "type": "string"
               }
             }
@@ -9991,9 +9992,6 @@
                                             }
                                           }
                                         },
-                                        "slug": {
-                                          "type": "string"
-                                        },
                                         "itunes": {
                                           "type": "string"
                                         },
@@ -10019,6 +10017,9 @@
                                           "type": "string"
                                         },
                                         "video": {
+                                          "type": "string"
+                                        },
+                                        "link": {
                                           "type": "string"
                                         },
                                         "createdAt": {
@@ -11213,9 +11214,6 @@
                   }
                 }
               },
-              "slug": {
-                "type": "string"
-              },
               "itunes": {
                 "type": "string"
               },
@@ -11241,6 +11239,9 @@
                 "type": "string"
               },
               "video": {
+                "type": "string"
+              },
+              "link": {
                 "type": "string"
               },
               "createdAt": {
@@ -12627,9 +12628,6 @@
                                             }
                                           }
                                         },
-                                        "slug": {
-                                          "type": "string"
-                                        },
                                         "itunes": {
                                           "type": "string"
                                         },
@@ -12655,6 +12653,9 @@
                                           "type": "string"
                                         },
                                         "video": {
+                                          "type": "string"
+                                        },
+                                        "link": {
                                           "type": "string"
                                         },
                                         "createdAt": {
@@ -13849,9 +13850,6 @@
                   }
                 }
               },
-              "slug": {
-                "type": "string"
-              },
               "itunes": {
                 "type": "string"
               },
@@ -13877,6 +13875,9 @@
                 "type": "string"
               },
               "video": {
+                "type": "string"
+              },
+              "link": {
                 "type": "string"
               },
               "createdAt": {
@@ -15296,9 +15297,6 @@
                                             }
                                           }
                                         },
-                                        "slug": {
-                                          "type": "string"
-                                        },
                                         "itunes": {
                                           "type": "string"
                                         },
@@ -15324,6 +15322,9 @@
                                           "type": "string"
                                         },
                                         "video": {
+                                          "type": "string"
+                                        },
+                                        "link": {
                                           "type": "string"
                                         },
                                         "createdAt": {
@@ -16518,9 +16519,6 @@
                   }
                 }
               },
-              "slug": {
-                "type": "string"
-              },
               "itunes": {
                 "type": "string"
               },
@@ -16546,6 +16544,9 @@
                 "type": "string"
               },
               "video": {
+                "type": "string"
+              },
+              "link": {
                 "type": "string"
               },
               "createdAt": {
@@ -17932,9 +17933,6 @@
                                             }
                                           }
                                         },
-                                        "slug": {
-                                          "type": "string"
-                                        },
                                         "itunes": {
                                           "type": "string"
                                         },
@@ -17960,6 +17958,9 @@
                                           "type": "string"
                                         },
                                         "video": {
+                                          "type": "string"
+                                        },
+                                        "link": {
                                           "type": "string"
                                         },
                                         "createdAt": {
@@ -19154,9 +19155,6 @@
                   }
                 }
               },
-              "slug": {
-                "type": "string"
-              },
               "itunes": {
                 "type": "string"
               },
@@ -19182,6 +19180,9 @@
                 "type": "string"
               },
               "video": {
+                "type": "string"
+              },
+              "link": {
                 "type": "string"
               },
               "createdAt": {
@@ -25447,9 +25448,6 @@
                                                           }
                                                         }
                                                       },
-                                                      "slug": {
-                                                        "type": "string"
-                                                      },
                                                       "itunes": {
                                                         "type": "string"
                                                       },
@@ -25475,6 +25473,9 @@
                                                         "type": "string"
                                                       },
                                                       "video": {
+                                                        "type": "string"
+                                                      },
+                                                      "link": {
                                                         "type": "string"
                                                       },
                                                       "createdAt": {
@@ -27418,9 +27419,6 @@
                                                           }
                                                         }
                                                       },
-                                                      "slug": {
-                                                        "type": "string"
-                                                      },
                                                       "itunes": {
                                                         "type": "string"
                                                       },
@@ -27446,6 +27444,9 @@
                                                         "type": "string"
                                                       },
                                                       "video": {
+                                                        "type": "string"
+                                                      },
+                                                      "link": {
                                                         "type": "string"
                                                       },
                                                       "createdAt": {
@@ -29422,9 +29423,6 @@
                                                           }
                                                         }
                                                       },
-                                                      "slug": {
-                                                        "type": "string"
-                                                      },
                                                       "itunes": {
                                                         "type": "string"
                                                       },
@@ -29450,6 +29448,9 @@
                                                         "type": "string"
                                                       },
                                                       "video": {
+                                                        "type": "string"
+                                                      },
+                                                      "link": {
                                                         "type": "string"
                                                       },
                                                       "createdAt": {
@@ -31393,9 +31394,6 @@
                                                           }
                                                         }
                                                       },
-                                                      "slug": {
-                                                        "type": "string"
-                                                      },
                                                       "itunes": {
                                                         "type": "string"
                                                       },
@@ -31421,6 +31419,9 @@
                                                         "type": "string"
                                                       },
                                                       "video": {
+                                                        "type": "string"
+                                                      },
+                                                      "link": {
                                                         "type": "string"
                                                       },
                                                       "createdAt": {
@@ -33136,9 +33137,6 @@
                                                                         }
                                                                       }
                                                                     },
-                                                                    "slug": {
-                                                                      "type": "string"
-                                                                    },
                                                                     "itunes": {
                                                                       "type": "string"
                                                                     },
@@ -33164,6 +33162,9 @@
                                                                       "type": "string"
                                                                     },
                                                                     "video": {
+                                                                      "type": "string"
+                                                                    },
+                                                                    "link": {
                                                                       "type": "string"
                                                                     },
                                                                     "createdAt": {
@@ -35136,9 +35137,6 @@
                                                                         }
                                                                       }
                                                                     },
-                                                                    "slug": {
-                                                                      "type": "string"
-                                                                    },
                                                                     "itunes": {
                                                                       "type": "string"
                                                                     },
@@ -35164,6 +35162,9 @@
                                                                       "type": "string"
                                                                     },
                                                                     "video": {
+                                                                      "type": "string"
+                                                                    },
+                                                                    "link": {
                                                                       "type": "string"
                                                                     },
                                                                     "createdAt": {
@@ -37169,9 +37170,6 @@
                                                                         }
                                                                       }
                                                                     },
-                                                                    "slug": {
-                                                                      "type": "string"
-                                                                    },
                                                                     "itunes": {
                                                                       "type": "string"
                                                                     },
@@ -37197,6 +37195,9 @@
                                                                       "type": "string"
                                                                     },
                                                                     "video": {
+                                                                      "type": "string"
+                                                                    },
+                                                                    "link": {
                                                                       "type": "string"
                                                                     },
                                                                     "createdAt": {
@@ -39169,9 +39170,6 @@
                                                                         }
                                                                       }
                                                                     },
-                                                                    "slug": {
-                                                                      "type": "string"
-                                                                    },
                                                                     "itunes": {
                                                                       "type": "string"
                                                                     },
@@ -39197,6 +39195,9 @@
                                                                       "type": "string"
                                                                     },
                                                                     "video": {
+                                                                      "type": "string"
+                                                                    },
+                                                                    "link": {
                                                                       "type": "string"
                                                                     },
                                                                     "createdAt": {
@@ -42386,9 +42387,6 @@
                                 }
                               }
                             },
-                            "slug": {
-                              "type": "string"
-                            },
                             "itunes": {
                               "type": "string"
                             },
@@ -42414,6 +42412,9 @@
                               "type": "string"
                             },
                             "video": {
+                              "type": "string"
+                            },
+                            "link": {
                               "type": "string"
                             },
                             "createdAt": {
@@ -45056,9 +45057,6 @@
                                 }
                               }
                             },
-                            "slug": {
-                              "type": "string"
-                            },
                             "itunes": {
                               "type": "string"
                             },
@@ -45084,6 +45082,9 @@
                               "type": "string"
                             },
                             "video": {
+                              "type": "string"
+                            },
+                            "link": {
                               "type": "string"
                             },
                             "createdAt": {
@@ -47759,9 +47760,6 @@
                                 }
                               }
                             },
-                            "slug": {
-                              "type": "string"
-                            },
                             "itunes": {
                               "type": "string"
                             },
@@ -47787,6 +47785,9 @@
                               "type": "string"
                             },
                             "video": {
+                              "type": "string"
+                            },
+                            "link": {
                               "type": "string"
                             },
                             "createdAt": {
@@ -50429,9 +50430,6 @@
                                 }
                               }
                             },
-                            "slug": {
-                              "type": "string"
-                            },
                             "itunes": {
                               "type": "string"
                             },
@@ -50457,6 +50455,9 @@
                               "type": "string"
                             },
                             "video": {
+                              "type": "string"
+                            },
+                            "link": {
                               "type": "string"
                             },
                             "createdAt": {

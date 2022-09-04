@@ -45,10 +45,6 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "releases"
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "name"
-    },
     "itunes": {
       "type": "string"
     },
@@ -75,6 +71,12 @@
     },
     "video": {
       "type": "string"
+    },
+    "link": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "minLength": 3
     }
   }
 }

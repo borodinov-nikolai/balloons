@@ -35,6 +35,7 @@ export type ReleaseType = {
   vkPixel?: string
   facebookPixel?: string
   link: string
+  attributes: object
   img: ImageType
 }
 

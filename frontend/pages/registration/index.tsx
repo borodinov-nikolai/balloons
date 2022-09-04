@@ -10,8 +10,7 @@ import { useRouter } from "next/router"
 import { useForm } from "react-hook-form"
 import { signUpFormType } from "types/auth"
 
-function Registration(props: any) {
-  const { isCaptchaVerified, setCaptchaVerified } = props
+function Registration() {
   const { loading, isAuthenticated, signUp, error: authError } = useAuth()
   const router = useRouter()
   const {
@@ -32,7 +31,7 @@ function Registration(props: any) {
   })
 
   const submitHandler = (data: signUpFormType) => {
-    if (isCaptchaVerified) signUp(data)
+    signUp(data)
   }
 
   return (

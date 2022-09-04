@@ -27,7 +27,7 @@ function ReleasePage() {
         } = await API.get("/releases", {
           params: {
             populate: { img: "*" },
-            "filters[slug][$eq]": realeseLink,
+            "filters[link][$eq]": realeseLink,
           },
         })
         if (data.length > 0) {
@@ -46,7 +46,7 @@ function ReleasePage() {
     fetchData()
     setLoading(false)
   }, [realeseLink])
-  console.log("release", release)
+
   return loading ? (
     <Loader />
   ) : (

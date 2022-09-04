@@ -21,7 +21,8 @@ import { useAuth } from "context/AuthProvider"
 import { CreateReleaseFormType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
-import { useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { API } from "lib/api"
 
 function NewRelease() {
   const { uniqueLink, isUniqueLink } = useReleaseLink()
@@ -42,37 +43,27 @@ function NewRelease() {
 
   const { user } = useAuth()
   const router = useRouter()
+  const [error, setError] = useState()
 
   const submitHandler = async (form: CreateReleaseFormType) => {
-    // console.log("submitHandler", form)
-    // try {
-    //   const { data } = await API.put(
-    //     "users/me",
-    //     {
-    //       ...form,
-    //       avatar: form.img?.item(0),
-    //     },
-    //     {
-    //       headers: { "Content-type": "multipart/form-data" },
-    //     }
-    //   )
-    //
-    //   if (data) {
-    //     setUser(data)
-    //     await router.push(`/artist/${data.slug}`)
-    //   }
-    //
-    //   if (!data) setError("User not found")
-    // } catch (e: any) {
-    //   setError(e.message)
-    //   setUser(null)
-    // }
-    // await router.push(`/artist/${user?.slug}`)
+    try {
+      const {
+        data: { data },
+      } = await API.post(
+        "releases",
+        {
+          data: JSON.stringify({ ...form, img: undefined }),
+          "files.img": form.img?.item(0),
+        },
+        {
+          headers: { "Content-type": "multipart/form-data" },
+        }
+      )
+      await router.push(`/${data?.attributes?.link}`)
+    } catch (e: any) {
+      setError(e.message)
+    }
   }
-
-  // const onChangeLinkHandler = (ev: SyntheticEvent) => {
-  //   console.log("value", ev.target.value)
-  // }
 
   useEffect(() => {
     setValue("link", uniqueLink)

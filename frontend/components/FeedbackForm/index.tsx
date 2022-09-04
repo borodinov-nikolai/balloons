@@ -33,29 +33,29 @@ function FeedbackForm() {
     watch,
     formState: { errors },
   } = useForm<FeedbackFormType>()
+
   const phoneInputRef = useRef()
   const [error, setError] = useState("")
   const [status, setStatus] = useState("")
   const files = watch("file")
 
   const submitHandler = async (form: FeedbackFormType) => {
-    if (isCaptchaVerified)
-      try {
-        const { status } = await API.post(
-          "feedbacks",
-          {
-            data: JSON.stringify({ ...form, file: undefined }),
-            "files.file": form.file?.item(0),
-          },
-          {
-            headers: { "Content-type": "multipart/form-data" },
-          }
-        )
+    try {
+      const { status } = await API.post(
+        "feedbacks",
+        {
+          data: JSON.stringify({ ...form, file: undefined }),
+          "files.file": form.file?.item(0),
+        },
+        {
+          headers: { "Content-type": "multipart/form-data" },
+        }
+      )
 
-        if (status === 200) setStatus("success")
-      } catch (e: any) {
-        setError(e.message)
-      }
+      if (status === 200) setStatus("success")
+    } catch (e: any) {
+      setError(e.message)
+    }
   }
   const clearFileHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
@@ -128,7 +128,7 @@ function FeedbackForm() {
                     )}
                   />
                   {errors.messageSubject && (
-                    <FormHelperText>Обязательное поле</FormHelperText>
+                    <FormHelperText error>Обязательное поле</FormHelperText>
                   )}
                 </FormControl>
               </div>

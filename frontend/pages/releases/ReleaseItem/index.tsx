@@ -5,10 +5,11 @@ type ReleaseItemType = {
   release: ReleaseType
 }
 
-function ReleaseItem(props: ReleaseItemType) {
+function ReleaseItem({ release }: ReleaseItemType) {
   const {
-    release: { img, name, link, artistName },
-  } = props
+    // @ts-ignore
+    attributes: { img, name, link, artistName },
+  } = release
 
   return (
     <ListItem img={img} title={name} subTitle={artistName} link={`/${link}`} />

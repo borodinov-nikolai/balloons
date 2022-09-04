@@ -1,32 +1,60 @@
 import withStandardLayout from "hoc/withStandardLayout"
 import SearchRow from "components/SearchRow"
 import { Grid } from "@mui/material"
-import { ReleaseType } from "types/general"
 import { useRouter } from "next/router"
 import { NextPage } from "next"
+import { useEffect, useState } from "react"
+import { API } from "lib/api"
+import ReleaseItem from "pages/releases/ReleaseItem"
+import { ReleaseType } from "types/general"
+import List from "components/List"
 
-type ReleasesProps = {
-  releases: ReleaseType[]
-}
-
-const Releases: NextPage<ReleasesProps> = ({ releases }) => {
-  const limit = 8
+const Releases: NextPage = () => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [releases, setReleases] = useState([])
+  const [meta, setMeta] = useState([])
   const page = Number(router.query?.page) || 1
   const searchQuery = router.query?.search || ""
-  const offset = page * limit - limit
-  const loading = false
-  // console.log("releases", releases)
-  // const pageCount = Math.floor(data?.releasesCount + limit - 1) || 0
-  // const releaseItems = loading ? (
-  //   <div>Идет загрузка</div>
-  // ) : (
-  //   releases.map((it: ReleaseType) => <ReleaseItem key={it.id} release={it} />)
-  // )
+  const pageSize = 8
+  const offset = page * pageSize - pageSize
 
-  // useEffect(() => {
-  //   if (!searchQuery) refetch()
-  // }, [refetch, searchQuery])
+  //data?.releasesCount
+  const pageCount = Math.floor(2 + pageSize - 1) || 0
+
+  const releaseItems = loading
+    ? [<div key={1}>Идет загрузка</div>]
+    : releases?.map((it: ReleaseType) => (
+        <ReleaseItem key={it.id} release={it} />
+      ))
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const {
+          data: { data, meta },
+        } = await API.get("/releases", {
+          params: {
+            populate: { avatar: "*" },
+            "filters[name][$null]": "",
+            "pagination[page]": page,
+            "pagination[pageSize]": pageSize,
+            "sort[createdAt]": "desc",
+          },
+        })
+        setReleases(data)
+        setMeta(meta)
+        setError("")
+      } catch (e) {
+        setError("Что-то пошло не так, перезагрузите страницу")
+      }
+      setLoading(false)
+    }
+
+    fetchData()
+  }, [offset, page])
 
   return (
     <>
@@ -36,21 +64,22 @@ const Releases: NextPage<ReleasesProps> = ({ releases }) => {
       />
 
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        {/*<List count={Math.trunc(pageCount / limit)} pageSize={limit}>*/}
-        {/*  {releases.length ? (*/}
-        {/*    releaseItems*/}
-        {/*  ) : (*/}
-        {/*    <Grid*/}
-        {/*      container*/}
-        {/*      style={{ fontSize: "2rem", margin: "2rem 0" }}*/}
-        {/*      justifyContent="center"*/}
-        {/*    >*/}
-        {/*      {searchQuery*/}
-        {/*        ? `Релиз с название ${searchQuery} не найдено`*/}
-        {/*        : "У артиста пока нет рилизов"}*/}
-        {/*    </Grid>*/}
-        {/*  )}*/}
-        {/*</List>*/}
+        <List count={Math.trunc(pageCount / pageSize)} pageSize={pageSize}>
+          {releases.length
+            ? releaseItems
+            : [
+                <Grid
+                  key={1}
+                  container
+                  style={{ fontSize: "2rem", margin: "2rem 0" }}
+                  justifyContent="center"
+                >
+                  {searchQuery
+                    ? `Релиз с название ${searchQuery} не найдено`
+                    : "У артиста пока нет рилизов"}
+                </Grid>,
+              ]}
+        </List>
       </Grid>
 
       <div className="vector__bg vector__bg_10">
@@ -119,18 +148,5 @@ const Releases: NextPage<ReleasesProps> = ({ releases }) => {
     </>
   )
 }
-//
-// Releases.getStaticProps = async () => {
-//   // Calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(ctx)
-//   // Fetch global site settings from Strapi
-//   const releasesRes = await fetchAPI("/releases", {
-//     populate: { name: "*" },
-//   })
-//   console.log("releasesRes", releasesRes)
-//   // Pass the data to our page via props
-//   return { ...appProps, pageProps: { releases: releasesRes?.data?.attributes } }
-// }
 
-// @ts-ignore
 export default withStandardLayout(Releases)

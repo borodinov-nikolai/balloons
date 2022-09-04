@@ -13,7 +13,6 @@ function useReleaseLink() {
       const { data } = await API.get("/release-link")
       setError("")
       setUniqueLink(data)
-      console.log("fetchUniqueLink data", data)
     } catch (e) {
       setError("Что-то пошло не так, перезагрузите страницу")
     }

@@ -62,7 +62,6 @@ function UpdateRelease() {
     //     },
     //   },
     // })
-    // console.log("form data", data)
   }
 
   return (

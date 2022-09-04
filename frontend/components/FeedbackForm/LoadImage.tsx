@@ -80,7 +80,7 @@ function LoadImage({
               />
 
               <Typography variant="h5">Загрузите обложку</Typography>
-              <FormHelperText>
+              <FormHelperText style={{ position: "relative" }}>
                 Квадратное изображение 3000x3000 px
               </FormHelperText>
             </label>
@@ -95,12 +95,16 @@ function LoadImage({
                 required: required && "Обязательное поле",
               })}
             />
+
+            <FormHelperText
+              error
+              style={{ position: "relative", textAlign: "center" }}
+            >
+              {errors && errors[formFieldName]?.message}
+            </FormHelperText>
           </FormControl>
         )}
       </Grid>
-      <Typography align="center" color="#d32f2f">
-        {errors && errors[formFieldName]?.message}
-      </Typography>
     </Grid>
   )
 }
