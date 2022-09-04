@@ -27,7 +27,7 @@
       "type": "email",
       "required": true
     },
-    "file": {
+    "attachment": {
       "type": "media",
       "multiple": false,
       "required": false,

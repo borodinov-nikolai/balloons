@@ -97,7 +97,7 @@ function Registration(props: any) {
         </p>
       </div>
 
-      <Captcha />
+      <Captcha register={register} errors={errors} />
 
       <p className={styles.formPage__text}>
         У меня есть аккаунт

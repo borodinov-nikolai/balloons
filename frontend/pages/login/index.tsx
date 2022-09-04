@@ -9,25 +9,27 @@ import { useForm } from "react-hook-form"
 import { loginFormType } from "types/auth"
 import { FunctionComponent, useEffect } from "react"
 import Captcha from "components/Captcha"
+import useGlobal from "context"
 
-const Login: FunctionComponent = (props: any) => {
-  const { isCaptchaVerified, setCaptchaVerified } = props
+const Login: FunctionComponent = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<loginFormType>()
-  const { isAuthenticated, loading, login, error: authError } = useAuth()
+  const { user, loading, login, error: authError } = useAuth()
   const router = useRouter()
+  const { isCaptchaVerified } = useGlobal()
 
   const submitHandler = (data: loginFormType) => {
-    // if (isCaptchaVerified) login(data)
-    login(data)
+    console.log("isCaptchaVerified", isCaptchaVerified)
+    if (!isCaptchaVerified) login(data)
   }
 
   useEffect(() => {
-    if (isAuthenticated && !loading) router.push("/artist/new")
-  }, [isAuthenticated, loading, router])
+    if (user?.name && !loading) router.push(`/artist/${user?.slug}`)
+    if (user?.email && !loading) router.push("/artist/new")
+  }, [loading, router, user?.email, user?.name, user?.slug])
 
   return (
     <form className={styles.formPage} onSubmit={handleSubmit(submitHandler)}>
@@ -68,10 +70,10 @@ const Login: FunctionComponent = (props: any) => {
         <a className={styles.forgotPassword}>Забыли пароль?</a>
       </Link>
 
-      <Captcha />
+      <Captcha register={register} errors={errors} />
 
       <p className={styles.formPage__text}>
-        Нет аккаунта?
+        Нет аккаунта?{" "}
         <Link href={"/registration"}>
           <a className={styles.formPage__enterLink}>Зарегистрироваться</a>
         </Link>

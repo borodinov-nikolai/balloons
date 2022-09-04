@@ -65,6 +65,7 @@ export type FeedbackFormType = {
   phone?: string
   email: string
   file?: FileList
+  captcha?: boolean
 }
 
 export type NewsArticleType = {

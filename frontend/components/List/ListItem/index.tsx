@@ -23,8 +23,8 @@ function ListItem(props: ListItemType) {
           <Image
             src={img?.url ? getMediaUrl(img) : placeholderUrl}
             alt="list img"
-            width={img?.width}
-            height={img?.height}
+            width={img?.width || 300}
+            height={img?.height || 300}
           />
         </Grid>
 

@@ -14,11 +14,12 @@ function Artists() {
   const page = Number(router.query.page) || 1
   const searchQuery = router.query.search || ""
   const [artists, setArtists] = useState<UserType[]>([])
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   const offset = page * limit - limit
 
-  const loading = false
-
-  const pageCount = Math.floor(10 + limit - 1) || 0
+  // usersCount
+  const pageCount = Math.floor(2 + limit - 1) || 0
 
   const artistItems = loading
     ? [<div key={1}>Идет загрузка</div>]
@@ -26,19 +27,27 @@ function Artists() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       try {
         const { data } = await API.get("/users", {
-          params: { populate: { avatar: "*" } },
+          params: {
+            populate: { avatar: "*" },
+            "filters[name][$null]": "",
+            start: offset,
+            limit,
+            "sort[createdAt]": "desc",
+          },
         })
         setArtists(data)
-        // setError("")
+        setError("")
       } catch (e) {
-        // setError("Что-то пошло не так, перезагрузите страницу")
+        setError("Что-то пошло не так, перезагрузите страницу")
       }
+      setLoading(false)
     }
 
     fetchData()
-  }, [])
+  }, [offset, page])
 
   return (
     <>

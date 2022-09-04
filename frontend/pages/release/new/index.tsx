@@ -21,8 +21,7 @@ import { useAuth } from "context/AuthProvider"
 import { CreateReleaseFormType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
-import { SyntheticEvent, useEffect, useMemo } from "react"
-import { API } from "lib/api"
+import { useEffect, useMemo } from "react"
 
 function NewRelease() {
   const { uniqueLink, isUniqueLink } = useReleaseLink()
@@ -45,35 +44,35 @@ function NewRelease() {
   const router = useRouter()
 
   const submitHandler = async (form: CreateReleaseFormType) => {
-    console.log("submitHandler", form)
-    try {
-      const { data } = await API.put(
-        "users/me",
-        {
-          ...form,
-          avatar: form.avatar?.item(0),
-        },
-        {
-          headers: { "Content-type": "multipart/form-data" },
-        }
-      )
-
-      if (data) {
-        setUser(data)
-        await router.push(`/artist/${data.slug}`)
-      }
-
-      if (!data) setError("User not found")
-    } catch (e: any) {
-      setError(e.message)
-      setUser(null)
-    }
+    // console.log("submitHandler", form)
+    // try {
+    //   const { data } = await API.put(
+    //     "users/me",
+    //     {
+    //       ...form,
+    //       avatar: form.img?.item(0),
+    //     },
+    //     {
+    //       headers: { "Content-type": "multipart/form-data" },
+    //     }
+    //   )
+    //
+    //   if (data) {
+    //     setUser(data)
+    //     await router.push(`/artist/${data.slug}`)
+    //   }
+    //
+    //   if (!data) setError("User not found")
+    // } catch (e: any) {
+    //   setError(e.message)
+    //   setUser(null)
+    // }
     // await router.push(`/artist/${user?.slug}`)
   }
 
-  const onChangeLinkHandler = (ev: SyntheticEvent) => {
-    console.log("value", ev.target.value)
-  }
+  // const onChangeLinkHandler = (ev: SyntheticEvent) => {
+  //   console.log("value", ev.target.value)
+  // }
 
   useEffect(() => {
     setValue("link", uniqueLink)
@@ -246,7 +245,7 @@ function NewRelease() {
                             value: /[a-zA-Z0-9_]/,
                             message: "Ссылка содержит недопустимые символы",
                           },
-                          onChange: onChangeLinkHandler,
+                          // onChange: onChangeLinkHandler,
                           validate: () =>
                             !isUniqueLink
                               ? "Релиз с такой ссылкой уже существует"

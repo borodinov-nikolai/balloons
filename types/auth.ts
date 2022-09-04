@@ -41,10 +41,12 @@ export type AuthContextType = {
 export type loginFormType = {
   identifier: string
   password: string
+  captcha: string
 }
 
 export type signUpFormType = {
   email: string
   password: string
   phone: string
+  captcha: string
 }

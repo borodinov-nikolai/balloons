@@ -63,6 +63,8 @@ let theme = createTheme({
         root: {
           color: "#d32f2f",
           marginLeft: 0,
+          position: "absolute",
+          bottom: "-1.5rem",
         },
       },
     },

@@ -5,7 +5,12 @@ import useGlobal from "context"
 import { FormHelperText, Grid, TextField } from "@mui/material"
 import styles from "./Captcha.module.scss"
 
-function Captcha() {
+type CaptchaProps = {
+  register: Function
+  errors?: Record<string, any>
+}
+
+function Captcha({ register, errors }: CaptchaProps) {
   const { setCaptchaVerified } = useGlobal()
   const [captchaInput, setCaptchaInput] = useState("")
   const debouncedCaptchaInput = useDebounce(captchaInput, 1500)
@@ -93,6 +98,9 @@ function Captcha() {
               ? `${styles.captcha__input} ${styles.captcha__input_done}`
               : styles.captcha__input
           }
+          error={!!errors?.captcha}
+          helperText={errors?.captcha && "Обязательное поле"}
+          {...register("captcha", { required: true })}
         />
 
         <button
