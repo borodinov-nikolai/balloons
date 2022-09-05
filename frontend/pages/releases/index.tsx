@@ -37,7 +37,7 @@ const Releases: NextPage = () => {
           data: { data, meta },
         } = await API.get("/releases", {
           params: {
-            populate: { avatar: "*" },
+            populate: { img: "*" },
             "filters[name][$null]": "",
             "pagination[page]": page,
             "pagination[pageSize]": pageSize,

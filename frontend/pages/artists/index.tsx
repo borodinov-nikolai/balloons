@@ -29,7 +29,9 @@ function Artists() {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const { data } = await API.get("/users", {
+        const {
+          data: { data },
+        } = await API.get("/users", {
           params: {
             populate: { avatar: "*" },
             "filters[name][$null]": "",

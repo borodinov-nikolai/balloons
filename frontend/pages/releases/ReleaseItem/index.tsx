@@ -6,10 +6,7 @@ type ReleaseItemType = {
 }
 
 function ReleaseItem({ release }: ReleaseItemType) {
-  const {
-    // @ts-ignore
-    attributes: { img, name, link, artistName },
-  } = release
+  const { img, name, link, artistName } = release
 
   return (
     <ListItem img={img} title={name} subTitle={artistName} link={`/${link}`} />

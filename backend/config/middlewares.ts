@@ -20,4 +20,5 @@ export default [
   "strapi::session",
   "strapi::favicon",
   "strapi::public",
+  "global::flatten-response",
 ]

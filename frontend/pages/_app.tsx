@@ -69,7 +69,7 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
   // Calls page's `getInitialProps` and fills `appProps.pageProps`
   const appProps = await App.getInitialProps(ctx)
   // Fetch global site settings from Strapi
-  const { data: globals } = await API.get("/global", {
+  const { data: global } = await API.get("/global", {
     params: {
       populate: {
         favicon: "*",
@@ -80,7 +80,7 @@ MyApp.getInitialProps = async (ctx: AppContext) => {
   // Pass the data to our page via props
   return {
     ...appProps,
-    pageProps: { global: globals?.data?.attributes },
+    pageProps: { global },
   }
 }
 

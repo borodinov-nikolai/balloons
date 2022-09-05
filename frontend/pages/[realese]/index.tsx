@@ -31,11 +31,7 @@ function ReleasePage() {
           },
         })
         if (data.length > 0) {
-          setRelease({
-            id: data[0].id,
-            ...data[0].attributes,
-            img: { ...data[0].attributes.img.data.attributes },
-          })
+          setRelease(data)
         }
         // setError("")
       } catch (e) {
