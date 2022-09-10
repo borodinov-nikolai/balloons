@@ -9,7 +9,9 @@ function useGetCaptchaImage() {
   const fetchCaptchaImg = useCallback(async (width: number, height: number) => {
     setLoading(true)
     try {
-      const { data } = await API.get("/captcha", { params: { width, height } })
+      const {
+        data: { data },
+      } = await API.get("/captcha", { params: { width, height } })
       setCaptchaImg(data)
       setError("")
     } catch (e) {
