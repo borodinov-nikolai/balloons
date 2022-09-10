@@ -43,7 +43,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (token) {
         try {
           API.defaults.headers.common.Authorization = `Bearer ${token}`
-          const { data } = await API.get("users/me", {
+          const {
+            data: { data },
+          } = await API.get("users/me", {
             params: { populate: "*" },
           })
           setUser(data)
@@ -62,9 +64,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async (form: loginFormType) => {
     setLoading(true)
+    Cookies.remove("token")
+    API.defaults.headers.common.Authorization = ""
 
     const {
-      data: { jwt, user },
+      data: {
+        data: { jwt, user },
+      },
     } = await API.post("auth/local", form)
 
     if (jwt) {
@@ -92,7 +98,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     try {
       const {
-        data: { jwt, user },
+        data: {
+          data: { jwt, user },
+        },
       } = await API.post("auth/local/register", {
         ...form,
         username: form.email,
@@ -112,7 +120,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const updateProfile = async (form: UpdateProfileFormType) => {
     try {
-      const { data } = await API.put(
+      const {
+        data: { data },
+      } = await API.put(
         "users/me",
         {
           ...form,

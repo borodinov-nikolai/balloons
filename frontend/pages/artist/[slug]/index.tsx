@@ -51,6 +51,8 @@ function ArtistPage() {
   }, [currentUser, error, slug, user])
 
   useEffect(() => {
+    console.log("currentUser", currentUser)
+    console.log("user", user)
     if (currentUser?.id && user?.id && user?.id === currentUser?.id)
       setIsCurrentUser(true)
   }, [currentUser?.id, user?.id])
