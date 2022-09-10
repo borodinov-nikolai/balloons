@@ -12,6 +12,7 @@ type ArtistHeaderProps = {
 }
 
 function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
+  console.log("user", user)
   return (
     <Grid className="content content_full-screen">
       <svg

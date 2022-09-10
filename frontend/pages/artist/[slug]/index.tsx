@@ -26,17 +26,16 @@ function ArtistPage() {
 
       if (!user && slug && !error) {
         try {
-          const { data } = await API.get("users", {
+          const {
+            data: { data },
+          } = await API.get("users", {
             params: {
               "filters[slug][$eq]": slug,
               populate: "*",
             },
           })
 
-          if (data.length) {
-            const user = data[0]
-            await setUser(user)
-          }
+          if (data.length) await setUser(data[0])
 
           if (!data.length) setError("User not found")
         } catch (e: any) {
@@ -52,8 +51,9 @@ function ArtistPage() {
   }, [currentUser, error, slug, user])
 
   useEffect(() => {
-    if (user?.id === currentUser?.id) setIsCurrentUser(true)
-  }, [currentUser?.id, user])
+    if (currentUser?.id && user?.id && user?.id === currentUser?.id)
+      setIsCurrentUser(true)
+  }, [currentUser?.id, user?.id])
 
   return loading ? (
     <Loader />
@@ -64,6 +64,7 @@ function ArtistPage() {
       ) : (
         <>
           <ArtistHeader user={user} isCurrentUser={isCurrentUser} />
+
           <Grid className="content" style={{ marginTop: "12rem" }}>
             <Grid container justifyContent="space-between" alignItems="center">
               <Typography variant="h2" style={{ color: "black" }}>
