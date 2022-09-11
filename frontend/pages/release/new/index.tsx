@@ -1,8 +1,10 @@
-import styles from "pages/artist/Artist.module.scss"
+import styles from "../Release.module.scss"
 import withStandardLayout from "hoc/withStandardLayout"
 import withPrivateRoute from "hoc/withPrivateRoute"
 import {
+  Autocomplete,
   Button,
+  Fade,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -13,16 +15,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material"
-import { Controller, useForm } from "react-hook-form"
+import { Controller, useFieldArray, useForm } from "react-hook-form"
 import LoadImage from "components/FeedbackForm/LoadImage"
 import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
-import { CreateReleaseFormType } from "types/general"
+import { CreateReleaseFormType, PlatformLinkType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
 import { useEffect, useMemo, useState } from "react"
 import { API } from "lib/api"
+import ReleaseLinkIcon from "components/ReleaseLinkIcon"
+import AddIcon from "@mui/icons-material/Add"
 
 function NewRelease() {
   const { uniqueLink, isUniqueLink } = useReleaseLink()
@@ -38,12 +42,62 @@ function NewRelease() {
     defaultValues: {
       date: new Date(),
       link: useMemo(() => uniqueLink, [uniqueLink]),
+      platformLinks: [
+        { type: "appleMusic", title: "Apple Music" },
+        { type: "iTunes", title: "iTunes" },
+        { type: "vkMusic", title: "VK music" },
+        { type: "yandexMusic", title: "Яндекс.Музыка" },
+        { type: "youTubeMusic", title: "YouTube Music" },
+      ],
     },
   })
 
   const { user } = useAuth()
   const router = useRouter()
   const [error, setError] = useState()
+
+  const { fields: platformLinks, append: appendPlatformLink } = useFieldArray({
+    control,
+    name: "platformLinks",
+  })
+
+  const watchFieldArray = watch("platformLinks")
+  const controlledFields = platformLinks.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    }
+  })
+
+  console.log("controlledFields", controlledFields)
+
+  const linksOptions = useMemo(() => {
+    const defaultLinkOptions: PlatformLinkType[] = [
+      { type: "appleMusic", title: "Apple Music" },
+      { type: "vkMusic", title: "VK Музыка" },
+      { type: "iTunes", title: "iTunes" },
+      { type: "yandexMusic", title: "Яндекс Музыка" },
+      { type: "zvuk", title: "Zvuk" },
+      { type: "spotify", title: "Spotify" },
+      { type: "youTubeMusic", title: "YouTube.Music" },
+      { type: "ok", title: "ok.ru" },
+      { type: "tikTok", title: "TikTok" },
+      { type: "amazonMusic", title: "Amazon Music" },
+      { type: "mtsMusic", title: "MTS Music" },
+      { type: "deezer", title: "Deezer" },
+      { type: "soundCloud", title: "SoundCloud" },
+      { type: "beatport", title: "Beatport" },
+      { type: "beelineMusic", title: "Beeline Music" },
+      { type: "tidal", title: "Tidal" },
+      { type: "triller", title: "Triller" },
+      { type: "huaweiMusic", title: "Huawei Music" },
+      { type: "shazam", title: "Shazam" },
+    ]
+    const selectedPlatformType = platformLinks.map((it) => it.type)
+    return defaultLinkOptions.filter(
+      (it) => !selectedPlatformType.includes(it.type)
+    )
+  }, [platformLinks])
 
   const submitHandler = async (form: CreateReleaseFormType) => {
     try {
@@ -52,17 +106,31 @@ function NewRelease() {
       } = await API.post(
         "releases",
         {
-          data: JSON.stringify({ ...form, img: undefined }),
+          data: JSON.stringify({
+            ...form,
+            platformLinks: form.platformLinks.filter((it) => !!it.link),
+            img: undefined,
+          }),
           "files.img": form.img?.item(0),
         },
         {
           headers: { "Content-type": "multipart/form-data" },
         }
       )
-      await router.push(`/${data?.attributes?.link}`)
+      await router.push(`/${data?.link}`)
     } catch (e: any) {
       setError(e.message)
     }
+  }
+
+  const addPlatformLinkHandler = (value: PlatformLinkType) => {
+    const { type, title } = value
+
+    appendPlatformLink({
+      type,
+      title,
+      link: undefined,
+    })
   }
 
   useEffect(() => {
@@ -90,13 +158,11 @@ function NewRelease() {
               watch={watch}
               required
             />
+
             <Margin />
 
             <div className={styles.right_column}>
-              <form
-                className={styles.create_form}
-                onSubmit={handleSubmit(submitHandler)}
-              >
+              <form onSubmit={handleSubmit(submitHandler)}>
                 <Grid container direction="column">
                   <FormControl>
                     <FormLabel id="type">
@@ -179,18 +245,71 @@ function NewRelease() {
                     Этот релиз на цифровых витринах
                   </Typography>
 
-                  <TextField label="Itunes" {...register("itunes")} />
-                  <TextField label="Apple music" {...register("appleMusic")} />
-                  <TextField label="Spotify" {...register("spotify")} />
-                  <TextField
-                    label="Яндекс Музыка"
-                    {...register("yandexMusic")}
-                  />
-                  <TextField label="Сбер.Звук" {...register("sberZvuk")} />
-                  <TextField
-                    label="YouTube Music"
-                    {...register("youtubeMusic")}
-                  />
+                  {controlledFields.map((link, index) => {
+                    return (
+                      <Fade key={link.id} in={!!link.id}>
+                        <Grid
+                          container
+                          wrap="nowrap"
+                          style={{
+                            margin: ".5rem 0",
+                          }}
+                        >
+                          <ReleaseLinkIcon
+                            type={link.type}
+                            style={{ marginRight: ".5rem" }}
+                          />
+                          <TextField
+                            {...register(`platformLinks.${index}.link`)}
+                            placeholder={link.title}
+                            fullWidth
+                          />
+                        </Grid>
+                      </Fade>
+                    )
+                  })}
+
+                  {!!linksOptions.length && (
+                    <Grid
+                      container
+                      wrap="nowrap"
+                      alignItems="center"
+                      style={{
+                        margin: ".5rem 0",
+                      }}
+                    >
+                      <AddIcon
+                        style={{
+                          padding: ".2rem",
+                          marginRight: ".5rem",
+                          width: "32px",
+                        }}
+                      />
+
+                      <Autocomplete
+                        disablePortal
+                        clearOnEscape
+                        size="small"
+                        disableClearable
+                        noOptionsText="Уточните поиск"
+                        options={linksOptions}
+                        fullWidth
+                        getOptionLabel={(option) => option.title}
+                        // @ts-ignore
+                        value={{ type: "", title: "" }}
+                        onChange={(event, value) =>
+                          addPlatformLinkHandler(value)
+                        }
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            placeholder="Добавить витрину"
+                          />
+                        )}
+                      />
+                    </Grid>
+                  )}
+
                   <Margin />
                 </Grid>
 
@@ -271,15 +390,12 @@ function NewRelease() {
                   <Button type="submit" className={styles.btn}>
                     Создать
                   </Button>
-                  <Button className={styles.btn} variant="outlined">
-                    Отменить
-                  </Button>
                   <Button
                     className={styles.btn}
                     variant="outlined"
-                    color="warning"
+                    href={`/artist/${user?.slug}`}
                   >
-                    Удалить
+                    Отменить
                   </Button>
                 </Grid>
                 <Margin />

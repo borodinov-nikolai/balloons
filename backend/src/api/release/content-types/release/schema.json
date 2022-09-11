@@ -45,38 +45,23 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "releases"
     },
-    "itunes": {
-      "type": "string"
-    },
-    "appleMusic": {
-      "type": "string"
-    },
-    "spotify": {
-      "type": "string"
-    },
-    "yandexMusic": {
-      "type": "string"
-    },
-    "sberZvuk": {
-      "type": "string"
-    },
-    "youtubeMusic": {
-      "type": "string"
-    },
-    "facebookPixel": {
-      "type": "string"
-    },
-    "vkPixel": {
-      "type": "string"
-    },
-    "video": {
-      "type": "string"
-    },
     "link": {
       "type": "string",
       "required": true,
       "unique": true,
       "minLength": 3
+    },
+    "platformLinks": {
+      "type": "json"
+    },
+    "vkPixel": {
+      "type": "string"
+    },
+    "facebookPixel": {
+      "type": "string"
+    },
+    "video": {
+      "type": "string"
     }
   }
 }

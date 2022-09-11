@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material"
+import { Button, Grid, Typography } from "@mui/material"
 import { useRouter } from "next/router"
 import Loader from "components/Loader"
 import styles from "./Realese.module.scss"
@@ -10,6 +10,7 @@ import { ReleaseType } from "types/general"
 import { useEffect, useState } from "react"
 import { API } from "lib/api"
 import { getMediaUrl } from "lib/media"
+import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 
 function ReleasePage() {
   const router = useRouter()
@@ -31,7 +32,7 @@ function ReleasePage() {
           },
         })
         if (data.length > 0) {
-          setRelease(data)
+          setRelease(data[0])
         }
         // setError("")
       } catch (e) {
@@ -75,129 +76,37 @@ function ReleasePage() {
                 </Typography>
               </Grid>
 
-              {/*<Grid className={styles.release_column_video}>*/}
-              {/*  <Grid className={styles.catalog_videos_img}>*/}
-              {/*    <img src="images/release__video-img.png" alt="" />*/}
-              {/*    <Grid className="catalog-videos__youtube">*/}
-              {/*      <img src="images/youtube.svg" alt="" />*/}
-              {/*    </Grid>*/}
-              {/*  </Grid>*/}
-              {/*</Grid>*/}
+              {release?.video && (
+                <Grid className={styles.release_column_video}>
+                  <Grid className={styles.catalog_videos_img}>
+                    <img src="images/release__video-img.png" alt="" />
+                    <Grid className="catalog-videos__youtube">
+                      <img src="images/youtube.svg" alt="" />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
 
               <Grid className={styles.release_column_tracks_list}>
-                <Grid className={styles.release_column_track_row}>
-                  <Grid className={styles.release_column_track_item}>
-                    <Grid className={styles.release_column_track_img}>
-                      <Image
-                        src="/assets/music-services6.png"
-                        alt="iTunes img"
-                        width={50}
-                        height={50}
+                {release?.platformLinks?.map((it) => (
+                  <Grid
+                    key={it.type}
+                    className={styles.release_column_track_row}
+                  >
+                    <Grid className={styles.release_column_track_item}>
+                      <ReleaseLinkIcon
+                        type={it.type}
+                        size="standard"
+                        style={{ marginRight: "1rem" }}
                       />
-                    </Grid>
-                    <div className={styles.release_column_track_name}>
-                      iTunes
-                    </div>
-                  </Grid>
-                  <Grid className={`${styles.release_column_track_btn} tl_btn`}>
-                    КУПИТЬ
-                  </Grid>
-                </Grid>
 
-                <Grid className={styles.release_column_track_row}>
-                  <Grid className={styles.release_column_track_item}>
-                    <Grid className={styles.release_column_track_img}>
-                      <Image
-                        src="/assets/music-services7.svg"
-                        alt="iTunes img"
-                        width={50}
-                        height={50}
-                      />
+                      <div className={styles.release_column_track_name}>
+                        {it.title}
+                      </div>
                     </Grid>
-                    <div className={styles.release_column_track_name}>
-                      Apple Music
-                    </div>
+                    <Button href={it.link}>Слушать</Button>
                   </Grid>
-                  <Grid className={`${styles.release_column_track_btn} tl_btn`}>
-                    СЛУШАТЬ
-                  </Grid>
-                </Grid>
-
-                <Grid className={styles.release_column_track_row}>
-                  <Grid className={styles.release_column_track_item}>
-                    <Grid className={styles.release_column_track_img}>
-                      <Image
-                        src="/assets/music-services5.svg"
-                        alt="iTunes img"
-                        width={50}
-                        height={50}
-                      />
-                    </Grid>
-                    <div className={styles.release_column_track_name}>
-                      Spotify
-                    </div>
-                  </Grid>
-                  <Grid className={`${styles.release_column_track_btn} tl_btn`}>
-                    СЛУШАТЬ
-                  </Grid>
-                </Grid>
-
-                <Grid className={styles.release_column_track_row}>
-                  <Grid className={styles.release_column_track_item}>
-                    <Grid className={styles.release_column_track_img}>
-                      <Image
-                        src="/assets/music-services3.png"
-                        alt="iTunes img"
-                        width={50}
-                        height={50}
-                      />
-                    </Grid>
-                    <div className={styles.release_column_track_name}>
-                      Яндекс Музыка
-                    </div>
-                  </Grid>
-                  <Grid className={`${styles.release_column_track_btn} tl_btn`}>
-                    СЛУШАТЬ
-                  </Grid>
-                </Grid>
-
-                <Grid className={styles.release_column_track_row}>
-                  <Grid className={styles.release_column_track_item}>
-                    <Grid className={styles.release_column_track_img}>
-                      <Image
-                        src="/assets/music-services2.png"
-                        alt="iTunes img"
-                        width={50}
-                        height={50}
-                      />
-                    </Grid>
-                    <div className={styles.release_column_track_name}>
-                      Сбер.Звук
-                    </div>
-                  </Grid>
-                  <Grid className={`${styles.release_column_track_btn} tl_btn`}>
-                    СЛУШАТЬ
-                  </Grid>
-                </Grid>
-
-                <Grid className={styles.release_column_track_row}>
-                  <Grid className={styles.release_column_track_item}>
-                    <Grid className={styles.release_column_track_img}>
-                      <Image
-                        src="/assets/music-services4.svg"
-                        alt="iTunes img"
-                        width={50}
-                        height={50}
-                      />
-                    </Grid>
-                    <div className={styles.release_column_track_name}>
-                      YouTube Music
-                    </div>
-                  </Grid>
-                  <Grid className={`${styles.release_column_track_btn} tl_btn`}>
-                    СЛУШАТЬ
-                  </Grid>
-                </Grid>
+                ))}
               </Grid>
 
               <Grid style={{ padding: "2rem 0 1rem" }}>

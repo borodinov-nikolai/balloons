@@ -1,0 +1,29 @@
+.delete_btn {
+
+}
+
+.create_main_row {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Gilroy", sans-serif;
+  margin-top: 35px;
+  @media (max-width: 1023px) {
+    flex-flow: column;
+  }
+}
+
+.right_column {
+  width: 580px;
+  font-family: Gilroy, sans-serif;
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+}
+
+.btn {
+  margin-right: 1rem;
+  min-width: 10rem;
+}

@@ -1,8 +1,4 @@
-import { Backdrop, CircularProgress } from "@mui/material";
-
-type LoaderProps = {
-  show: boolean;
-};
+import { Backdrop, CircularProgress } from "@mui/material"
 
 const Loader = () => {
   return (
@@ -16,7 +12,7 @@ const Loader = () => {
     >
       <CircularProgress color="inherit" size={100} />
     </Backdrop>
-  );
-};
+  )
+}
 
-export default Loader;
+export default Loader

@@ -25,13 +25,8 @@ export type ReleaseType = {
   name: string
   artistName?: string
   date: number
-  vk?: string
-  odnoklassniki?: string
-  youtube?: string
-  rutube?: string
-  telegram?: string
-  facebook?: string
-  instagram?: string
+  platformLinks: PlatformLinkType[]
+  video?: string
   vkPixel?: string
   facebookPixel?: string
   link: string
@@ -77,6 +72,32 @@ export type NewsArticleType = {
   img: ImageType
 }
 
+export type PlatformLinkType = {
+  type:
+    | "appleMusic"
+    | "vkMusic"
+    | "youTubeMusic"
+    | "yandexMusic"
+    | "amazonMusic"
+    | "mtsMusic"
+    | "beelineMusic"
+    | "huaweiMusic"
+    | "iTunes"
+    | "zvuk"
+    | "spotify"
+    | "ok"
+    | "tikTok"
+    | "deezer"
+    | "soundCloud"
+    | "beatport"
+    | "tidal"
+    | "triller"
+    | "shazam"
+  title: string
+  status?: boolean
+  link?: string
+}
+
 export type CreateReleaseFormType = {
   type: "single" | "album"
   name: string
@@ -84,12 +105,7 @@ export type CreateReleaseFormType = {
   link: string
   img: FileList
   artistName?: string
-  itunes?: string
-  appleMusic?: string
-  spotify?: string
-  yandexMusic?: string
-  sberZvuk?: string
-  youtubeMusic?: string
+  platformLinks: PlatformLinkType[]
   video?: string
   vkPixel?: string
   facebookPixel?: string
