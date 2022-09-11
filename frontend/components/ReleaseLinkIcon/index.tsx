@@ -40,8 +40,8 @@ const ReleaseLinkIcon = ({
 }: ReleaseLinkIconProps) => {
   const sizes: Sizes = {
     small: 32,
-    standard: 64,
-    large: 128,
+    standard: 48,
+    large: 64,
   }
 
   return (

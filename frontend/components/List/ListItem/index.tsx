@@ -8,7 +8,7 @@ import Link from "next/link"
 import { getMediaUrl } from "lib/media"
 
 function ListItem(props: ListItemType) {
-  const { img, title, link, subTitle, placeholder } = props
+  const { img, title, link, subTitle, description, placeholder } = props
   const placeholderUrl = placeholder ? placeholder : "/assets/placeholder.png"
 
   return (
@@ -35,6 +35,8 @@ function ListItem(props: ListItemType) {
         )}
 
         {subTitle && <Typography>{subTitle}</Typography>}
+
+        {description && <Typography>{description}</Typography>}
       </Grid>
     </LinkWrapper>
   )

@@ -5,9 +5,10 @@ import SocialLinks from "components/SocialLinks"
 import Link from "next/link"
 import { UserType } from "types/auth"
 import { getMediaUrl } from "lib/media"
+import getUserSocialLinks from "lib/getUserSocialLinks"
 
 type ArtistHeaderProps = {
-  user: UserType | null
+  user?: UserType
   isCurrentUser: boolean
 }
 
@@ -97,8 +98,7 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
           </Typography>
           <Typography style={{ width: "70%" }}>{user?.description}</Typography>
 
-          {/* @ts-ignore */}
-          <SocialLinks links={{ vk: "" }} />
+          <SocialLinks links={getUserSocialLinks(user)} />
 
           {isCurrentUser && (
             <Link href="/artist/edit">

@@ -29,7 +29,7 @@ export type UserType = {
 
 export type AuthContextType = {
   isAuthenticated: boolean
-  user: UserType | null
+  user?: UserType
   loading: boolean
   error: string
   login: Function

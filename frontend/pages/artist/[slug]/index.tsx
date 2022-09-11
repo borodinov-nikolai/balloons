@@ -10,15 +10,21 @@ import { UserType } from "types/auth"
 import MyReleases from "components/MyReleases"
 import { API } from "lib/api"
 import Loader from "components/Loader"
+import { ReleaseType } from "types/general"
+import ReleaseItem from "pages/releases/ReleaseItem"
 
 function ArtistPage() {
   const { user: currentUser } = useAuth()
-  const [user, setUser] = useState<UserType | null>(null)
+  const [user, setUser] = useState<UserType>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [isCurrentUser, setIsCurrentUser] = useState(false)
   const router = useRouter()
   const { slug } = router.query
+
+  const releaseItems = user?.releases?.map((it: ReleaseType) => (
+    <ReleaseItem key={it.id} release={it} />
+  ))
 
   useEffect(() => {
     async function loadUser() {
@@ -40,7 +46,7 @@ function ArtistPage() {
           if (!data.length) setError("User not found")
         } catch (e: any) {
           setError(e.message)
-          setUser(null)
+          setUser(undefined)
         }
       }
 
@@ -78,7 +84,24 @@ function ArtistPage() {
               )}
             </Grid>
 
-            <MyReleases releases={user?.releases} />
+            {isCurrentUser ? (
+              <MyReleases releases={user?.releases} />
+            ) : (
+              <Grid container>
+                {user?.releases?.length
+                  ? releaseItems
+                  : [
+                      <Grid
+                        key={1}
+                        container
+                        style={{ fontSize: "2rem", margin: "2rem 0" }}
+                        justifyContent="center"
+                      >
+                        У артиста пока нет рилизов
+                      </Grid>,
+                    ]}
+              </Grid>
+            )}
           </Grid>
         </>
       )}

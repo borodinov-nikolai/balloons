@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from "@mui/material"
 import { useRouter } from "next/router"
 import Loader from "components/Loader"
-import styles from "./Realese.module.scss"
+import styles from "./Release.module.scss"
 import SocialLinks from "components/SocialLinks"
 import Logo from "components/Logo"
 import { useAuth } from "context/AuthProvider"
@@ -11,11 +11,12 @@ import { useEffect, useState } from "react"
 import { API } from "lib/api"
 import { getMediaUrl } from "lib/media"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
+import getUserSocialLinks from "lib/getUserSocialLinks"
 
 function ReleasePage() {
   const router = useRouter()
   const { user } = useAuth()
-  const { realese: realeseLink } = router.query
+  const { release: releaseLink } = router.query
   const [release, setRelease] = useState<ReleaseType | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -28,7 +29,7 @@ function ReleasePage() {
         } = await API.get("/releases", {
           params: {
             populate: "*",
-            "filters[link][$eq]": realeseLink,
+            "filters[link][$eq]": releaseLink,
           },
         })
         if (data.length > 0) {
@@ -42,7 +43,7 @@ function ReleasePage() {
 
     fetchData()
     setLoading(false)
-  }, [realeseLink])
+  }, [releaseLink])
 
   return loading ? (
     <Loader />
@@ -110,7 +111,7 @@ function ReleasePage() {
               </Grid>
 
               <Grid style={{ padding: "2rem 0 1rem" }}>
-                <SocialLinks links={{ vk: "" }} />
+                <SocialLinks links={getUserSocialLinks(release?.user)} />
               </Grid>
             </Grid>
 

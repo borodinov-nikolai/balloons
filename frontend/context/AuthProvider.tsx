@@ -18,7 +18,7 @@ import { API } from "lib/api"
 
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
-  user: null,
+  user: undefined,
   loading: false,
   error: "",
   login: () => {},
@@ -31,7 +31,7 @@ type AuthProviderProps = { children: ReactNode }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter()
-  const [user, setUser] = useState<UserType | null>(null)
+  const [user, setUser] = useState<UserType>()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           setUser(data)
         } catch (e: any) {
           setError(e.message)
-          setUser(null)
+          setUser(undefined)
           API.defaults.headers.common.Authorization = ""
         }
       }
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async (redirect: string = "/") => {
     setLoading(true)
     Cookies.remove("token")
-    setUser(null)
+    setUser(undefined)
     API.defaults.headers.common.Authorization = ""
     setLoading(false)
     await router.push(redirect)
@@ -141,7 +141,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (!data) setError("User not found")
     } catch (e: any) {
       setError(e.message)
-      setUser(null)
+      setUser(undefined)
     }
   }
 

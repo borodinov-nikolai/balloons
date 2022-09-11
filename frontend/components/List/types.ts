@@ -5,5 +5,6 @@ export type ListItemType = {
   title?: string
   link?: string
   subTitle?: string
+  description?: string
   placeholder?: string
 }

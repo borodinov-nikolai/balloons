@@ -20,7 +20,6 @@ const Releases: NextPage = () => {
   const pageSize = 8
   const offset = page * pageSize - pageSize
 
-  //data?.releasesCount
   const pageCount = Math.floor(2 + pageSize - 1) || 0
 
   const releaseItems = loading
@@ -37,7 +36,7 @@ const Releases: NextPage = () => {
           data: { data, meta },
         } = await API.get("/releases", {
           params: {
-            populate: { img: "*" },
+            populate: ["img", "user"],
             "filters[name][$null]": "",
             "pagination[page]": page,
             "pagination[pageSize]": pageSize,

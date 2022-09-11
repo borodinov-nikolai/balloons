@@ -81,7 +81,7 @@ function LoadImage({
 
               <Typography variant="h5">Загрузите обложку</Typography>
               <FormHelperText style={{ position: "relative" }}>
-                Квадратное изображение 3000x3000 px
+                Квадратное изображение 1000x1000 px
               </FormHelperText>
             </label>
 
