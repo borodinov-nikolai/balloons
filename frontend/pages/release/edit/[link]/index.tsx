@@ -1,4 +1,4 @@
-import styles from "../Release.module.scss"
+import styles from "pages/artist/Artist.module.scss"
 import withStandardLayout from "hoc/withStandardLayout"
 import withPrivateRoute from "hoc/withPrivateRoute"
 import {
@@ -16,47 +16,38 @@ import {
   Typography,
 } from "@mui/material"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
-import LoadImage from "components/FeedbackForm/LoadImage"
 import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
-import { CreateReleaseFormType, PlatformLinkType } from "types/general"
-import { useRouter } from "next/router"
-import useReleaseLink from "hooks/releaseLink.hooks"
+import {
+  CreateReleaseFormType,
+  PlatformLinkType,
+  ReleaseType,
+} from "types/general"
 import { SyntheticEvent, useEffect, useMemo, useState } from "react"
 import { API } from "lib/api"
+import { useRouter } from "next/router"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 
-function NewRelease() {
-  const { uniqueLink, isUniqueLink } = useReleaseLink()
-  const { user } = useAuth()
-
+function UpdateRelease() {
   const {
     register,
     control,
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
-  } = useForm<CreateReleaseFormType>({
-    defaultValues: {
-      date: new Date(),
-      link: useMemo(() => uniqueLink, [uniqueLink]),
-      user: user?.id,
-      platformLinks: [
-        { type: "appleMusic", title: "Apple Music" },
-        { type: "iTunes", title: "iTunes" },
-        { type: "vkMusic", title: "VK music" },
-        { type: "yandexMusic", title: "Яндекс.Музыка" },
-        { type: "youTubeMusic", title: "YouTube Music" },
-      ],
-    },
-  })
+  } = useForm<CreateReleaseFormType>()
 
+  const { user } = useAuth()
+  const watchLink = watch("link")
   const router = useRouter()
-  const [error, setError] = useState()
+  const [loading, setLoading] = useState(false)
+  const { link: queryLink } = router.query
+  const [release, setRelease] = useState<ReleaseType | null>(null)
 
   const {
     fields: platformLinks,
@@ -103,28 +94,6 @@ function NewRelease() {
     )
   }, [platformLinks])
 
-  const submitHandler = async (form: CreateReleaseFormType) => {
-    try {
-      const formData = {
-        data: JSON.stringify({
-          ...form,
-          platformLinks: form.platformLinks.filter((it) => !!it.link),
-          img: undefined,
-        }),
-        "files.img": form.img?.item(0),
-      }
-
-      const {
-        data: { data },
-      } = await API.post("releases", formData, {
-        headers: { "Content-type": "multipart/form-data" },
-      })
-      await router.push(`/${data?.link}`)
-    } catch (e: any) {
-      setError(e.message)
-    }
-  }
-
   const addPlatformLinkHandler = (
     e: SyntheticEvent,
     value: PlatformLinkType
@@ -133,9 +102,50 @@ function NewRelease() {
     appendPlatformLink({ type, title, link: "" })
   }
 
+  const deletePlatformLinkHandler = (index: number) => {
+    removePlatformLink(index)
+  }
+
   useEffect(() => {
-    setValue("link", uniqueLink)
-  }, [setValue, uniqueLink])
+    setLoading(true)
+    const fetchData = async () => {
+      try {
+        const {
+          data: { data },
+        } = await API.get("/releases", {
+          params: {
+            populate: "*",
+            "filters[link][$eq]": queryLink,
+          },
+        })
+
+        if (data.length > 0) {
+          const release = data[0]
+          setRelease(release)
+          reset({
+            type: release.type,
+            name: release.name,
+            date: new Date(release.date),
+            artistName: release.artistName,
+            platformLinks: release.platformLinks,
+            video: release.video,
+            vkPixel: release.vkPixel,
+            facebookPixel: release.facebookPixel,
+          })
+        }
+        // setError("")
+      } catch (e) {
+        // setError("Что-то пошло не так, перезагрузите страницу")
+      }
+    }
+
+    fetchData()
+    setLoading(false)
+  }, [queryLink, reset])
+
+  const submitHandler = async (form: CreateReleaseFormType) => {
+    console.log("form", form)
+  }
 
   return (
     <>
@@ -146,23 +156,26 @@ function NewRelease() {
 
         <div className="content">
           <Grid container justifyContent="center">
-            <Typography variant="h2">НОВЫЙ РЕЛИЗ</Typography>
+            <Typography variant="h2">РЕДАКТИРОВАНИЕ РЕЛИЗА</Typography>
           </Grid>
 
           <div className={styles.create_main_row}>
-            <LoadImage
-              formFieldName="img"
-              register={register}
-              errors={errors}
-              setValue={setValue}
-              watch={watch}
-              required
-            />
-
+            {/*<LoadImage*/}
+            {/*  formFieldName="img"*/}
+            {/*  register={register}*/}
+            {/*  errors={errors}*/}
+            {/*  setValue={setValue}*/}
+            {/*  watch={watch}*/}
+            {/*  required*/}
+            {/*  defaultValue={release?.img}*/}
+            {/*/>*/}
             <Margin />
 
             <div className={styles.right_column}>
-              <form onSubmit={handleSubmit(submitHandler)}>
+              <form
+                className={styles.create_form}
+                onSubmit={handleSubmit(submitHandler)}
+              >
                 <Grid container direction="column">
                   <FormControl>
                     <FormLabel id="type">
@@ -217,7 +230,7 @@ function NewRelease() {
 
                   <Grid>
                     <Grid>Имя артиста:</Grid>
-                    <Typography variant="h5">{user?.name}</Typography>
+                    <Typography variant="h5">{release?.user?.name}</Typography>
                   </Grid>
 
                   <TextField
@@ -229,11 +242,11 @@ function NewRelease() {
                   <FormControl>
                     <TextField
                       label="Название релиза"
+                      error={!!errors.name}
+                      helperText={errors.name?.message}
                       {...register("name", {
                         required: "Обязательное поле",
                       })}
-                      error={!!errors.name}
-                      helperText={errors.name?.message}
                     />
                     <Margin />
                   </FormControl>
@@ -268,7 +281,9 @@ function NewRelease() {
                                 <InputAdornment
                                   position="end"
                                   sx={{ cursor: "pointer" }}
-                                  onClick={() => removePlatformLink(index)}
+                                  onClick={() =>
+                                    deletePlatformLinkHandler(index)
+                                  }
                                 >
                                   <ClearIcon />
                                 </InputAdornment>
@@ -358,16 +373,16 @@ function NewRelease() {
                         {...register("link", {
                           required: "Обязательное поле",
                           minLength: {
-                            value: 3,
-                            message: "Ссылка не может быть короче 3 символов",
+                            value: 7,
+                            message: "Ссылка не может быть короче 7 символов",
                           },
                           pattern: {
                             value: /[a-zA-Z0-9_]/,
                             message: "Ссылка содержит недопустимые символы",
                           },
-                          // onChange: onChangeLinkHandler,
                           validate: () =>
-                            !isUniqueLink
+                            // @ts-ignore
+                            uniqLinkData?.releases.length > 0
                               ? "Релиз с такой ссылкой уже существует"
                               : true,
                         })}
@@ -398,14 +413,17 @@ function NewRelease() {
 
                 <Grid style={{ padding: "1rem 0" }}>
                   <Button type="submit" className={styles.btn}>
-                    Создать
+                    Сохранить
+                  </Button>
+                  <Button className={styles.btn} variant="outlined">
+                    Отменить
                   </Button>
                   <Button
                     className={styles.btn}
                     variant="outlined"
-                    href={`/artist/${user?.slug}`}
+                    color="warning"
                   >
-                    Отменить
+                    Удалить
                   </Button>
                 </Grid>
                 <Margin />
@@ -418,4 +436,4 @@ function NewRelease() {
   )
 }
 
-export default withPrivateRoute(withStandardLayout(NewRelease))
+export default withPrivateRoute(withStandardLayout(UpdateRelease))

@@ -60,7 +60,10 @@ function MyReleases({ releases }: MyReleasesProps) {
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Button fullWidth>Копировать ссылку</Button>
-                  <Button fullWidth>Редактировать</Button>
+
+                  <Button href={`/release/edit/${realese.link}`} fullWidth>
+                    Редактировать
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>

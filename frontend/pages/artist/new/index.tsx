@@ -36,7 +36,7 @@ function NewProfile() {
     <>
       <section className="block block_first-on-page">
         <Grid className="vector__bg vector__bg_right-top">
-          <img src={"/images/vector-bg_catalog-right.svg"} alt="" />
+          <img src={"/assets/vector-bg_catalog-right.svg"} alt="" />
         </Grid>
 
         <div className="content">

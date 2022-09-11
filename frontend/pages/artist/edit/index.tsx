@@ -52,7 +52,7 @@ function UpdateProfile() {
     <>
       <section className="block block_first-on-page">
         <Grid className="vector__bg vector__bg_right-top">
-          <img src={"/images/vector-bg_catalog-right.svg"} alt="" />
+          <img src={"/assets/vector-bg_catalog-right.svg"} alt="" />
         </Grid>
 
         <div className="content">
@@ -154,7 +154,7 @@ function UpdateProfile() {
 
                   <Grid style={{ padding: "1rem 0" }}>
                     <Button type="submit" className={styles.btn}>
-                      Создать
+                      Сохранить
                     </Button>
                     <Button className={styles.btn} variant="outlined">
                       <Link href={`/artist/${user?.slug}`}>Отменить</Link>

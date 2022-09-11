@@ -27,7 +27,7 @@ function ReleasePage() {
           data: { data },
         } = await API.get("/releases", {
           params: {
-            populate: { img: "*" },
+            populate: "*",
             "filters[link][$eq]": realeseLink,
           },
         })

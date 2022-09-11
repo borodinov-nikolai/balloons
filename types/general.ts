@@ -1,3 +1,5 @@
+import { UserType } from "./auth"
+
 export type ImageType = {
   url: string
   extension: string
@@ -25,6 +27,7 @@ export type ReleaseType = {
   name: string
   artistName?: string
   date: number
+  user: UserType
   platformLinks: PlatformLinkType[]
   video?: string
   vkPixel?: string
