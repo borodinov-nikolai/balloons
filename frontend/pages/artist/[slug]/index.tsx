@@ -31,7 +31,7 @@ function ArtistPage() {
           } = await API.get("users", {
             params: {
               "filters[slug][$eq]": slug,
-              populate: "*",
+              populate: ["releases.img", "avatar"],
             },
           })
 

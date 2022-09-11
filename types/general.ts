@@ -103,6 +103,7 @@ export type CreateReleaseFormType = {
   name: string
   date: Date
   link: string
+  user: string
   img: FileList
   artistName?: string
   platformLinks: PlatformLinkType[]

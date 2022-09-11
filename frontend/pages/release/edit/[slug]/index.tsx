@@ -173,18 +173,7 @@ function UpdateRelease() {
                   <Typography variant="h5">
                     Этот релиз на цифровых витринах
                   </Typography>
-                  itunes?: string appleMusic?: string spotify?: string
-                  yandexMusic?: string sberZvuk?: string youtubeMusic?: string
-                  video?: string vkPixel?: string facebookPixel?: string
-                  <TextField label="itunes" {...register("itunes")} />
-                  <TextField label="appleMusic" {...register("appleMusic")} />
-                  <TextField label="spotify" {...register("spotify")} />
-                  <TextField label="yandexMusic" {...register("yandexMusic")} />
-                  <TextField label="sberZvuk" {...register("sberZvuk")} />
-                  <TextField
-                    label="youtubeMusic"
-                    {...register("youtubeMusic")}
-                  />
+
                   <Margin />
                 </Grid>
 

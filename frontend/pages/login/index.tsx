@@ -22,7 +22,6 @@ const Login: FunctionComponent = () => {
   const { isCaptchaVerified } = useGlobal()
 
   const submitHandler = (data: loginFormType) => {
-    console.log("isCaptchaVerified", isCaptchaVerified)
     if (!isCaptchaVerified) login(data)
   }
 

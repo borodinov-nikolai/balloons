@@ -1,25 +1,25 @@
-import { Button, Collapse, Grid, Typography } from "@mui/material";
-import { ReleaseType } from "types/general";
-import React, { useState } from "react";
-import styles from "./MyReleases.module.scss";
-import Image from "next/image";
+import { Button, Collapse, Grid, Typography } from "@mui/material"
+import { ReleaseType } from "types/general"
+import React, { useState } from "react"
+import styles from "./MyReleases.module.scss"
+import Image from "next/image"
+import { getMediaUrl } from "lib/media"
 
 type MyReleasesProps = {
-  releases?: ReleaseType[];
-};
+  releases?: ReleaseType[]
+}
 
-function MyReleases(props: MyReleasesProps) {
-  const { releases } = props;
-  const [openId, setOpenId] = useState<string | null>(null);
-
+function MyReleases({ releases }: MyReleasesProps) {
+  const [openId, setOpenId] = useState<string | null>(null)
   const toggleHandler = (id: string) => {
     if (openId === id) {
-      setOpenId(null);
-      return;
+      setOpenId(null)
+      return
     }
 
-    setOpenId(id);
-  };
+    setOpenId(id)
+  }
+
   return (
     <Grid container direction="column" className={styles.wrapper}>
       {!!releases?.length ? (
@@ -45,7 +45,7 @@ function MyReleases(props: MyReleasesProps) {
               >
                 <Grid item xs={12} sm={4}>
                   <Image
-                    src={realese.img.url}
+                    src={getMediaUrl(realese.img)}
                     alt="realese img"
                     width={250}
                     height={250}
@@ -70,7 +70,7 @@ function MyReleases(props: MyReleasesProps) {
         <Grid>У артиста пока нет рилизов</Grid>
       )}
     </Grid>
-  );
+  )
 }
 
-export default MyReleases;
+export default MyReleases

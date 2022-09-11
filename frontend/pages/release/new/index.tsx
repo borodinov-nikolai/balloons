@@ -23,13 +23,14 @@ import { useAuth } from "context/AuthProvider"
 import { CreateReleaseFormType, PlatformLinkType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
-import { useEffect, useMemo, useState } from "react"
+import { SyntheticEvent, useEffect, useMemo, useState } from "react"
 import { API } from "lib/api"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 
 function NewRelease() {
   const { uniqueLink, isUniqueLink } = useReleaseLink()
+  const { user } = useAuth()
 
   const {
     register,
@@ -42,6 +43,7 @@ function NewRelease() {
     defaultValues: {
       date: new Date(),
       link: useMemo(() => uniqueLink, [uniqueLink]),
+      user: user?.id,
       platformLinks: [
         { type: "appleMusic", title: "Apple Music" },
         { type: "iTunes", title: "iTunes" },
@@ -52,7 +54,6 @@ function NewRelease() {
     },
   })
 
-  const { user } = useAuth()
   const router = useRouter()
   const [error, setError] = useState()
 
@@ -68,8 +69,6 @@ function NewRelease() {
       ...watchFieldArray[index],
     }
   })
-
-  console.log("controlledFields", controlledFields)
 
   const linksOptions = useMemo(() => {
     const defaultLinkOptions: PlatformLinkType[] = [
@@ -101,29 +100,30 @@ function NewRelease() {
 
   const submitHandler = async (form: CreateReleaseFormType) => {
     try {
+      const formData = {
+        data: JSON.stringify({
+          ...form,
+          platformLinks: form.platformLinks.filter((it) => !!it.link),
+          img: undefined,
+        }),
+        "files.img": form.img?.item(0),
+      }
+
       const {
         data: { data },
-      } = await API.post(
-        "releases",
-        {
-          data: JSON.stringify({
-            ...form,
-            platformLinks: form.platformLinks.filter((it) => !!it.link),
-            img: undefined,
-          }),
-          "files.img": form.img?.item(0),
-        },
-        {
-          headers: { "Content-type": "multipart/form-data" },
-        }
-      )
+      } = await API.post("releases", formData, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
       await router.push(`/${data?.link}`)
     } catch (e: any) {
       setError(e.message)
     }
   }
 
-  const addPlatformLinkHandler = (value: PlatformLinkType) => {
+  const addPlatformLinkHandler = (
+    e: SyntheticEvent,
+    value: PlatformLinkType
+  ) => {
     const { type, title } = value
 
     appendPlatformLink({
@@ -291,15 +291,14 @@ function NewRelease() {
                         clearOnEscape
                         size="small"
                         disableClearable
-                        noOptionsText="Уточните поиск"
+                        noOptionsText="Нет доступных вариантов"
+                        openText="Открыть"
                         options={linksOptions}
                         fullWidth
-                        getOptionLabel={(option) => option.title}
                         // @ts-ignore
                         value={{ type: "", title: "" }}
-                        onChange={(event, value) =>
-                          addPlatformLinkHandler(value)
-                        }
+                        getOptionLabel={(option) => option.title}
+                        onChange={addPlatformLinkHandler}
                         renderInput={(params) => (
                           <TextField
                             {...params}
