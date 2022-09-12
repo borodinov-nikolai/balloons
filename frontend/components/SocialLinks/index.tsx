@@ -50,14 +50,6 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         className={`${styles.links_rutube_bw} ${linkItemStyle}`}
       />
     )
-  if (links.telegram)
-    socialLinks.push(
-      <a
-        key={5}
-        href={links.telegram}
-        className={`${styles.links_telegram_bw} ${linkItemStyle}`}
-      />
-    )
   if (links.facebook)
     socialLinks.push(
       <a
@@ -72,6 +64,14 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={7}
         href={links.instagram}
         className={`${styles.links_instagram_bw} ${linkItemStyle}`}
+      />
+    )
+  if (links.telegram)
+    socialLinks.push(
+      <a
+        key={5}
+        href={links.telegram}
+        className={`${styles.links_telegram_bw} ${linkItemStyle}`}
       />
     )
 

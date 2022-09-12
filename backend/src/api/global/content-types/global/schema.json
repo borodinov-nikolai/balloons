@@ -54,12 +54,6 @@
     },
     "instagram": {
       "type": "string"
-    },
-    "username": {
-      "type": "string",
-      "private": true,
-      "default": "username",
-      "required": false
     }
   }
 }

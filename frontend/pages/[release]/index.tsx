@@ -89,12 +89,13 @@ function ReleasePage() {
 
               {release?.video && (
                 <Grid className={styles.release_column_video}>
-                  <Grid className={styles.catalog_videos_img}>
-                    <img src="images/release__video-img.png" alt="" />
-                    <Grid className="catalog-videos__youtube">
-                      <img src="images/youtube.svg" alt="" />
-                    </Grid>
-                  </Grid>
+                  <iframe
+                    width="100%"
+                    height="315"
+                    src={release?.video}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </Grid>
               )}
 
