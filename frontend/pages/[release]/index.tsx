@@ -4,7 +4,6 @@ import Loader from "components/Loader"
 import styles from "./Release.module.scss"
 import SocialLinks from "components/SocialLinks"
 import Logo from "components/Logo"
-import { useAuth } from "context/AuthProvider"
 import Image from "next/image"
 import { ReleaseType } from "types/general"
 import { useEffect, useState } from "react"
@@ -15,10 +14,12 @@ import getUserSocialLinks from "lib/getUserSocialLinks"
 
 function ReleasePage() {
   const router = useRouter()
-  const { user } = useAuth()
   const { release: releaseLink } = router.query
-  const [release, setRelease] = useState<ReleaseType | null>(null)
+  const [release, setRelease] = useState<ReleaseType>()
   const [loading, setLoading] = useState(false)
+  // @ts-ignore
+  const year = new Date(release?.date).getFullYear()
+  const releaseType = release?.type === "single" ? "Сингл" : "Альбом"
 
   useEffect(() => {
     setLoading(true)
@@ -73,8 +74,9 @@ function ReleasePage() {
               <Grid container alignItems="center" direction="column">
                 <Typography variant="h2">{release?.name}</Typography>
                 <Typography variant="h6">
-                  {release?.artistName || user?.name}
+                  {release?.artistName || release?.user?.name}
                 </Typography>
+                <Typography variant="h6">{`${year} ${releaseType}`}</Typography>
               </Grid>
 
               {release?.video && (
