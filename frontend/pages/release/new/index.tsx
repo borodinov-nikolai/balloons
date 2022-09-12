@@ -114,12 +114,10 @@ function NewRelease() {
         "files.img": form.img?.item(0),
       }
 
-      const {
-        data: { data },
-      } = await API.post("releases", formData, {
+      await API.post("releases", formData, {
         headers: { "Content-type": "multipart/form-data" },
       })
-      await router.push(`/${data?.link}`)
+      await router.push(`/artist/${user?.slug}`)
     } catch (e: any) {
       setError(e.message)
     }

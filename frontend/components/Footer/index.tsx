@@ -85,7 +85,7 @@ const Footer = ({ links }: FooterProps) => {
             </p>
           </div>
 
-          <SocialLinks links={links} />
+          <SocialLinks color="darkGray" links={links} />
         </div>
       </div>
     </div>

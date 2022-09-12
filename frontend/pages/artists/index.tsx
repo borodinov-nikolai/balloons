@@ -35,6 +35,7 @@ function Artists() {
           params: {
             populate: { avatar: "*" },
             "filters[name][$null]": "",
+            "filters[blocked]": "false",
             start: offset,
             limit,
             "sort[createdAt]": "desc",

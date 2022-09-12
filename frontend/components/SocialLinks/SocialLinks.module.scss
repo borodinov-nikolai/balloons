@@ -1,26 +1,47 @@
 .link_item {
   padding: 0 1rem;
   display: flex;
-  background: #8C8C8C;
-  fill: #8C8C8C;
   transition: ease-in-out all 0.3s;
   cursor: pointer;
 
   &:last-child {
     padding-right: 0;
   }
+}
+
+.link_dark_gray {
+  background: #8C8C8C;
+  fill: #8C8C8C;
 
   &:hover {
-    background: #FFFFFF;
+    background: #424242;
   }
 }
+
+.link_white {
+  background: #ffffff;
+  fill: #ffffff;
+
+  &:hover {
+    background: #dadada;
+  }
+}
+
+.link_light_gray {
+  background: #8C8C8C;
+  fill: #8C8C8C;
+
+  &:hover {
+    background: #424242;
+  }
+}
+
 
 .links_vk_bw {
   -webkit-mask: url("images/vk_bw_icon.svg") no-repeat center;
   -webkit-mask-size: contain;
   width: 25px;
   height: 20px;
-  background: #8C8C8C;
 }
 
 .links_odnoklassniki_bw {

@@ -7,4 +7,5 @@ export type ListItemType = {
   subTitle?: string
   description?: string
   placeholder?: string
+  sx?: object
 }

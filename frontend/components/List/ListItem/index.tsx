@@ -7,8 +7,15 @@ import { ReactElement } from "react"
 import Link from "next/link"
 import { getMediaUrl } from "lib/media"
 
-function ListItem(props: ListItemType) {
-  const { img, title, link, subTitle, description, placeholder } = props
+function ListItem({
+  img,
+  title,
+  link,
+  subTitle,
+  description,
+  placeholder,
+  sx,
+}: ListItemType) {
   const placeholderUrl = placeholder ? placeholder : "/assets/placeholder.png"
 
   return (
@@ -18,7 +25,7 @@ function ListItem(props: ListItemType) {
         <Link href={link || ""}>{children}</Link>
       )}
     >
-      <Grid container direction="column" className={styles.item}>
+      <Grid container direction="column" className={styles.item} sx={sx}>
         <Grid className={styles.item_img}>
           <Image
             src={img?.url ? getMediaUrl(img) : placeholderUrl}

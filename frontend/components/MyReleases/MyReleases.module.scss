@@ -16,6 +16,38 @@
   border-radius: .5rem;
 }
 
+.blue {
+  margin: .5rem 0;
+  background: #0984E3;
+
+  &:hover {
+    background: #004d8a;
+  }
+}
+
 .red {
-  color: #BC012E;
+  margin: .5rem 0;
+  background: #BC012E;
+
+  &:hover {
+    background: #85001e;
+  }
+}
+
+.purple {
+  margin: .5rem 0;
+  background: #6C5CE7;
+
+  &:hover {
+    background: #372a9b;
+  }
+}
+
+.orange {
+  margin: .5rem 0;
+  background: #FF6D30;
+
+  &:hover {
+    background: #be3700;
+  }
 }

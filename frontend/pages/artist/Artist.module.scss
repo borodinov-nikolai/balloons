@@ -48,6 +48,7 @@
   padding: 2rem;
   flex-grow: 1;
   color: white;
+  flex-direction: column;
 }
 
 .header_user_title {
@@ -86,7 +87,6 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 150%;
-
   color: #0000FF;
 }
 

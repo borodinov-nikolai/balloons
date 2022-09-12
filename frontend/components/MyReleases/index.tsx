@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import styles from "./MyReleases.module.scss"
 import Image from "next/image"
 import { getMediaUrl } from "lib/media"
+import Link from "next/link"
 
 type MyReleasesProps = {
   releases?: ReleaseType[]
@@ -53,17 +54,26 @@ function MyReleases({ releases }: MyReleasesProps) {
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button fullWidth className={styles.red}>
+                  <Button fullWidth className={styles.blue}>
                     Сводка по релизу
                   </Button>
-                  <Button fullWidth>Предпросмотр</Button>
+
+                  <a href={`/${realese.link}`} target="_blank" rel="noreferrer">
+                    <Button fullWidth className={styles.red}>
+                      Предпросмотр
+                    </Button>
+                  </a>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button fullWidth>Копировать ссылку</Button>
-
-                  <Button href={`/release/edit/${realese.link}`} fullWidth>
-                    Редактировать
+                  <Button fullWidth className={styles.purple}>
+                    Копировать ссылку
                   </Button>
+
+                  <Link href={`/release/edit/${realese.link}`}>
+                    <Button fullWidth className={styles.orange}>
+                      Редактировать
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </Grid>

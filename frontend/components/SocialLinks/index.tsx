@@ -3,17 +3,27 @@ import { Grid } from "@mui/material"
 import { UserSocialLinksType } from "types/general"
 
 type SocialLinksProps = {
+  color: "darkGray" | "white" | "lightGray"
   links: UserSocialLinksType
+  sx?: object
+}
+const getIconStyle = (color: SocialLinksProps["color"]): string => {
+  if (color === "white") return styles.link_white
+  if (color === "darkGray") return styles.link_dark_gray
+  if (color === "lightGray") return styles.link_light_gray
+  return ""
 }
 
-function SocialLinks({ links }: SocialLinksProps) {
+function SocialLinks({ color, links, sx }: SocialLinksProps) {
+  const linkItemStyle = `${styles.link_item} ${getIconStyle(color)}`
   const socialLinks = []
+
   if (links.vk)
     socialLinks.push(
       <a
         key={1}
         href={links.vk}
-        className={`${styles.links_vk_bw} ${styles.link_item}`}
+        className={`${styles.links_vk_bw} ${linkItemStyle}`}
       />
     )
   if (links.odnoklassniki)
@@ -21,7 +31,7 @@ function SocialLinks({ links }: SocialLinksProps) {
       <a
         key={2}
         href={links.odnoklassniki}
-        className={`${styles.links_odnoklassniki_bw} ${styles.link_item}`}
+        className={`${styles.links_odnoklassniki_bw} ${linkItemStyle}`}
       />
     )
   if (links.youtube)
@@ -29,7 +39,7 @@ function SocialLinks({ links }: SocialLinksProps) {
       <a
         key={3}
         href={links.youtube}
-        className={`${styles.links_youtube_bw} ${styles.link_item}`}
+        className={`${styles.links_youtube_bw} ${linkItemStyle}`}
       />
     )
   if (links.rutube)
@@ -37,7 +47,7 @@ function SocialLinks({ links }: SocialLinksProps) {
       <a
         key={4}
         href={links.rutube}
-        className={`${styles.links_rutube_bw} ${styles.link_item}`}
+        className={`${styles.links_rutube_bw} ${linkItemStyle}`}
       />
     )
   if (links.telegram)
@@ -45,7 +55,7 @@ function SocialLinks({ links }: SocialLinksProps) {
       <a
         key={5}
         href={links.telegram}
-        className={`${styles.links_telegram_bw} ${styles.link_item}`}
+        className={`${styles.links_telegram_bw} ${linkItemStyle}`}
       />
     )
   if (links.facebook)
@@ -53,7 +63,7 @@ function SocialLinks({ links }: SocialLinksProps) {
       <a
         key={6}
         href={links.facebook}
-        className={`${styles.links_facebook_bw} ${styles.link_item}`}
+        className={`${styles.links_facebook_bw} ${linkItemStyle}`}
       />
     )
   if (links.instagram)
@@ -61,12 +71,12 @@ function SocialLinks({ links }: SocialLinksProps) {
       <a
         key={7}
         href={links.instagram}
-        className={`${styles.links_instagram_bw} ${styles.link_item}`}
+        className={`${styles.links_instagram_bw} ${linkItemStyle}`}
       />
     )
 
   return (
-    <Grid container className={styles.links} justifyContent="center">
+    <Grid container className={styles.links} sx={sx}>
       {socialLinks}
     </Grid>
   )

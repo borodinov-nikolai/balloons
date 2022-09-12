@@ -96,9 +96,25 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
           <Typography className={styles.header_user_title} variant="h2">
             {user?.name}
           </Typography>
+
+          {user?.site && (
+            <a
+              href={user.site}
+              style={{ width: "70%" }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {user.site}
+            </a>
+          )}
+
           <Typography style={{ width: "70%" }}>{user?.description}</Typography>
 
-          <SocialLinks links={getUserSocialLinks(user)} />
+          <SocialLinks
+            color="white"
+            links={getUserSocialLinks(user)}
+            sx={{ margin: "1.5rem 0" }}
+          />
 
           {isCurrentUser && (
             <Link href="/artist/edit">

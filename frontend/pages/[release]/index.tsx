@@ -11,6 +11,7 @@ import { API } from "lib/api"
 import { getMediaUrl } from "lib/media"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import getUserSocialLinks from "lib/getUserSocialLinks"
+import Link from "next/link"
 
 function ReleasePage() {
   const router = useRouter()
@@ -57,25 +58,32 @@ function ReleasePage() {
             backgroundImage: `url(${getMediaUrl(release?.img)})`,
           }}
         />
+
         <Grid className="content">
-          <Grid className={styles.release_wrapper}>
+          <Grid container direction="column" alignItems="center">
             <Grid className={styles.release_column_img}>
               {release?.img && (
                 <Image
                   src={getMediaUrl(release?.img)}
                   alt="list img"
-                  width={280}
-                  height={280}
+                  width={1000}
+                  height={1000}
                 />
               )}
             </Grid>
 
             <Grid className={styles.release_column}>
               <Grid container alignItems="center" direction="column">
-                <Typography variant="h2">{release?.name}</Typography>
-                <Typography variant="h6">
-                  {release?.artistName || release?.user?.name}
-                </Typography>
+                <Typography variant="h3">{release?.name}</Typography>
+                <Link href={`/artist/${release?.user.slug}`}>
+                  <Typography
+                    variant="h6"
+                    sx={{ cursor: "pointer", "&:hover": { color: "blue" } }}
+                  >
+                    {release?.artistName || release?.user?.name}
+                  </Typography>
+                </Link>
+
                 <Typography variant="h6">{`${year} ${releaseType}`}</Typography>
               </Grid>
 
@@ -113,7 +121,11 @@ function ReleasePage() {
               </Grid>
 
               <Grid style={{ padding: "2rem 0 1rem" }}>
-                <SocialLinks links={getUserSocialLinks(release?.user)} />
+                <SocialLinks
+                  color="darkGray"
+                  links={getUserSocialLinks(release?.user)}
+                  sx={{ justifyContent: "center" }}
+                />
               </Grid>
             </Grid>
 

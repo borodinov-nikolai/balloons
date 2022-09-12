@@ -23,7 +23,7 @@ function ArtistPage() {
   const { slug } = router.query
 
   const releaseItems = user?.releases?.map((it: ReleaseType) => (
-    <ReleaseItem key={it.id} release={it} />
+    <ReleaseItem key={it.id} release={it} sx={{ margin: "0 .5rem" }} />
   ))
 
   useEffect(() => {
@@ -73,7 +73,7 @@ function ArtistPage() {
 
           <Grid className="content" style={{ marginTop: "12rem" }}>
             <Grid container justifyContent="space-between" alignItems="center">
-              <Typography variant="h2" style={{ color: "black" }}>
+              <Typography variant="h2" style={{ marginBottom: "2rem" }}>
                 {isCurrentUser ? "МОИ РЕЛИЗЫ" : "РЕЛИЗЫ"}
               </Typography>
 
