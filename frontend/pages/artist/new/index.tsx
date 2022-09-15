@@ -77,6 +77,7 @@ function NewProfile() {
                     />
                   </FormControl>
                   <Margin />
+                  <Margin />
 
                   <TextField
                     label="Краткое описание"

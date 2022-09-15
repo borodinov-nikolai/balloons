@@ -6,6 +6,8 @@ import { ReleaseType } from "types/general"
 
 import styles from "./Catalog.module.scss"
 import { UserType } from "types/auth"
+import { useEffect, useState } from "react"
+import { API } from "lib/api"
 
 function PrevArrow(props: any) {
   const { onClick } = props
@@ -73,27 +75,83 @@ const settings: Settings = {
   ],
 }
 
-function Catalog() {
-  // const { data: artistsData } = useQuery(GET_ARTISTS)
-  const artists: UserType[] = []
+type CatalogProps = {
+  artistCount: number
+  releaseCount: number
+  showCounter: boolean
+}
 
-  const releases: ReleaseType[] = []
+function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
+  const [releases, setReleases] = useState<ReleaseType[]>([])
+  const [artists, setArtists] = useState<UserType[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    const fetchReleases = async () => {
+      setLoading(true)
+      try {
+        const {
+          data: { data },
+        } = await API.get("/users", {
+          params: {
+            populate: { avatar: "*" },
+            "filters[name][$null]": "",
+            "filters[blocked]": "false",
+            "sort[createdAt]": "desc",
+          },
+        })
+        setArtists(data)
+        setError("")
+      } catch (e) {
+        setError("Что-то пошло не так, перезагрузите страницу")
+      }
+      setLoading(false)
+    }
+
+    const fetchArtists = async () => {
+      setLoading(true)
+      try {
+        const {
+          data: { data },
+        } = await API.get("/releases", {
+          params: {
+            populate: ["img", "user"],
+            "filters[name][$null]": "",
+            "sort[createdAt]": "desc",
+          },
+        })
+        setReleases(data)
+        setError("")
+      } catch (e) {
+        setError("Что-то пошло не так, перезагрузите страницу")
+      }
+      setLoading(false)
+    }
+
+    fetchReleases()
+    fetchArtists()
+  }, [])
 
   return (
     <div className={`block ${styles.blockCatalog}`}>
       <div className="content">
         <div className={styles.title__part}>
           <h2 className={styles.title}>В нашем каталоге</h2>
-          <div
-            className={`${styles.title__numbers} ${styles.title__numbers_first}`}
-          >
-            <Counter number={releases.length} />
-            <span>Релизов</span>
-          </div>
-          <div className={styles.title__numbers}>
-            <Counter number={artists.length} />
-            <span>Артистов</span>
-          </div>
+          {showCounter && (
+            <>
+              <div
+                className={`${styles.title__numbers} ${styles.title__numbers_first}`}
+              >
+                <Counter number={releaseCount} />
+                <span>Релизов</span>
+              </div>
+              <div className={styles.title__numbers}>
+                <Counter number={artistCount} />
+                <span>Артистов</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
@@ -113,39 +171,39 @@ function Catalog() {
         </Slider>
       </div>
 
-      <div className="content">
-        <div className={styles.videos}>
-          <div className={styles.videos__item}>
-            <div className={styles.videos__img}>
-              <img src={"/images/catalog-videos__img-1.png"} alt="" />
-              <div className={styles.videos__youtube}>
-                <img src={"/images/youtube.svg"} alt="" />
-              </div>
-            </div>
-            <div className={styles.videos__name}>Небесные розы</div>
-          </div>
-          <div className={styles.videos__item}>
-            <div className={styles.videos__img}>
-              <img src="/images/catalog-videos__img-2.png" alt="" />
-              <div className={styles.videos__youtube}>
-                <img src="/images/youtube.svg" alt="" />
-              </div>
-            </div>
-            <div className={styles.videos__name}>
-              Parasitic Metamorphosis Manifestation
-            </div>
-          </div>
-          <div className={styles.videos__item}>
-            <div className={styles.videos__img}>
-              <img src={"/images/catalog-videos__img-3.png"} alt="" />
-              <div className={styles.videos__youtube}>
-                <img src={"/images/youtube.svg"} alt="" />
-              </div>
-            </div>
-            <div className={styles.videos__name}>Manifestation</div>
-          </div>
-        </div>
-      </div>
+      {/*<div className="content">*/}
+      {/*  <div className={styles.videos}>*/}
+      {/*    <div className={styles.videos__item}>*/}
+      {/*      <div className={styles.videos__img}>*/}
+      {/*        <img src={"/images/catalog-videos__img-1.png"} alt="" />*/}
+      {/*        <div className={styles.videos__youtube}>*/}
+      {/*          <img src={"/images/youtube.svg"} alt="" />*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className={styles.videos__name}>Небесные розы</div>*/}
+      {/*    </div>*/}
+      {/*    <div className={styles.videos__item}>*/}
+      {/*      <div className={styles.videos__img}>*/}
+      {/*        <img src="/images/catalog-videos__img-2.png" alt="" />*/}
+      {/*        <div className={styles.videos__youtube}>*/}
+      {/*          <img src="/images/youtube.svg" alt="" />*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className={styles.videos__name}>*/}
+      {/*        Parasitic Metamorphosis Manifestation*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*    <div className={styles.videos__item}>*/}
+      {/*      <div className={styles.videos__img}>*/}
+      {/*        <img src={"/images/catalog-videos__img-3.png"} alt="" />*/}
+      {/*        <div className={styles.videos__youtube}>*/}
+      {/*          <img src={"/images/youtube.svg"} alt="" />*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className={styles.videos__name}>Manifestation</div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
 
       <div className="vector__bg vector__bg_1">
         <img src={"/images/vector-bg_catalog-left.svg"} alt="" />

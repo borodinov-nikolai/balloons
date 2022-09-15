@@ -26,6 +26,9 @@
   background-position: center;
   filter: blur(15px);
   -webkit-filter: blur(15px);
+  -moz-filter: blur(15px);
+  -o-filter: blur(15px);
+  -ms-filter: blur(15px);
   transform: scale(1.1);
   opacity: .6;
 }

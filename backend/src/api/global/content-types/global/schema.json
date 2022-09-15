@@ -54,6 +54,18 @@
     },
     "instagram": {
       "type": "string"
+    },
+    "artistCount": {
+      "type": "string",
+      "default": "0"
+    },
+    "releaseCount": {
+      "type": "string",
+      "default": "0"
+    },
+    "showCounter": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

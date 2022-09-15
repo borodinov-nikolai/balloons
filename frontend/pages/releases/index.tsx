@@ -17,7 +17,7 @@ const Releases: NextPage = () => {
   const [meta, setMeta] = useState([])
   const page = Number(router.query?.page) || 1
   const searchQuery = router.query?.search || ""
-  const pageSize = 8
+  const pageSize = 64
   const offset = page * pageSize - pageSize
 
   const pageCount = Math.floor(2 + pageSize - 1) || 0
