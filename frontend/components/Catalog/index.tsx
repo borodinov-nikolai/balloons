@@ -158,7 +158,7 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
       <div className="content_slider">
         <Slider {...settings} className={`${styles.row} ${styles.row_main}`}>
           {artists.map((it: UserType) => (
-            <ArtistItem artist={it} key={it.id} />
+            <ArtistItem artist={it} key={it.id} sx={{ margin: "1rem" }} />
           ))}
         </Slider>
       </div>
@@ -166,7 +166,9 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
       <div className="content_slider">
         <Slider {...settings} className={`${styles.row} ${styles.row_main}`}>
           {releases.map((it: ReleaseType) => {
-            return <ReleaseItem key={it.id} release={it} />
+            return (
+              <ReleaseItem key={it.id} release={it} sx={{ margin: "1rem" }} />
+            )
           })}
         </Slider>
       </div>

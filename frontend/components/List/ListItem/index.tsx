@@ -25,25 +25,27 @@ function ListItem({
         <Link href={link || ""}>{children}</Link>
       )}
     >
-      <Grid container direction="column" className={styles.item} sx={sx}>
-        <Grid className={styles.item_img}>
-          <Image
-            src={img?.url ? getMediaUrl(img) : placeholderUrl}
-            alt="list img"
-            width={img?.width || 300}
-            height={img?.height || 300}
-          />
+      <Grid item sx={sx}>
+        <Grid container direction="column">
+          <Grid className={styles.item_img}>
+            <Image
+              src={img?.url ? getMediaUrl(img) : placeholderUrl}
+              alt="list img"
+              width={img?.width || 300}
+              height={img?.height || 300}
+            />
+          </Grid>
+
+          {title && (
+            <Typography variant="h5" className={styles.title}>
+              {title}
+            </Typography>
+          )}
+
+          {subTitle && <Typography>{subTitle}</Typography>}
+
+          {description && <Typography>{description}</Typography>}
         </Grid>
-
-        {title && (
-          <Typography variant="h5" className={styles.title}>
-            {title}
-          </Typography>
-        )}
-
-        {subTitle && <Typography>{subTitle}</Typography>}
-
-        {description && <Typography>{description}</Typography>}
       </Grid>
     </LinkWrapper>
   )

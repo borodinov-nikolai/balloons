@@ -138,16 +138,8 @@
 }
 
 .item {
-  display: flex;
-  flex-flow: column;
-  width: 23%;
+  flex: 1;
   margin-bottom: 3rem;
-  @media (max-width: 1023px) {
-    width: 47%;
-  }
-  @media (max-width: 767px) {
-    width: 100%;
-  }
 }
 
 .item_img {
