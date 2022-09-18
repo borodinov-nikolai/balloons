@@ -23,7 +23,7 @@ function Header() {
     ? `${styles.header} ${styles.header_bg}`
     : styles.header
   const burgerClasses = openMenu
-    ? `${styles.burger} ${styles.active}`
+    ? `${styles.burger} ${styles.burger_active}`
     : styles.burger
   const menuClasses = openMenu ? `${styles.list} ${styles.active}` : styles.list
   const { user, isAuthenticated, logout } = useAuth()
@@ -48,6 +48,10 @@ function Header() {
     }
   }, [])
 
+  useEffect(() => {
+    if (router.asPath) setOpenMenu(false)
+  }, [router.asPath])
+
   const UserProfileBtn = () => {
     return (
       <>
@@ -56,23 +60,11 @@ function Header() {
         )}
 
         {isAuthenticated && !!user?.avatar?.url && (
-          <Image
-            className={styles.personalAreaButton}
-            src={getMediaUrl(user.avatar)}
-            width={43}
-            height={43}
-            alt=""
-          />
+          <Image src={getMediaUrl(user.avatar)} width={43} height={43} alt="" />
         )}
 
         {!isAuthenticated && (
-          <Image
-            className={styles.personalAreaButton}
-            src={login}
-            width={43}
-            height={43}
-            alt=""
-          />
+          <Image src={login} width={43} height={43} alt="" />
         )}
       </>
     )
@@ -85,22 +77,20 @@ function Header() {
           <Logo />
 
           <div className={menuClasses}>
-            <Link href={{ pathname: "/", hash: "#services" }}>
+            <Link href={{ pathname: "/", hash: "#services" }} passHref>
               <a
                 className={
                   router.asPath == "/#services"
                     ? `${styles.listItem} ${styles.active}`
                     : styles.listItem
                 }
-                onClick={() => setOpenMenu(false)}
               >
                 Услуги
               </a>
             </Link>
 
-            <Link href={"/artists"}>
+            <Link href={"/artists"} passHref>
               <a
-                onClick={() => setOpenMenu(false)}
                 className={
                   router.asPath == "/artists"
                     ? `${styles.listItem} ${styles.active}`
@@ -111,9 +101,8 @@ function Header() {
               </a>
             </Link>
 
-            <Link href={"/releases"}>
+            <Link href={"/releases"} passHref>
               <a
-                onClick={() => setOpenMenu(false)}
                 className={
                   router.asPath == "/releases"
                     ? `${styles.listItem} ${styles.active}`
@@ -124,15 +113,8 @@ function Header() {
               </a>
             </Link>
 
-            <Link
-              href={{
-                pathname: "/",
-                hash: "#contacts",
-              }}
-              scroll
-            >
+            <Link href={{ pathname: "/", hash: "#contacts" }} passHref>
               <a
-                onClick={() => setOpenMenu(false)}
                 className={
                   router.asPath == "/#contacts"
                     ? `${styles.listItem} ${styles.active}`
@@ -234,13 +216,19 @@ function Header() {
             </div>
           </div>
 
-          <button className={burgerClasses} onClick={() => setOpenMenu(!open)}>
+          <button
+            className={burgerClasses}
+            onClick={() => setOpenMenu(!openMenu)}
+          >
             <Image src={burger} width={50} height={50} alt="" />
           </button>
 
           {isAuthenticated ? (
             <>
-              <Grid onClick={userMenuHandler} style={{ cursor: "pointer" }}>
+              <Grid
+                onClick={userMenuHandler}
+                className={styles.personalAreaButton}
+              >
                 <UserProfileBtn />
               </Grid>
 
@@ -275,14 +263,10 @@ function Header() {
               </Popper>
             </>
           ) : (
-            <Link passHref href={"/login"}>
-              <a>
-                <Image
-                  className={styles.personalAreaButton}
-                  src={login}
-                  alt=""
-                />
-              </a>
+            <Link href={"/login"}>
+              <Grid className={styles.personalAreaButton}>
+                <Image src={login} alt="" />
+              </Grid>
             </Link>
           )}
         </nav>

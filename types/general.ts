@@ -34,6 +34,15 @@ export type ReleaseType = {
   facebookPixel?: string
   link: string
   img: ImageType
+  createdAt: string
+  updatedAt: string
+}
+
+export type Pagination = {
+  page: number
+  pageCount: number
+  pageSize: number
+  total: number
 }
 
 export type ReleaseData = {

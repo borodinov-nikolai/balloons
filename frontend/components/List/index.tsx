@@ -3,13 +3,13 @@ import { ChangeEvent, ReactElement } from "react"
 import { useRouter } from "next/router"
 
 type ListProps = {
-  children: ReactElement[]
-  pageSize: number
-  count: number
+  children?: ReactElement[]
+  pageSize?: number
+  pageCount?: number
 }
 
 function List(props: ListProps) {
-  const { children, count, pageSize } = props
+  const { children, pageCount, pageSize } = props
   const emptyItems =
     children?.length && pageSize
       ? Array.from(
@@ -43,9 +43,9 @@ function List(props: ListProps) {
         ))}
 
         <Grid container justifyContent="center" style={{ margin: "2rem 0" }}>
-          {count > 1 && (
+          {!!pageCount && pageCount > 1 && (
             <Pagination
-              count={count}
+              count={pageCount}
               page={page}
               size="large"
               onChange={paginationHandler}

@@ -176,36 +176,13 @@
 .personalAreaButton {
   border-radius: 50%;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2rem;
-  height: 2rem;
-
-  &::before {
-    position: absolute;
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    background: url(images/avatar-area.svg) center no-repeat;
-    background-size: contain;
-    opacity: 0;
-  }
-
-  &:hover {
-    &::before {
-      width: 163px;
-      height: 163px;
-      opacity: 0.5;
-    }
-  }
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  overflow: hidden;
 
   @media (max-width: 767px) {
-    width: 26px;
-    height: 26px;
-    &::before {
-      content: none;
-    }
+    width: 2rem;
+    height: 2rem;
   }
 }

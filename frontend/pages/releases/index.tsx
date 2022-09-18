@@ -6,21 +6,20 @@ import { NextPage } from "next"
 import { useEffect, useState } from "react"
 import { API } from "lib/api"
 import ReleaseItem from "pages/releases/ReleaseItem"
-import { ReleaseType } from "types/general"
+import { Pagination, ReleaseType } from "types/general"
 import List from "components/List"
+import Loader from "components/Loader"
 
 const Releases: NextPage = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [releases, setReleases] = useState([])
-  const [meta, setMeta] = useState([])
+  const [releases, setReleases] = useState<ReleaseType[]>([])
+  const [pagination, setPagination] = useState<Pagination>()
   const page = Number(router.query?.page) || 1
   const searchQuery = router.query?.search || ""
-  const pageSize = 64
+  const pageSize = 2
   const offset = page * pageSize - pageSize
-
-  const pageCount = Math.floor(2 + pageSize - 1) || 0
 
   const releaseItems = loading
     ? [<div key={1}>Идет загрузка</div>]
@@ -38,13 +37,15 @@ const Releases: NextPage = () => {
           params: {
             populate: ["img", "user"],
             "filters[name][$null]": "",
+            "filters[name][$contains]": searchQuery,
             "pagination[page]": page,
             "pagination[pageSize]": pageSize,
             "sort[createdAt]": "desc",
           },
         })
+
         setReleases(data)
-        setMeta(meta)
+        setPagination(meta?.pagination)
         setError("")
       } catch (e) {
         setError("Что-то пошло не так, перезагрузите страницу")
@@ -53,7 +54,7 @@ const Releases: NextPage = () => {
     }
 
     fetchData()
-  }, [offset, page])
+  }, [offset, page, searchQuery])
 
   return (
     <>
@@ -63,7 +64,9 @@ const Releases: NextPage = () => {
       />
 
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        <List count={Math.trunc(pageCount / pageSize)} pageSize={pageSize}>
+        {loading && <Loader />}
+
+        <List pageCount={pagination?.pageCount} pageSize={pageSize}>
           {releases.length
             ? releaseItems
             : [
@@ -73,9 +76,9 @@ const Releases: NextPage = () => {
                   style={{ fontSize: "2rem", margin: "2rem 0" }}
                   justifyContent="center"
                 >
-                  {searchQuery
+                  {!!searchQuery
                     ? `Релиз с название ${searchQuery} не найдено`
-                    : "У артиста пока нет рилизов"}
+                    : !loading && "У артиста пока нет рилизов"}
                 </Grid>,
               ]}
         </List>

@@ -60,7 +60,7 @@ function Artists() {
       />
 
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        <List count={Math.trunc(pageCount / limit)} pageSize={limit}>
+        <List pageCount={Math.trunc(pageCount / limit)} pageSize={limit}>
           {artists.length
             ? artistItems
             : [

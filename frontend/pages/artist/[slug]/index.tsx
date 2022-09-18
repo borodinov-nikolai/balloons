@@ -22,9 +22,13 @@ function ArtistPage() {
   const router = useRouter()
   const { slug } = router.query
 
-  const releaseItems = user?.releases?.map((it: ReleaseType) => (
-    <ReleaseItem key={it.id} release={it} sx={{ margin: "0 .5rem" }} />
-  ))
+  const releaseItems = user?.releases
+    ?.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+    .map((it: ReleaseType) => (
+      <ReleaseItem key={it.id} release={it} sx={{ margin: "0 .5rem" }} />
+    ))
 
   useEffect(() => {
     async function loadUser() {
