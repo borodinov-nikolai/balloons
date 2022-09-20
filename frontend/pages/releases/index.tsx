@@ -18,7 +18,7 @@ const Releases: NextPage = () => {
   const [pagination, setPagination] = useState<Pagination>()
   const page = Number(router.query?.page) || 1
   const searchQuery = router.query?.search || ""
-  const pageSize = 2
+  const pageSize = 8
   const offset = page * pageSize - pageSize
 
   const releaseItems = loading

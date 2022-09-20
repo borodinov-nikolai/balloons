@@ -24,13 +24,15 @@ import { CreateReleaseFormType, PlatformLinkType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
 import { SyntheticEvent, useEffect, useMemo, useState } from "react"
-import { API } from "lib/api"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
+import RotateLeftIcon from "@mui/icons-material/RotateLeft"
+import { API } from "lib/api"
 
 function NewRelease() {
-  const { uniqueLink, isUniqueLink } = useReleaseLink()
+  const { uniqueLink, isUniqueLink, fetchUniqueLink, checkUniqueLink } =
+    useReleaseLink()
   const { user } = useAuth()
 
   const {
@@ -41,6 +43,7 @@ function NewRelease() {
     setValue,
     formState: { errors },
   } = useForm<CreateReleaseFormType>({
+    mode: "all",
     defaultValues: {
       date: new Date(),
       link: useMemo(() => uniqueLink, [uniqueLink]),
@@ -68,6 +71,7 @@ function NewRelease() {
   })
 
   const watchFieldArray = watch("platformLinks")
+  const watchLink = watch("link")
   const controlledFields = platformLinks.map((field, index) => {
     return {
       ...field,
@@ -134,6 +138,12 @@ function NewRelease() {
   useEffect(() => {
     setValue("link", uniqueLink)
   }, [setValue, uniqueLink])
+
+  useEffect(() => {
+    checkUniqueLink(watchLink)
+    console.log("watchLink", watchLink)
+    console.log("isUniqueLink", isUniqueLink)
+  }, [checkUniqueLink, watchLink])
 
   return (
     <>
@@ -350,6 +360,15 @@ function NewRelease() {
                               linkmusic.ru/
                             </InputAdornment>
                           ),
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              sx={{ cursor: "pointer" }}
+                              onClick={fetchUniqueLink}
+                            >
+                              <RotateLeftIcon />
+                            </InputAdornment>
+                          ),
                         }}
                         error={!!errors.link}
                         helperText={errors.link?.message}
@@ -360,14 +379,15 @@ function NewRelease() {
                             message: "Ссылка не может быть короче 3 символов",
                           },
                           pattern: {
-                            value: /[a-zA-Z0-9_]/,
+                            value: /[a-zA-Z0-9_-]/,
                             message: "Ссылка содержит недопустимые символы",
                           },
-                          // onChange: onChangeLinkHandler,
-                          validate: () =>
-                            !isUniqueLink
+                          validate: () => {
+                            console.log("isUniqueLink", isUniqueLink)
+                            return !isUniqueLink
                               ? "Релиз с такой ссылкой уже существует"
-                              : true,
+                              : true
+                          },
                         })}
                       />
                     </FormControl>

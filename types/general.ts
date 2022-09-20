@@ -71,7 +71,7 @@ export type FeedbackFormType = {
   message: string
   phone?: string
   email: string
-  file?: FileList
+  attachment?: FileList
   captcha?: boolean
 }
 

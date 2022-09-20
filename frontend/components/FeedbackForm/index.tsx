@@ -37,15 +37,15 @@ function FeedbackForm() {
   const phoneInputRef = useRef()
   const [error, setError] = useState("")
   const [status, setStatus] = useState("")
-  const files = watch("file")
+  const files = watch("attachment")
 
   const submitHandler = async (form: FeedbackFormType) => {
     try {
       const { status } = await API.post(
         "feedbacks",
         {
-          data: JSON.stringify({ ...form, file: undefined }),
-          "files.file": form.file?.item(0),
+          data: JSON.stringify({ ...form, attachment: undefined }),
+          "files.attachment": form.attachment?.item(0),
         },
         {
           headers: { "Content-type": "multipart/form-data" },
@@ -60,7 +60,7 @@ function FeedbackForm() {
   const clearFileHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
 
-    setValue("file", undefined)
+    setValue("attachment", undefined)
   }
 
   useEffect(() => {
@@ -216,7 +216,11 @@ function FeedbackForm() {
                     </svg>
                   )}
 
-                  <TextField type="file" id="form-file" {...register("file")} />
+                  <TextField
+                    type="file"
+                    id="form-file"
+                    {...register("attachment")}
+                  />
                 </label>
               </div>
 

@@ -8,5 +8,13 @@ export default {
         policies: [],
       },
     },
+    {
+      method: "GET",
+      path: "/release-link-is-unique/:releaseLink",
+      handler: "release-link.checkReleaseLinkIsUnique",
+      config: {
+        policies: [],
+      },
+    },
   ],
 }

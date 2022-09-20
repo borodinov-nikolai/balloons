@@ -10,9 +10,27 @@ function useReleaseLink() {
   const fetchUniqueLink = useCallback(async () => {
     setLoading(true)
     try {
-      const { data } = await API.get("/release-link")
+      const {
+        data: { data },
+      } = await API.get("/release-link")
+      console.log("release-link", data)
       setError("")
       setUniqueLink(data)
+    } catch (e) {
+      setError("Что-то пошло не так, перезагрузите страницу")
+    }
+
+    setLoading(false)
+  }, [])
+
+  const checkUniqueLink = useCallback(async (link: string) => {
+    setLoading(true)
+    try {
+      const {
+        data: { data },
+      } = await API.get(`/release-link-is-unique/${link}`)
+      setError("")
+      setIsUniqueLink(data)
     } catch (e) {
       setError("Что-то пошло не так, перезагрузите страницу")
     }
@@ -44,6 +62,7 @@ function useReleaseLink() {
     uniqueLink,
     isUniqueLink,
     fetchUniqueLink,
+    checkUniqueLink,
     checkUniqueReleaseLink,
     loading,
     error,
