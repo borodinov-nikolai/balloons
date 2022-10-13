@@ -203,9 +203,8 @@ function Suggestion() {
           <Typography variant="h2">Мы предлагаем</Typography>
 
           <p className={styles.column__text}>
-            Рыбатекст используется дизайнерами, проектировщиками и
-            фронтендерами, когда нужно быстро заполнить макеты или прототипы
-            содержимым.
+            Комплекс удобных услуг для вашей музыкальной деятельности. Узнайте
+            подробности в карточках.
           </p>
 
           <Button fullWidth href={"#contacts"} className={styles.column__btn}>
@@ -481,7 +480,11 @@ function Suggestion() {
               )}
               {openModal && (
                 <div className={styles.modal__contentImg}>
-                  <img src={modalState?.img} alt="" />
+                  <img
+                    style={{ maxHeight: "10rem" }}
+                    src={modalState?.img}
+                    alt=""
+                  />
                 </div>
               )}
             </div>

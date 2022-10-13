@@ -417,6 +417,7 @@
 .modal {
   justify-content: center;
   align-items: center;
+  position: absolute;
 
   & > div:first-of-type {
     background: inherit;
@@ -438,7 +439,7 @@
   border-radius: 10px;
   font-family: Gilroy, sans-serif;
   font-style: normal;
-  margin: 20px;
+  height: 80vh;
 
   @media (max-width: 1023px) {
     max-width: 566px;
@@ -467,8 +468,7 @@
   font-weight: bold;
   font-size: 36px;
   line-height: 140%;
-  margin: 46px 0;
-
+  margin: 2rem 0;
   color: #052525;
 
   @media (max-width: 1023px) {
@@ -487,6 +487,8 @@
   font-weight: normal;
   font-size: 20px;
   line-height: 140%;
+  overflow-y: scroll;
+  height: 60%;
 
   p {
     margin-bottom: 20px;
