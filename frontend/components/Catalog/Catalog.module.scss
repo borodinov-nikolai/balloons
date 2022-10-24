@@ -124,6 +124,11 @@
 }
 
 .slider__arrow_next {
+  left: 4.5%;
+  right: unset;
+}
+
+.slider__arrow_prev {
   transform: scale(-1, 1);
   left: unset;
   right: 4.5%;

@@ -13,7 +13,7 @@ function PrevArrow(props: any) {
   const { onClick } = props
   return (
     <button
-      className={`${styles.slider__arrow} catalog-slider__arrow_prev`}
+      className={`${styles.slider__arrow} ${styles.slider__arrow_prev}`}
       onClick={onClick}
     >
       <svg
@@ -37,7 +37,7 @@ function NextArrow(props: any) {
   const { onClick } = props
   return (
     <button
-      className={`${styles.slider__arrow} catalog-slider__arrow_next`}
+      className={`${styles.slider__arrow} ${styles.slider__arrow_next}`}
       onClick={onClick}
     >
       <svg
@@ -88,7 +88,7 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    const fetchReleases = async () => {
+    const fetchArtists = async () => {
       setLoading(true)
       try {
         const {
@@ -98,9 +98,12 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
             populate: { avatar: "*" },
             "filters[name][$null]": "",
             "filters[blocked]": "false",
+            "filters[partner]": "true",
+            "sort[order]": "desc",
             "sort[createdAt]": "desc",
           },
         })
+
         setArtists(data)
         setError("")
       } catch (e) {
@@ -109,7 +112,7 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
       setLoading(false)
     }
 
-    const fetchArtists = async () => {
+    const fetchReleases = async () => {
       setLoading(true)
       try {
         const {
@@ -118,9 +121,12 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
           params: {
             populate: ["img", "user"],
             "filters[name][$null]": "",
+            "filters[user][partner]": "true",
+            "sort[order]": "desc",
             "sort[createdAt]": "desc",
           },
         })
+
         setReleases(data)
         setError("")
       } catch (e) {

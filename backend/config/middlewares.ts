@@ -10,6 +10,8 @@ export default [
         "http://localhost:1337",
         "https://linkmusic.ru",
         "http://linkmusic.ru",
+        "https://www.linkmusic.ru",
+        "http://www.linkmusic.ru",
       ],
     },
   },

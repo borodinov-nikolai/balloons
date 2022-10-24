@@ -38,6 +38,7 @@ function Artists() {
             "filters[blocked]": "false",
             start: offset,
             limit,
+            "sort[order]": "desc",
             "sort[createdAt]": "desc",
           },
         })

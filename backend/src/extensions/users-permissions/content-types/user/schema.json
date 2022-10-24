@@ -115,6 +115,15 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "partner": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
