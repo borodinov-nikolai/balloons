@@ -28,6 +28,7 @@
     "wait-on": "6.0.1"
   },
   "dependencies": {
-    "sharp": "^0.30.7"
+    "@types/sharp": "^0.31.0",
+    "sharp": "^0.31.2"
   }
 }
