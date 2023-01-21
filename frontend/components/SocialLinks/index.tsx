@@ -24,6 +24,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={1}
         href={links.vk}
         className={`${styles.links_vk_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
   if (links.odnoklassniki)
@@ -32,6 +34,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={2}
         href={links.odnoklassniki}
         className={`${styles.links_odnoklassniki_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
   if (links.youtube)
@@ -40,6 +44,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={3}
         href={links.youtube}
         className={`${styles.links_youtube_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
   if (links.rutube)
@@ -48,6 +54,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={4}
         href={links.rutube}
         className={`${styles.links_rutube_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
   if (links.facebook)
@@ -56,6 +64,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={6}
         href={links.facebook}
         className={`${styles.links_facebook_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
   if (links.instagram)
@@ -64,6 +74,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={7}
         href={links.instagram}
         className={`${styles.links_instagram_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
   if (links.telegram)
@@ -72,6 +84,8 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
         key={5}
         href={links.telegram}
         className={`${styles.links_telegram_bw} ${linkItemStyle}`}
+        target="_blank"
+        rel="noreferrer"
       />
     )
 

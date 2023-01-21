@@ -3,6 +3,7 @@ import { Button, Grid, Typography } from "@mui/material"
 import styles from "pages/artist/Artist.module.scss"
 import SocialLinks from "components/SocialLinks"
 import Link from "next/link"
+import MuiLink from "@mui/material/Link"
 import { UserType } from "types/auth"
 import { getMediaUrl } from "lib/media"
 import getUserSocialLinks from "lib/getUserSocialLinks"
@@ -98,14 +99,14 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
           </Typography>
 
           {user?.site && (
-            <a
-              href={user.site}
+            <MuiLink
+              href={`http://${user.site}`}
               style={{ width: "70%" }}
               target="_blank"
               rel="noreferrer"
             >
               {user.site}
-            </a>
+            </MuiLink>
           )}
 
           <Typography style={{ width: "70%" }}>{user?.description}</Typography>

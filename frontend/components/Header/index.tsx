@@ -232,6 +232,7 @@ function Header() {
                 <UserProfileBtn />
               </Grid>
 
+              {/* @ts-ignore */}
               <Popper
                 open={open}
                 anchorEl={anchorEl}
