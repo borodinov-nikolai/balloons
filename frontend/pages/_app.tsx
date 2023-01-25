@@ -13,13 +13,11 @@ import theme from "styles/theme"
 import "styles/globals.scss"
 import { useRouter } from "next/router"
 import { StyledEngineProvider } from "@mui/material"
-import { GlobalContext } from "context"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
-  const [isCaptchaVerified, setCaptchaVerified] = useState<boolean>(false)
 
   useEffect(() => {
     const handleStart = (url: string) => {
@@ -35,29 +33,21 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return loading ? (
     <Loader />
   ) : (
-    <GlobalContext.Provider
-      value={{
-        ...global,
-        setCaptchaVerified,
-        isCaptchaVerified,
-      }}
-    >
+    <StyledEngineProvider injectFirst>
       <Head>
         <link rel="shortcut icon" href={getMediaUrl(global?.favicon)} />
       </Head>
-      <StyledEngineProvider injectFirst>
-        <LocalizationProvider
-          adapterLocale={ruLocale}
-          dateAdapter={AdapterDateFns}
-        >
-          <ThemeProvider theme={theme}>
-            <AuthProvider>
-              <Component {...pageProps} />
-            </AuthProvider>
-          </ThemeProvider>
-        </LocalizationProvider>
-      </StyledEngineProvider>
-    </GlobalContext.Provider>
+      <LocalizationProvider
+        adapterLocale={ruLocale}
+        dateAdapter={AdapterDateFns}
+      >
+        <ThemeProvider theme={theme}>
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
+    </StyledEngineProvider>
   )
 }
 

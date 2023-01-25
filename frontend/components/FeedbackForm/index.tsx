@@ -16,30 +16,30 @@ import { FeedbackFormType } from "types/general"
 import Margin from "components/FeedbackForm/Margin"
 import { SyntheticEvent, useEffect, useRef, useState } from "react"
 import IMask from "imask"
-import useGlobal from "context"
 import { API } from "lib/api"
 import CloseIcon from "@mui/icons-material/Close"
 import Confirm from "components/Confirm"
 
 function FeedbackForm() {
-  const { isCaptchaVerified } = useGlobal()
-
   const {
     register,
     handleSubmit,
     control,
     reset,
     setValue,
+    setError,
+    clearErrors,
     watch,
     formState: { errors },
   } = useForm<FeedbackFormType>()
 
   const phoneInputRef = useRef()
-  const [error, setError] = useState("")
+  const [submitError, setSubmitError] = useState("")
   const [status, setStatus] = useState("")
   const files = watch("attachment")
 
   const submitHandler = async (form: FeedbackFormType) => {
+    console.log("form", form)
     try {
       const { status } = await API.post(
         "feedbacks",
@@ -54,9 +54,10 @@ function FeedbackForm() {
 
       if (status === 200) setStatus("success")
     } catch (e: any) {
-      setError(e.message)
+      setSubmitError(e.message)
     }
   }
+
   const clearFileHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
 
@@ -159,7 +160,6 @@ function FeedbackForm() {
                   error={!!errors.email}
                   helperText={errors.email && "Обязательное поле"}
                   {...register("email", { required: true })}
-                  required
                 />
               </div>
 
@@ -224,7 +224,14 @@ function FeedbackForm() {
                 </label>
               </div>
 
-              <Captcha register={register} errors={errors} />
+              <Captcha
+                register={register}
+                errors={errors}
+                setValue={setValue}
+                setError={setError}
+                clearErrors={clearErrors}
+                watch={watch}
+              />
 
               <div className={styles.btnRow}>
                 <Button fullWidth onClick={handleSubmit(submitHandler)}>

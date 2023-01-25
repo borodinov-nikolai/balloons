@@ -72,7 +72,8 @@ export type FeedbackFormType = {
   phone?: string
   email: string
   attachment?: FileList
-  captcha?: boolean
+  captcha?: string
+  captchaVerified: boolean
 }
 
 export type NewsArticleType = {

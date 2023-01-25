@@ -9,20 +9,22 @@ import { useForm } from "react-hook-form"
 import { loginFormType } from "types/auth"
 import { FunctionComponent, useEffect } from "react"
 import Captcha from "components/Captcha"
-import useGlobal from "context"
 
 const Login: FunctionComponent = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    setError,
+    setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<loginFormType>()
   const { user, loading, login, error: authError } = useAuth()
   const router = useRouter()
-  const { isCaptchaVerified } = useGlobal()
 
   const submitHandler = (data: loginFormType) => {
-    if (!isCaptchaVerified) login(data)
+    login(data)
   }
 
   useEffect(() => {
@@ -69,7 +71,14 @@ const Login: FunctionComponent = () => {
         <a className={styles.forgotPassword}>Забыли пароль?</a>
       </Link>
 
-      <Captcha register={register} errors={errors} />
+      <Captcha
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        setError={setError}
+        clearErrors={clearErrors}
+        watch={watch}
+      />
 
       <p className={styles.formPage__text}>
         Нет аккаунта?{" "}

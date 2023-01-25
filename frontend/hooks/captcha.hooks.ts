@@ -32,7 +32,9 @@ function useCheckCaptcha() {
   const checkCaptcha = useCallback(async (receivedCaptcha: string) => {
     setLoading(true)
     try {
-      const { data } = await API.post("/captcha", { receivedCaptcha })
+      const {
+        data: { data },
+      } = await API.post("/captcha", { receivedCaptcha })
       setCaptchaVerified(data)
     } catch (e) {
       setError("Что-то пошло не так, перезагрузите страницу")

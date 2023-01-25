@@ -141,8 +141,6 @@ function NewRelease() {
 
   useEffect(() => {
     checkUniqueLink(watchLink)
-    console.log("watchLink", watchLink)
-    console.log("isUniqueLink", isUniqueLink)
   }, [checkUniqueLink, watchLink])
 
   return (

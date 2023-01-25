@@ -1,20 +1,29 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { useCheckCaptcha, useGetCaptchaImage } from "hooks/captcha.hooks"
 import useDebounce from "hooks/debounce.hooks"
-import useGlobal from "context"
-import { FormHelperText, Grid, TextField } from "@mui/material"
+import { Grid, TextField } from "@mui/material"
 import styles from "./Captcha.module.scss"
 
 type CaptchaProps = {
   register: Function
+  watch: Function
+  setValue: Function
+  setError: Function
+  clearErrors: Function
   errors?: Record<string, any>
 }
 
-function Captcha({ register, errors }: CaptchaProps) {
-  const { setCaptchaVerified } = useGlobal()
-  const [captchaInput, setCaptchaInput] = useState("")
-  const debouncedCaptchaInput = useDebounce(captchaInput, 1500)
-  const [error, updateError] = useState("")
+function Captcha({
+  register,
+  watch,
+  setValue,
+  setError,
+  clearErrors,
+  errors,
+}: CaptchaProps) {
+  const captchaValue = watch("captcha")
+  const captchaVerified = watch("captchaVerified")
+  const debouncedCaptchaInput = useDebounce(captchaValue, 500)
   const captchaImgBlockRef = useRef<HTMLElement | null>()
   const sizeOptions = useRef({ width: 0, height: 0 })
 
@@ -33,21 +42,34 @@ function Captcha({ register, errors }: CaptchaProps) {
   } = useCheckCaptcha()
 
   const reloadCaptcha = async () => {
-    setCaptchaVerified(false)
-    updateError("")
+    setValue("captcha", "")
+    setValue("captchaVerified", false)
+    clearErrors("captcha")
     await fetchCaptchaImg(sizeOptions.current.width, sizeOptions.current.height)
   }
 
   useEffect(() => {
-    if (debouncedCaptchaInput.length > 0) {
+    if (debouncedCaptchaInput?.length > 0) {
       checkCaptcha(debouncedCaptchaInput)
-      setCaptchaVerified(isCaptchaVerified)
+      setValue("captchaVerified", isCaptchaVerified)
+
+      if (!captchaVerified)
+        setError("captcha", {
+          type: "validated",
+          message: "Капча введена неправильно",
+        })
     }
+
+    if (debouncedCaptchaInput?.length === 0 || isCaptchaVerified)
+      clearErrors("captcha")
   }, [
+    captchaVerified,
     checkCaptcha,
+    clearErrors,
     debouncedCaptchaInput,
     isCaptchaVerified,
-    setCaptchaVerified,
+    setError,
+    setValue,
   ])
 
   useEffect(() => {
@@ -64,43 +86,35 @@ function Captcha({ register, errors }: CaptchaProps) {
   }, [fetchCaptchaImg])
 
   useEffect(() => {
-    if (fetchImgError) updateError("Ошибка загрузки изображения")
-    if (errorCheckCaptcha) updateError("Капча введена неправильно")
-  }, [fetchImgError, errorCheckCaptcha]) // add errors
-
-  useEffect(() => {
-    if (
-      !isCaptchaVerified &&
-      debouncedCaptchaInput !== "" &&
-      !checkCaptchaLoading
-    ) {
-      updateError("Капча введена неправильно")
-    } else {
-      updateError("")
-    }
-  }, [
-    isCaptchaVerified,
-    checkCaptchaLoading,
-    setCaptchaVerified,
-    debouncedCaptchaInput,
-  ])
+    if (fetchImgError)
+      setError("captcha", {
+        type: "validated",
+        message: "Ошибка загрузки изображения",
+      })
+    if (errorCheckCaptcha)
+      setError("captcha", {
+        type: "validated",
+        message: "Ошибка сервера при проверки",
+      })
+  }, [errorCheckCaptcha, fetchImgError, setError])
 
   return (
     <Grid container direction="column" className={styles.captcha}>
       <Grid container wrap="nowrap" alignItems="center">
         <TextField
           variant="outlined"
-          onChange={(e) => setCaptchaInput(e.target.value.toLowerCase())}
-          className={
-            error
-              ? `${styles.captcha__input} ${styles.captcha__input_err}`
-              : isCaptchaVerified
-              ? `${styles.captcha__input} ${styles.captcha__input_done}`
-              : styles.captcha__input
-          }
           error={!!errors?.captcha}
-          helperText={errors?.captcha && "Обязательное поле"}
-          {...register("captcha", { required: true })}
+          helperText={
+            errors?.captcha?.message || (checkCaptchaLoading && "Проверка...")
+          }
+          {...register("captcha", {
+            validate: {
+              validated: (x: string) =>
+                (!!x && !captchaVerified && "Капча введена неправильно") ||
+                true,
+              required: (x: string) => (!x && "Обязательное поле") || true,
+            },
+          })}
         />
 
         <button
@@ -127,22 +141,6 @@ function Captcha({ register, errors }: CaptchaProps) {
           onClick={reloadCaptcha}
         />
       </Grid>
-
-      <FormHelperText
-        className={
-          error
-            ? `${styles.captcha__label} ${styles.captcha__label_error}`
-            : styles.captcha__label
-        }
-      >
-        {error
-          ? error
-          : checkCaptchaLoading
-          ? "Проверка..."
-          : isCaptchaVerified
-          ? ""
-          : ""}
-      </FormHelperText>
     </Grid>
   )
 }

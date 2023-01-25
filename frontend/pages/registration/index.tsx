@@ -16,6 +16,10 @@ function Registration() {
   const {
     register,
     handleSubmit,
+    watch,
+    setError,
+    setValue,
+    clearErrors,
     formState: { errors },
   } = useForm<signUpFormType>()
   const [userAgreement, toggleUserAgreement] = useState(false)
@@ -96,7 +100,14 @@ function Registration() {
         </p>
       </div>
 
-      <Captcha register={register} errors={errors} />
+      <Captcha
+        register={register}
+        errors={errors}
+        setValue={setValue}
+        setError={setError}
+        clearErrors={clearErrors}
+        watch={watch}
+      />
 
       <p className={styles.formPage__text}>
         У меня есть аккаунт
