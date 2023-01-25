@@ -4,7 +4,7 @@ import CloseButton from "components/CloseBtn"
 import styles from "pages/registration/Registration.module.scss"
 import { useAuth } from "context/AuthProvider"
 import { useRouter } from "next/router"
-import { Button, TextField, Typography } from "@mui/material"
+import { Button, Grid, TextField, Typography } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { loginFormType } from "types/auth"
 import { FunctionComponent, useEffect } from "react"
@@ -71,14 +71,16 @@ const Login: FunctionComponent = () => {
         <a className={styles.forgotPassword}>Забыли пароль?</a>
       </Link>
 
-      <Captcha
-        register={register}
-        errors={errors}
-        setValue={setValue}
-        setError={setError}
-        clearErrors={clearErrors}
-        watch={watch}
-      />
+      <Grid container style={{ margin: "1rem 0 0" }}>
+        <Captcha
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          setError={setError}
+          clearErrors={clearErrors}
+          watch={watch}
+        />
+      </Grid>
 
       <p className={styles.formPage__text}>
         Нет аккаунта?{" "}

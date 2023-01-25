@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { useCheckCaptcha, useGetCaptchaImage } from "hooks/captcha.hooks"
 import useDebounce from "hooks/debounce.hooks"
-import { Grid, TextField } from "@mui/material"
+import { FormHelperText, Grid, TextField } from "@mui/material"
 import styles from "./Captcha.module.scss"
 
 type CaptchaProps = {
@@ -24,7 +24,7 @@ function Captcha({
   const captchaValue = watch("captcha")
   const captchaVerified = watch("captchaVerified")
   const debouncedCaptchaInput = useDebounce(captchaValue, 500)
-  const captchaImgBlockRef = useRef<HTMLElement | null>()
+  const captchaImgBlockRef = useRef<HTMLDivElement | null>()
   const sizeOptions = useRef({ width: 0, height: 0 })
 
   const {
@@ -99,14 +99,12 @@ function Captcha({
   }, [errorCheckCaptcha, fetchImgError, setError])
 
   return (
-    <Grid container direction="column" className={styles.captcha}>
-      <Grid container wrap="nowrap" alignItems="center">
+    <Grid container style={{ position: "relative" }}>
+      <Grid container className={styles.captcha}>
         <TextField
+          className={styles.captcha__input}
           variant="outlined"
           error={!!errors?.captcha}
-          helperText={
-            errors?.captcha?.message || (checkCaptchaLoading && "Проверка...")
-          }
           {...register("captcha", {
             validate: {
               validated: (x: string) =>
@@ -117,30 +115,28 @@ function Captcha({
           })}
         />
 
-        <button
+        {/* @ts-ignore */}
+        <Grid
           className={styles.captcha__img}
-          disabled={fetchImgLoading || checkCaptchaLoading}
           onClick={reloadCaptcha}
-          // @ts-ignore
           ref={captchaImgBlockRef}
         >
-          {fetchImgLoading ? (
-            <p>Загрузка изображения</p>
-          ) : (
-            <img src={captchaImg} alt="" />
-          )}
-        </button>
-
-        <button
-          className={
-            fetchImgLoading || checkCaptchaLoading
-              ? `${styles.captcha__refreshBtn} ${styles.loading}`
-              : styles.captcha__refreshBtn
-          }
-          disabled={fetchImgLoading || checkCaptchaLoading}
-          onClick={reloadCaptcha}
-        />
+          <img src={captchaImg} alt="" />
+          <span
+            className={
+              fetchImgLoading || checkCaptchaLoading
+                ? `${styles.captcha__refreshBtn} ${styles.loading}`
+                : styles.captcha__refreshBtn
+            }
+          />
+        </Grid>
       </Grid>
+
+      <FormHelperText
+        className={errors?.captcha?.message ? styles.captcha__label_error : ""}
+      >
+        {errors?.captcha?.message || (checkCaptchaLoading && "Проверка...")}
+      </FormHelperText>
     </Grid>
   )
 }

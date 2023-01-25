@@ -224,14 +224,16 @@ function FeedbackForm() {
                 </label>
               </div>
 
-              <Captcha
-                register={register}
-                errors={errors}
-                setValue={setValue}
-                setError={setError}
-                clearErrors={clearErrors}
-                watch={watch}
-              />
+              <Grid container style={{ margin: "1rem 0 0" }}>
+                <Captcha
+                  register={register}
+                  errors={errors}
+                  setValue={setValue}
+                  setError={setError}
+                  clearErrors={clearErrors}
+                  watch={watch}
+                />
+              </Grid>
 
               <div className={styles.btnRow}>
                 <Button fullWidth onClick={handleSubmit(submitHandler)}>

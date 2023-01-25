@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import IMask from "imask"
-import { Button, Checkbox, Link, TextField, Typography } from "@mui/material"
+import {
+  Button,
+  Checkbox,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material"
 import CloseButton from "components/CloseBtn"
 import styles from "pages/registration/Registration.module.scss"
 import withFormPage from "hoc/withFormPage"
@@ -94,20 +101,22 @@ function Registration() {
         />
 
         <p className={styles.formPage__checkboxText}>
-          <a href={"/docs/Terms-of-use.pdf"} className={styles.formPage__link}>
+          <a href={"/terms"} className={styles.formPage__link}>
             Принимаю пользовательское соглашение
           </a>
         </p>
       </div>
 
-      <Captcha
-        register={register}
-        errors={errors}
-        setValue={setValue}
-        setError={setError}
-        clearErrors={clearErrors}
-        watch={watch}
-      />
+      <Grid container style={{ margin: "1rem 0 0" }}>
+        <Captcha
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          setError={setError}
+          clearErrors={clearErrors}
+          watch={watch}
+        />
+      </Grid>
 
       <p className={styles.formPage__text}>
         У меня есть аккаунт

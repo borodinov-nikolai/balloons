@@ -80,8 +80,9 @@ const Footer = ({ links }: FooterProps) => {
           <div className={styles.column__text}>
             <p>Copyright © {year} ООО «Линк Мьюзик»</p>
             <p>
-              Правовая информация: <a href="#">Пользовательское соглашение</a>,{" "}
-              <a href="#">Политика конфиденциальности</a>
+              Правовая информация:{" "}
+              <a href="/terms">Пользовательское соглашение</a>,{" "}
+              <a href="/privacy-policy">Политика конфиденциальности</a>
             </p>
           </div>
 
