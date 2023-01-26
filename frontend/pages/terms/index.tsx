@@ -2,6 +2,7 @@ import withStandardLayout from "hoc/withStandardLayout"
 import { Grid } from "@mui/material"
 import { useEffect, useState } from "react"
 import { API } from "lib/api"
+import ReactMarkdown from "react-markdown"
 
 function Terms() {
   const [loading, setLoading] = useState(false)
@@ -16,11 +17,10 @@ function Terms() {
           data: { data },
         } = await API.get("/articles", {
           params: {
-            "filters[slug][$eq]": "terms",
-            _publicationState: "preview",
+            filters: { slug: { $eq: "terms" } },
+            publicationState: "preview",
           },
         })
-        console.log("data", data)
         setTerms(data[0])
         setError("")
       } catch (e) {
@@ -36,7 +36,8 @@ function Terms() {
     <Grid container direction="column" flexGrow={1}>
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
         {!loading ? ( // @ts-ignore
-          terms?.content
+          // eslint-disable-next-line react/no-children-prop
+          <ReactMarkdown children={terms?.content} />
         ) : (
           <div>Идет загрузка</div>
         )}

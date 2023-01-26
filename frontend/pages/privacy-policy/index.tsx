@@ -1,54 +1,46 @@
 import withStandardLayout from "hoc/withStandardLayout"
 import { Grid } from "@mui/material"
-import SearchRow from "components/SearchRow"
-import { useRouter } from "next/router"
-import List from "components/List"
-import NewsArticle from "pages/news/NewsBlock/NewsArticle"
-import { NewsArticleType } from "types/general"
+import { useEffect, useState } from "react"
+import { API } from "lib/api"
+import ReactMarkdown from "react-markdown"
 
 function PrivacyPolicy() {
-  const limit = 8
-  const router = useRouter()
-  const page = Number(router.query.page) || 1
-  const searchQuery = router.query.search || ""
-  const offset = page * limit - limit
+  const [loading, setLoading] = useState(false)
+  const [privacyPolicy, setPrivacyPolicy] = useState()
+  const [error, setError] = useState("")
 
-  // @ts-ignore
-  const loading = false
-  const news: NewsArticleType[] = []
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const {
+          data: { data },
+        } = await API.get("/articles", {
+          params: {
+            filters: { slug: { $eq: "privacy-policy" } },
+            publicationState: "preview",
+          },
+        })
+        setPrivacyPolicy(data[0])
+        setError("")
+      } catch (e) {
+        setError("Что-то пошло не так, перезагрузите страницу")
+      }
+      setLoading(false)
+    }
 
-  const pageCount = Math.floor(10 + limit - 1) || 0
-
-  const newsItems = loading ? (
-    <div>Идет загрузка</div>
-  ) : (
-    news.map((it: NewsArticleType) => (
-      <NewsArticle key={it.id} newsArticle={it} small />
-    ))
-  )
+    fetchData()
+  }, [])
 
   return (
     <Grid container direction="column" flexGrow={1}>
-      <SearchRow
-        title="Новости"
-        bg="linear-gradient(90deg, #FF3B3B -15.88%, #FFCD1C 133.05%)"
-      />
-
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        <List pageCount={Math.trunc(pageCount / limit)} pageSize={limit}>
-          {/* @ts-ignore*/}
-          {news.length ? (
-            newsItems
-          ) : (
-            <Grid
-              container
-              style={{ fontSize: "2rem", margin: "2rem 0" }}
-              justifyContent="center"
-            >
-              Новость {searchQuery} не найдена
-            </Grid>
-          )}
-        </List>
+        {!loading ? ( // @ts-ignore
+          // eslint-disable-next-line react/no-children-prop
+          <ReactMarkdown children={privacyPolicy?.content} />
+        ) : (
+          <div>Идет загрузка</div>
+        )}
       </Grid>
     </Grid>
   )
