@@ -1,14 +1,14 @@
-import styles from "pages/news/News.module.scss";
-import { Grid } from "@mui/material";
-import { NewsArticleType } from "types/general";
+import styles from "pages/news/News.module.scss"
+import { Grid } from "@mui/material"
+import { NewsArticleType } from "types/general"
 
 type NewsArticleProps = {
-  newsArticle: NewsArticleType;
-  small?: boolean;
-};
+  newsArticle: NewsArticleType
+  small?: boolean
+}
 
 function NewsArticle({ newsArticle, small = false }: NewsArticleProps) {
-  const { title, slug, date, img } = newsArticle;
+  const { title, slug, date, img } = newsArticle
   return (
     <Grid container className={styles.article}>
       <a
@@ -24,7 +24,7 @@ function NewsArticle({ newsArticle, small = false }: NewsArticleProps) {
         {title}
       </a>
     </Grid>
-  );
+  )
 }
 
-export default NewsArticle;
+export default NewsArticle

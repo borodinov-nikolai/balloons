@@ -33,7 +33,12 @@ function Terms() {
   }, [])
 
   return (
-    <Grid container direction="column" flexGrow={1}>
+    <Grid
+      container
+      direction="column"
+      flexGrow={1}
+      className="privacyPolicyAndTerms"
+    >
       <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
         {!loading ? ( // @ts-ignore
           // eslint-disable-next-line react/no-children-prop

@@ -647,3 +647,20 @@ a {
     flex-direction: column;
   }
 }
+
+.privacyPolicyAndTerms {
+  padding: 5rem 2rem 0;
+
+  ul {
+    padding: 1rem 0 1rem 3rem;
+  }
+
+  h1, h2 {
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  h4 {
+    margin: 1rem 0;
+  }
+}
