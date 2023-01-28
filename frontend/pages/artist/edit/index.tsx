@@ -3,6 +3,9 @@ import withStandardLayout from "hoc/withStandardLayout"
 import withPrivateRoute from "hoc/withPrivateRoute"
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   Grid,
@@ -18,6 +21,7 @@ import { useAuth } from "context/AuthProvider"
 import Margin from "components/FeedbackForm/Margin"
 import LoadImage from "components/FeedbackForm/LoadImage"
 import Link from "next/link"
+import { useState } from "react"
 
 function UpdateProfile() {
   const { updateProfile, user } = useAuth()
@@ -43,9 +47,14 @@ function UpdateProfile() {
     },
   })
   const canBookPerformance = watch("canBookPerformance")
+  const [deleteConfirm, setDeleteConfirm] = useState(false)
 
   const submitHandler = (data: UpdateProfileFormType) => {
     updateProfile(data)
+  }
+
+  const deleteUserHandler = () => {
+    alert("user deleted")
   }
 
   return (
@@ -85,9 +94,6 @@ function UpdateProfile() {
                     <TextField
                       label="Имя артиста / Название группы"
                       disabled
-                      helperText={
-                        "Задаётся один раз, без возможности изменения"
-                      }
                       {...register("name", { required: true })}
                     />
                   </FormControl>
@@ -164,9 +170,36 @@ function UpdateProfile() {
                       className={styles.btn}
                       variant="outlined"
                       color="warning"
+                      onClick={() => setDeleteConfirm(true)}
                     >
                       Удалить
                     </Button>
+
+                    <Dialog
+                      open={deleteConfirm}
+                      onClose={() => setDeleteConfirm(false)}
+                    >
+                      <DialogTitle>
+                        Вы действительно хотите удалить пользователя?
+                      </DialogTitle>
+                      <DialogActions>
+                        <Button
+                          className={styles.btn}
+                          variant="contained"
+                          color="warning"
+                          onClick={deleteUserHandler}
+                        >
+                          Удалить
+                        </Button>
+                        <Button
+                          className={styles.btn}
+                          variant="outlined"
+                          onClick={() => setDeleteConfirm(false)}
+                        >
+                          Отмена
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Grid>
                   <Margin />
                 </Grid>

@@ -19,6 +19,7 @@ import IMask from "imask"
 import { API } from "lib/api"
 import CloseIcon from "@mui/icons-material/Close"
 import Confirm from "components/Confirm"
+import Link from "next/link"
 
 function FeedbackForm() {
   const {
@@ -242,7 +243,11 @@ function FeedbackForm() {
 
                 <p className={styles.politic}>
                   Отправляя сообщение вы соглашаетесь с{" "}
-                  <a href="#">Политикой конфиденциальности</a>
+                  <div className="link">
+                    <Link href={"/privacy-policy"}>
+                      Политикой конфиденциальности
+                    </Link>
+                  </div>
                 </p>
               </div>
 

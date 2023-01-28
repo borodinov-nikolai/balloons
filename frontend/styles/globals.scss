@@ -664,3 +664,13 @@ a {
     margin: 1rem 0;
   }
 }
+
+.link {
+  color: #0000FF;
+  transition: color 0.3s ease-in-out;
+
+  &:hover {
+    text-decoration: none;
+    color: #D4AA00;
+  }
+}

@@ -111,7 +111,7 @@ export type PlatformLinkType = {
   link?: string
 }
 
-export type CreateReleaseFormType = {
+export type CreateOrUpdateReleaseFormType = {
   type: "single" | "album"
   name: string
   date: Date

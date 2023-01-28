@@ -4,6 +4,9 @@ import withPrivateRoute from "hoc/withPrivateRoute"
 import {
   Autocomplete,
   Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
   Fade,
   FormControl,
   FormControlLabel,
@@ -20,7 +23,7 @@ import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
 import {
-  CreateReleaseFormType,
+  CreateOrUpdateReleaseFormType,
   PlatformLinkType,
   ReleaseType,
 } from "types/general"
@@ -30,8 +33,11 @@ import { useRouter } from "next/router"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
+import Link from "next/link"
+import LoadImage from "components/FeedbackForm/LoadImage"
 
 function UpdateRelease() {
+  const [release, setRelease] = useState<ReleaseType | null>(null)
   const {
     register,
     control,
@@ -40,14 +46,16 @@ function UpdateRelease() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<CreateReleaseFormType>()
+  } = useForm<CreateOrUpdateReleaseFormType>({
+    resetOptions: { keepDirtyValues: true },
+  })
 
   const { user } = useAuth()
-  const watchLink = watch("link")
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const { link: queryLink } = router.query
-  const [release, setRelease] = useState<ReleaseType | null>(null)
+  const [deleteConfirm, setDeleteConfirm] = useState(false)
 
   const {
     fields: platformLinks,
@@ -106,6 +114,10 @@ function UpdateRelease() {
     removePlatformLink(index)
   }
 
+  const deleteReleaseHandler = () => {
+    alert("Release deleted")
+  }
+
   useEffect(() => {
     setLoading(true)
     const fetchData = async () => {
@@ -123,19 +135,19 @@ function UpdateRelease() {
           const release = data[0]
           setRelease(release)
           reset({
-            type: release.type,
-            name: release.name,
-            date: new Date(release.date),
-            artistName: release.artistName,
-            platformLinks: release.platformLinks,
-            video: release.video,
-            vkPixel: release.vkPixel,
-            facebookPixel: release.facebookPixel,
+            type: release?.type,
+            name: release?.name,
+            date: release?.date ? new Date(release.date) : undefined,
+            artistName: release?.artistName,
+            link: release?.link,
+            platformLinks: release?.platformLinks,
+            video: release?.video,
+            vkPixel: release?.vkPixel,
+            facebookPixel: release?.facebookPixel,
           })
         }
-        // setError("")
       } catch (e) {
-        // setError("Что-то пошло не так, перезагрузите страницу")
+        setError("Что-то пошло не так, перезагрузите страницу")
       }
     }
 
@@ -143,7 +155,7 @@ function UpdateRelease() {
     setLoading(false)
   }, [queryLink, reset])
 
-  const submitHandler = async (form: CreateReleaseFormType) => {
+  const submitHandler = async (form: CreateOrUpdateReleaseFormType) => {
     console.log("form", form)
   }
 
@@ -160,15 +172,15 @@ function UpdateRelease() {
           </Grid>
 
           <div className={styles.create_main_row}>
-            {/*<LoadImage*/}
-            {/*  formFieldName="img"*/}
-            {/*  register={register}*/}
-            {/*  errors={errors}*/}
-            {/*  setValue={setValue}*/}
-            {/*  watch={watch}*/}
-            {/*  required*/}
-            {/*  defaultValue={release?.img}*/}
-            {/*/>*/}
+            <LoadImage
+              formFieldName="img"
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+              required
+              defaultValue={release?.img}
+            />
             <Margin />
 
             <div className={styles.right_column}>
@@ -236,20 +248,17 @@ function UpdateRelease() {
                   <TextField
                     label="Имя артиста для этого релиза"
                     {...register("artistName")}
-                    multiline
+                  />
+                  <Margin />
+
+                  <TextField
+                    label="Название релиза"
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
+                    {...register("name", { required: "Обязательное поле" })}
                   />
 
-                  <FormControl>
-                    <TextField
-                      label="Название релиза"
-                      error={!!errors.name}
-                      helperText={errors.name?.message}
-                      {...register("name", {
-                        required: "Обязательное поле",
-                      })}
-                    />
-                    <Margin />
-                  </FormControl>
+                  <Margin />
                 </Grid>
 
                 <Grid container direction="column">
@@ -334,7 +343,6 @@ function UpdateRelease() {
                       />
                     </Grid>
                   )}
-
                   <Margin />
                 </Grid>
 
@@ -350,7 +358,6 @@ function UpdateRelease() {
 
                 <Grid container direction="column">
                   <Margin />
-
                   <FormControl>
                     <FormLabel id="link-type">
                       <Typography variant="h5">
@@ -358,36 +365,33 @@ function UpdateRelease() {
                       </Typography>
                     </FormLabel>
 
-                    <FormControl>
-                      <TextField
-                        InputProps={{
-                          name: "link",
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              linkmusic.ru/
-                            </InputAdornment>
-                          ),
-                        }}
-                        error={!!errors.link}
-                        helperText={errors.link?.message}
-                        {...register("link", {
-                          required: "Обязательное поле",
-                          minLength: {
-                            value: 7,
-                            message: "Ссылка не может быть короче 7 символов",
-                          },
-                          pattern: {
-                            value: /[a-zA-Z0-9_]/,
-                            message: "Ссылка содержит недопустимые символы",
-                          },
-                          validate: () =>
-                            // @ts-ignore
-                            uniqLinkData?.releases.length > 0
-                              ? "Релиз с такой ссылкой уже существует"
-                              : true,
-                        })}
-                      />
-                    </FormControl>
+                    <TextField
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            linkmusic.ru/
+                          </InputAdornment>
+                        ),
+                      }}
+                      error={!!errors.link}
+                      helperText={errors.link?.message}
+                      {...register("link", {
+                        required: "Обязательное поле",
+                        minLength: {
+                          value: 7,
+                          message: "Ссылка не может быть короче 7 символов",
+                        },
+                        pattern: {
+                          value: /[a-zA-Z0-9_]/,
+                          message: "Ссылка содержит недопустимые символы",
+                        },
+                        // validate: () =>
+                        // // @ts-ignore
+                        // uniqLinkData?.releases.length > 0
+                        //   ? "Релиз с такой ссылкой уже существует"
+                        //   : true,
+                      })}
+                    />
                   </FormControl>
 
                   <Margin />
@@ -416,15 +420,42 @@ function UpdateRelease() {
                     Сохранить
                   </Button>
                   <Button className={styles.btn} variant="outlined">
-                    Отменить
+                    <Link href={`/artist/${user?.slug}`}>Отменить</Link>
                   </Button>
                   <Button
                     className={styles.btn}
                     variant="outlined"
                     color="warning"
+                    onClick={() => setDeleteConfirm(true)}
                   >
                     Удалить
                   </Button>
+
+                  <Dialog
+                    open={deleteConfirm}
+                    onClose={() => setDeleteConfirm(false)}
+                  >
+                    <DialogTitle>
+                      Вы действительно хотите удалить релиз?
+                    </DialogTitle>
+                    <DialogActions>
+                      <Button
+                        className={styles.btn}
+                        variant="contained"
+                        color="warning"
+                        onClick={deleteReleaseHandler}
+                      >
+                        Удалить
+                      </Button>
+                      <Button
+                        className={styles.btn}
+                        variant="outlined"
+                        onClick={() => setDeleteConfirm(false)}
+                      >
+                        Отмена
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </Grid>
                 <Margin />
               </form>

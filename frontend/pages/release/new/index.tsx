@@ -20,7 +20,7 @@ import LoadImage from "components/FeedbackForm/LoadImage"
 import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
-import { CreateReleaseFormType, PlatformLinkType } from "types/general"
+import { CreateOrUpdateReleaseFormType, PlatformLinkType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
 import { SyntheticEvent, useEffect, useMemo, useState } from "react"
@@ -42,7 +42,7 @@ function NewRelease() {
     watch,
     setValue,
     formState: { errors },
-  } = useForm<CreateReleaseFormType>({
+  } = useForm<CreateOrUpdateReleaseFormType>({
     mode: "all",
     defaultValues: {
       date: new Date(),
@@ -107,7 +107,7 @@ function NewRelease() {
     )
   }, [platformLinks])
 
-  const submitHandler = async (form: CreateReleaseFormType) => {
+  const submitHandler = async (form: CreateOrUpdateReleaseFormType) => {
     try {
       const formData = {
         data: JSON.stringify({
