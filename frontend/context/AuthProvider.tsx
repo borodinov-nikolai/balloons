@@ -27,7 +27,7 @@ const AuthContext = createContext<AuthContextType>({
   updateProfile: () => {},
 })
 
-type AuthProviderProps = { children: ReactNode }
+type AuthProviderProps = { children?: ReactNode }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const router = useRouter()

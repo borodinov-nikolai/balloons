@@ -1,7 +1,7 @@
 {
   "name": "link-music",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "workspaces": [
     "frontend",
     "backend"
@@ -18,17 +18,17 @@
     "start": "cross-env FORCE_COLOR=1 yarn workspaces run start"
   },
   "devDependencies": {
-    "cross-env": "7.0.3",
-    "eslint": "8.21.0",
-    "eslint-config-next": "12.2.4",
-    "eslint-config-prettier": "^8.5.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.35.0",
+    "eslint-config-next": "^13.2.3",
+    "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "npm-run-all": "4.1.5",
-    "prettier": "^2.7.1",
-    "wait-on": "6.0.1"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.4",
+    "wait-on": "^7.0.1"
   },
   "dependencies": {
-    "@types/sharp": "^0.31.0",
-    "sharp": "^0.31.2"
+    "@types/sharp": "^0.31.1",
+    "sharp": "^0.31.3"
   }
 }

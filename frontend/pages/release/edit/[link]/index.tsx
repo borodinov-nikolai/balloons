@@ -228,6 +228,7 @@ function UpdateRelease() {
                               onChange(newValue)
                             }}
                             value={value}
+                            // @ts-ignore
                             renderInput={(params) => <TextField {...params} />}
                           />
                         )

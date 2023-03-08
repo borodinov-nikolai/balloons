@@ -2,10 +2,11 @@
   "kind": "collectionType",
   "collectionName": "releases",
   "info": {
+    "name": "release",
+    "description": "",
     "singularName": "release",
     "pluralName": "releases",
-    "displayName": "Release",
-    "description": ""
+    "displayName": "Release"
   },
   "options": {
     "draftAndPublish": false,

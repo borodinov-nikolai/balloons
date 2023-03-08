@@ -5,7 +5,7 @@ export function getMediaUrl(img?: ImageType): string {
 
   if (url) {
     const baseURL = process.env.NEXT_PUBLIC_URL
-    return `${baseURL || "http://localhost:1337"}${url}`
+    return `${baseURL || "https://linkmusic.ru"}${url}`
   }
   return ""
 }

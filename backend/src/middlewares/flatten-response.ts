@@ -3,16 +3,16 @@ function flattenArray(obj) {
 }
 
 function flattenData(obj) {
-  return flatten(obj.data)
+  return flatten(obj?.data)
 }
 
 function flattenAttrs(obj) {
   let attrs = {}
-  for (var key in obj.attributes) {
-    attrs[key] = flatten(obj.attributes[key])
+  for (var key in obj?.attributes) {
+    attrs[key] = flatten(obj?.attributes[key])
   }
   return {
-    id: obj.id,
+    id: obj?.id,
     ...attrs,
   }
 }
@@ -21,10 +21,10 @@ function flatten(obj) {
   if (Array.isArray(obj)) {
     return flattenArray(obj)
   }
-  if (obj && obj.data) {
+  if (obj?.data) {
     return flattenData(obj)
   }
-  if (obj && obj.attributes) {
+  if (obj?.attributes) {
     return flattenAttrs(obj)
   }
   return obj
@@ -40,8 +40,8 @@ async function respond(ctx, next) {
   )
 
   ctx.response.body = {
-    data: flatten(ctx.response.body.data || ctx.response.body),
-    meta: ctx.response.body.meta,
+    data: flatten(ctx?.response?.body?.data || ctx?.response?.body),
+    meta: ctx.response?.body?.meta,
   }
 }
 

@@ -23,7 +23,7 @@ function Header() {
     ? `${styles.header} ${styles.header_bg}`
     : styles.header
   const burgerClasses = openMenu
-    ? `${styles.burger} ${styles.burger_active}`
+    ? `${styles.burger} ${styles.active}`
     : styles.burger
   const menuClasses = openMenu ? `${styles.list} ${styles.active}` : styles.list
   const { user, isAuthenticated, logout } = useAuth()
@@ -60,11 +60,11 @@ function Header() {
         )}
 
         {isAuthenticated && !!user?.avatar?.url && (
-          <Image src={getMediaUrl(user.avatar)} width={43} height={43} alt="" />
+          <Image src={getMediaUrl(user.avatar)} width={30} height={30} alt="" />
         )}
 
         {!isAuthenticated && (
-          <Image src={login} width={43} height={43} alt="" />
+          <Image src={login} width={30} height={30} alt="" />
         )}
       </>
     )
@@ -77,52 +77,52 @@ function Header() {
           <Logo />
 
           <div className={menuClasses}>
-            <Link href={{ pathname: "/", hash: "#services" }} passHref>
-              <a
-                className={
-                  router.asPath == "/#services"
-                    ? `${styles.listItem} ${styles.active}`
-                    : styles.listItem
-                }
-              >
-                Услуги
-              </a>
+            <Link
+              href={{ pathname: "/", hash: "#services" }}
+              passHref
+              className={
+                router.asPath == "/#services"
+                  ? `${styles.listItem} ${styles.active}`
+                  : styles.listItem
+              }
+            >
+              Услуги
             </Link>
 
-            <Link href={"/artists"} passHref>
-              <a
-                className={
-                  router.asPath == "/artists"
-                    ? `${styles.listItem} ${styles.active}`
-                    : styles.listItem
-                }
-              >
-                Артисты
-              </a>
+            <Link
+              href={"/artists"}
+              passHref
+              className={
+                router.asPath == "/artists"
+                  ? `${styles.listItem} ${styles.active}`
+                  : styles.listItem
+              }
+            >
+              Артисты
             </Link>
 
-            <Link href={"/releases"} passHref>
-              <a
-                className={
-                  router.asPath == "/releases"
-                    ? `${styles.listItem} ${styles.active}`
-                    : styles.listItem
-                }
-              >
-                Релизы
-              </a>
+            <Link
+              href={"/releases"}
+              passHref
+              className={
+                router.asPath == "/releases"
+                  ? `${styles.listItem} ${styles.active}`
+                  : styles.listItem
+              }
+            >
+              Релизы
             </Link>
 
-            <Link href={{ pathname: "/", hash: "#contacts" }} passHref>
-              <a
-                className={
-                  router.asPath == "/#contacts"
-                    ? `${styles.listItem} ${styles.active}`
-                    : styles.listItem
-                }
-              >
-                Контакты
-              </a>
+            <Link
+              href={{ pathname: "/", hash: "#contacts" }}
+              passHref
+              className={
+                router.asPath == "/#contacts"
+                  ? `${styles.listItem} ${styles.active}`
+                  : styles.listItem
+              }
+            >
+              Контакты
             </Link>
 
             <div className={styles.listCircle}>
@@ -220,7 +220,7 @@ function Header() {
             className={burgerClasses}
             onClick={() => setOpenMenu(!openMenu)}
           >
-            <Image src={burger} width={50} height={50} alt="" />
+            <Image src={burger} width={18} height={18} alt="" />
           </button>
 
           {isAuthenticated ? (
@@ -266,7 +266,7 @@ function Header() {
           ) : (
             <Link href={"/login"}>
               <Grid className={styles.personalAreaButton}>
-                <Image src={login} alt="" />
+                <Image src={login} alt="" height={30} width={30} />
               </Grid>
             </Link>
           )}

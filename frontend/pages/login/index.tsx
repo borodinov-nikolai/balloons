@@ -67,8 +67,8 @@ const Login: FunctionComponent = () => {
         })}
       />
 
-      <Link href={"/forgot-password"}>
-        <a className={styles.forgotPassword}>Забыли пароль?</a>
+      <Link href={"/forgot-password"} className={styles.forgotPassword}>
+        Забыли пароль?
       </Link>
 
       <Grid container style={{ margin: "1rem 0 0" }}>
@@ -84,8 +84,8 @@ const Login: FunctionComponent = () => {
 
       <p className={styles.formPage__text}>
         Нет аккаунта?{" "}
-        <Link href={"/registration"}>
-          <a className={styles.formPage__enterLink}>Зарегистрироваться</a>
+        <Link href={"/registration"} className={styles.formPage__enterLink}>
+          Зарегистрироваться
         </Link>
       </p>
 

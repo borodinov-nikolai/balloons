@@ -72,12 +72,12 @@ function SearchRow(props: SearchRowProps) {
           <div
             className={`${styles.searchRow__vector} ${styles.searchRow__vector_left}`}
           >
-            <Image src={left} alt="" />
+            <Image src={left} alt="" height={43} width={43} />
           </div>
           <div
             className={`${styles.searchRow__vector} ${styles.searchRow__vector_right}`}
           >
-            <Image src={right} alt="" />
+            <Image src={right} alt="" height={43} width={43} />
           </div>
         </div>
       </div>

@@ -31,8 +31,8 @@ function ListItem({
             <Image
               src={img?.url ? getMediaUrl(img) : placeholderUrl}
               alt="list img"
-              width={img?.width || 300}
-              height={img?.height || 300}
+              width={300}
+              height={300}
             />
           </Grid>
 

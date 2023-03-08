@@ -3,6 +3,7 @@ import { Grid, Typography } from "@mui/material"
 import { useRouter } from "next/router"
 import { NewsArticleType } from "types/general"
 import Image from "next/image"
+import { getMediaUrl } from "../../../lib/media"
 
 function NewsPage() {
   const router = useRouter()
@@ -16,7 +17,12 @@ function NewsPage() {
       <Grid container direction="column" className="container">
         <Typography variant="h3">{newsArticle?.title}</Typography>
         {newsArticle?.img.url && (
-          <Image src={newsArticle.img.url} width={300} height={300} alt="" />
+          <Image
+            src={getMediaUrl(newsArticle.img)}
+            width={300}
+            height={300}
+            alt=""
+          />
         )}
         {newsArticle?.content?.document && (
           <Typography>

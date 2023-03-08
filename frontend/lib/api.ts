@@ -2,11 +2,13 @@ import axios, { AxiosInstance } from "axios"
 import qs from "qs"
 
 export const API: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:1337/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "https://linkmusic.ru/api",
   timeout: 1000,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
-  paramsSerializer: (params) => {
-    return qs.stringify(params)
-  },
 })
+
+// @ts-ignore
+API.paramsSerializer = (p) => {
+  return qs.stringify(p, { arrayFormat: "brackets" })
+}

@@ -13,6 +13,12 @@
     "timestamps": true
   },
   "attributes": {
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "unique": true,
+      "required": false
+    },
     "email": {
       "type": "email",
       "minLength": 6,
@@ -23,12 +29,6 @@
       "minLength": 11,
       "required": true,
       "private": true
-    },
-    "name": {
-      "type": "string",
-      "minLength": 3,
-      "unique": true,
-      "required": false
     },
     "releases": {
       "type": "relation",
@@ -72,9 +72,6 @@
       "allowedTypes": [
         "images"
       ]
-    },
-    "provider": {
-      "type": "string"
     },
     "password": {
       "type": "password",
@@ -124,6 +121,9 @@
     "order": {
       "type": "integer",
       "default": 0
+    },
+    "provider": {
+      "type": "string"
     }
   }
 }

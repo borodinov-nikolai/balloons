@@ -63,8 +63,9 @@ function LoadImage({
             <CloseIcon className={styles.remove_btn} onClick={onClearHandler} />
             <Image
               src={URL.createObjectURL(files.item(0))}
-              width="3000px"
-              height="3000px"
+              width={3000}
+              height={3000}
+              alt="img"
             />
           </>
         )}

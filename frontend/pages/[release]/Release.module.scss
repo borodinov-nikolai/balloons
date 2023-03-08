@@ -31,8 +31,10 @@
 }
 
 .release_column_img {
-  max-width: 500px;
   max-height: 500px;
+  max-width: 500px;
+  width: 90vw;
+  height: 90vw;
   margin-top: 4vh;
   overflow: hidden;
   border-radius: 10px 10px 0 0;
@@ -48,7 +50,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   border-radius: 0 0 10px 10px;
   max-width: 500px;
-  width: 100%;
+  width: 90vw;
   @media (max-width: 767px) {
     padding: 1rem;
   }

@@ -128,7 +128,7 @@
     }
   }
 
-  &.active {
+  .active {
     rect:nth-of-type(1) {
       transform: rotate(45deg) translateY(-2px) translateX(2px);
     }
