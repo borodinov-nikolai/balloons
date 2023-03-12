@@ -219,17 +219,17 @@ const ReleaseSliderMainSlide = () => {
             alt=""
             className={styles.slideCharacterImg}
           />
-          <p className={styles.slideTitle}>
+          <div className={styles.slideTitle}>
             Расскажи <br /> всем о релизе
-          </p>
+          </div>
           <Grid className={styles.imgWrapperNotes}>
             <img src={"/assets/notes.svg"} alt="" />
           </Grid>
         </Grid>
 
-        <p className={`${styles.slideTitle} ${styles.slideTitle_main}`}>
+        <div className={`${styles.slideTitle} ${styles.slideTitle_main}`}>
           Расскажи <br /> всем о релизе
-        </p>
+        </div>
         <Grid
           container
           direction="column"

@@ -29,10 +29,6 @@ a {
   text-decoration: none;
 }
 
-img {
-  width: 100%;
-}
-
 button {
   cursor: pointer;
   background: transparent;
@@ -673,4 +669,21 @@ a {
     text-decoration: none;
     color: #D4AA00;
   }
+}
+
+.square_img_container {
+  width: 100%;
+  overflow: hidden;
+
+  > div {
+    position: unset !important;
+  }
+}
+
+.square_img {
+  vertical-align: middle;
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
 }

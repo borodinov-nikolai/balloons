@@ -30,23 +30,15 @@
   }
 }
 
-.release_column_img {
-  max-height: 500px;
-  max-width: 500px;
-  width: 90vw;
-  height: 90vw;
+.release_img_container {
   margin-top: 4vh;
-  overflow: hidden;
+  max-width: 500px;
   border-radius: 10px 10px 0 0;
-
-  & span {
-    display: block !important;
-  }
 }
 
 .release_column {
   padding: 2rem;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   border-radius: 0 0 10px 10px;
   max-width: 500px;

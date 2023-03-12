@@ -1,12 +1,12 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement } from "react"
 
 type LinkWrapperType = {
-  condition: boolean;
-  wrapper: Function;
-  children: ReactElement;
-};
+  condition: boolean
+  wrapper: Function
+  children: ReactElement
+}
 
 const LinkWrapper: FC<LinkWrapperType> = ({ condition, wrapper, children }) =>
-  condition ? wrapper(children) : children;
+  condition ? wrapper(children) : children
 
-export default LinkWrapper;
+export default LinkWrapper

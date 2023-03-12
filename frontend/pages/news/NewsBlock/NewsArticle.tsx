@@ -16,9 +16,9 @@ function NewsArticle({ newsArticle, small = false }: NewsArticleProps) {
         className={styles.article_img_wrapper}
         style={{ backgroundImage: `url(${img?.url})` }}
       />
-      <p className={styles.article_date}>
+      <div className={styles.article_date}>
         {new Date(date).toLocaleDateString("ru-RU")}
-      </p>
+      </div>
 
       <a href={`/news/${slug}`} className={styles.article_title}>
         {title}

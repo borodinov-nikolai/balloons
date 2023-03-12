@@ -1,6 +1,6 @@
 import withStandardLayout from "hoc/withStandardLayout"
 import SearchRow from "components/SearchRow"
-import { Grid } from "@mui/material"
+import { Grid, useMediaQuery } from "@mui/material"
 import { useRouter } from "next/router"
 import { NextPage } from "next"
 import { useEffect, useState } from "react"
@@ -9,6 +9,7 @@ import ReleaseItem from "pages/releases/ReleaseItem"
 import { Pagination, ReleaseType } from "types/general"
 import List from "components/List"
 import Loader from "components/Loader"
+import { Theme } from "@mui/system"
 
 const Releases: NextPage = () => {
   const router = useRouter()
@@ -18,7 +19,14 @@ const Releases: NextPage = () => {
   const [pagination, setPagination] = useState<Pagination>()
   const page = Number(router.query?.page) || 1
   const searchQuery = router.query?.search || ""
-  const pageSize = 8
+
+  const mediumScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.between(788, 1040)
+  )
+
+  console.log("mediumScreen", mediumScreen)
+  const pageSize = mediumScreen ? 9 : 8
+
   const offset = page * pageSize - pageSize
 
   const releaseItems = loading
@@ -30,6 +38,7 @@ const Releases: NextPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
+
       try {
         const {
           data: { data, meta },
@@ -54,7 +63,7 @@ const Releases: NextPage = () => {
     }
 
     fetchData()
-  }, [offset, page, searchQuery])
+  }, [mediumScreen, offset, page, pageSize, searchQuery])
 
   return (
     <>
@@ -63,22 +72,18 @@ const Releases: NextPage = () => {
         bg="linear-gradient(90deg, #3434FF 0%, #FF6534 100%)"
       />
 
-      <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        {loading && <Loader />}
-
-        <List pageCount={pagination?.pageCount} pageSize={pageSize}>
-          {releases.length
-            ? releaseItems
-            : [
+      <Grid className="content" style={{ flexGrow: 1 }}>
+        <List pageCount={pagination?.pageCount}>
+          {loading
+            ? [<div key={1}>Идет загрузка</div>]
+            : (releases.length && releaseItems) || [
                 <Grid
                   key={1}
                   container
                   style={{ fontSize: "2rem", margin: "2rem 0" }}
                   justifyContent="center"
                 >
-                  {!!searchQuery
-                    ? `Релиз с название ${searchQuery} не найдено`
-                    : !loading && "У артиста пока нет рилизов"}
+                  Релизов с название {searchQuery} не найдено
                 </Grid>,
               ]}
         </List>

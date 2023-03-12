@@ -25,14 +25,14 @@ function ListItem({
         <Link href={link || ""}>{children}</Link>
       )}
     >
-      <Grid item sx={sx}>
+      <Grid sx={sx} className={styles.item}>
         <Grid container direction="column">
-          <Grid className={styles.item_img}>
+          <Grid className={`${styles.item_img_container} square_img_container`}>
             <Image
               src={img?.url ? getMediaUrl(img) : placeholderUrl}
               alt="list img"
-              width={300}
-              height={300}
+              className="square_img"
+              fill
             />
           </Grid>
 

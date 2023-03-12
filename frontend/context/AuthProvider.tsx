@@ -67,18 +67,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     Cookies.remove("token")
     API.defaults.headers.common.Authorization = ""
 
-    const {
-      data: {
-        data: { jwt, user },
-      },
-    } = await API.post("auth/local", form)
+    try {
+      const {
+        data: {
+          data: { jwt, user },
+        },
+      } = await API.post("/auth/local", form)
 
-    if (jwt) {
-      Cookies.set("token", jwt, { expires: 60 })
-      API.defaults.headers.common.Authorization = `Bearer ${jwt}`
-      setUser(user)
-      if (user.slug) await router.push(`/artist/${user.slug}`)
-      if (!user.slug) await router.push("/artist/new")
+      if (jwt) {
+        Cookies.set("token", jwt, { expires: 60 })
+        API.defaults.headers.common.Authorization = `Bearer ${jwt}`
+        setUser(user)
+        if (user.slug) await router.push(`/artist/${user.slug}`)
+        if (!user.slug) await router.push("/artist/new")
+      }
+    } catch (e) {
+      console.log("errors", e)
+
+      setError("Ошибка входа")
     }
 
     setLoading(false)
@@ -114,8 +120,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (!user.slug) await router.push("/artist/new")
       }
     } catch (e) {
+      console.log("errors", e)
+
       setError("Ошибка регистрации")
     }
+    setLoading(false)
   }
 
   const updateProfile = async (form: UpdateProfileFormType) => {

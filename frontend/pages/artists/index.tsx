@@ -21,9 +21,9 @@ function Artists() {
   // usersCount
   const pageCount = Math.floor(2 + limit - 1) || 0
 
-  const artistItems = loading
-    ? [<div key={1}>Идет загрузка</div>]
-    : artists.map((it: UserType) => <ArtistItem key={it.id} artist={it} />)
+  const artistItems = artists.map((it: UserType) => (
+    <ArtistItem key={it.id} artist={it} />
+  ))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,11 +60,11 @@ function Artists() {
         bg="linear-gradient(90deg, #FF3B3B -15.88%, #FFCD1C 133.05%)"
       />
 
-      <Grid className="content" style={{ flexGrow: 1, padding: "4rem 1rem" }}>
-        <List pageCount={Math.trunc(pageCount / limit)} pageSize={limit}>
-          {artists.length
-            ? artistItems
-            : [
+      <Grid className="content" style={{ flexGrow: 1 }}>
+        <List pageCount={Math.trunc(pageCount / limit)}>
+          {loading
+            ? [<div key={1}>Идет загрузка</div>]
+            : (artists.length && artistItems) || [
                 <Grid
                   key={1}
                   container

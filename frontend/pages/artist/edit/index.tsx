@@ -21,7 +21,7 @@ import { useAuth } from "context/AuthProvider"
 import Margin from "components/FeedbackForm/Margin"
 import LoadImage from "components/FeedbackForm/LoadImage"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function UpdateProfile() {
   const { updateProfile, user } = useAuth()
@@ -30,22 +30,10 @@ function UpdateProfile() {
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
-  } = useForm<UpdateProfileFormType>({
-    defaultValues: {
-      name: user?.name,
-      description: user?.description,
-      site: user?.site,
-      canBookPerformance: user?.canBookPerformance,
-      vk: user?.vk,
-      odnoklassniki: user?.odnoklassniki,
-      youtube: user?.youtube,
-      rutube: user?.rutube,
-      telegram: user?.telegram,
-      facebook: user?.facebook,
-      instagram: user?.instagram,
-    },
-  })
+  } = useForm<UpdateProfileFormType>()
+
   const canBookPerformance = watch("canBookPerformance")
   const [deleteConfirm, setDeleteConfirm] = useState(false)
 
@@ -56,6 +44,23 @@ function UpdateProfile() {
   const deleteUserHandler = () => {
     alert("user deleted")
   }
+
+  useEffect(() => {
+    if (user)
+      reset({
+        name: user?.name,
+        description: user?.description,
+        site: user?.site,
+        canBookPerformance: user?.canBookPerformance,
+        vk: user?.vk,
+        odnoklassniki: user?.odnoklassniki,
+        youtube: user?.youtube,
+        rutube: user?.rutube,
+        telegram: user?.telegram,
+        facebook: user?.facebook,
+        instagram: user?.instagram,
+      })
+  }, [reset, user])
 
   return (
     <>

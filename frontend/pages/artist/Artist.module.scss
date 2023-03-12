@@ -8,19 +8,22 @@
   }
 }
 
-.header {
-  height: 18rem;
+
+.header_bg_container {
+  position: absolute;
   overflow: hidden;
-  position: relative;
-  background: #0C0B0B;
+  top: 1rem;
+  height: 30vw;
+  min-height: 13rem;
+  max-height: 20rem;
+  width: 100%;
+  z-index: -1;
+  background: black;
 }
 
 .header_bg {
-  position: absolute;
-  left: -2rem;
-  top: -2rem;
-  right: -2rem;
-  bottom: -2rem;
+  height: 100%;
+  width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -33,18 +36,18 @@
   opacity: .6;
 }
 
+.header {
+  height: 30vw;
+  width: 100%;
+  min-height: 13rem;
+  max-height: 20rem;
+}
+
 .header_content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .header_avatar {
-  width: 30%;
-  margin: 2rem 2rem 0 0;
+  width: 25%;
 }
 
 .header_user_block {

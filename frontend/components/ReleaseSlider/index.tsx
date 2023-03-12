@@ -43,7 +43,7 @@ const settings: Settings = {
   nextArrow: <NextArrow />,
   centerMode: true,
   customPaging: (i: number) => (
-    <p className={styles.paginationItem}>0{i + 1}</p>
+    <div className={styles.paginationItem}>0{i + 1}</div>
   ),
 }
 

@@ -59,15 +59,10 @@ function LoadImage({
     <Grid>
       <Grid className={styles.load_img}>
         {!!files?.length && (
-          <>
+          <Grid className="square_img_container">
             <CloseIcon className={styles.remove_btn} onClick={onClearHandler} />
-            <Image
-              src={URL.createObjectURL(files.item(0))}
-              width={3000}
-              height={3000}
-              alt="img"
-            />
-          </>
+            <Image src={URL.createObjectURL(files.item(0))} fill alt="img" />
+          </Grid>
         )}
 
         {!files?.length && (

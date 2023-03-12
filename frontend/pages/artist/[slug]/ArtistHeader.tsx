@@ -1,12 +1,13 @@
 import { Button, Grid, Typography } from "@mui/material"
-
-import styles from "pages/artist/Artist.module.scss"
+import Image from "next/image"
 import SocialLinks from "components/SocialLinks"
 import Link from "next/link"
 import MuiLink from "@mui/material/Link"
 import { UserType } from "types/auth"
 import { getMediaUrl } from "lib/media"
 import getUserSocialLinks from "lib/getUserSocialLinks"
+
+import styles from "pages/artist/Artist.module.scss"
 
 type ArtistHeaderProps = {
   user?: UserType
@@ -79,7 +80,7 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
         </defs>
       </svg>
 
-      <Grid className={styles.header}>
+      <Grid className={styles.header_bg_container}>
         <Grid
           className={styles.header_bg}
           style={{
@@ -88,40 +89,52 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
         />
       </Grid>
 
-      <Grid container className={`${styles.header_content} content`}>
-        <Grid className={styles.header_avatar}>
-          <img src={getMediaUrl(user?.avatar)} alt="" />
-        </Grid>
+      <Grid className={styles.header}>
+        <Grid container className={`${styles.header_content} content`}>
+          <Grid
+            md={4}
+            className={`${styles.header_avatar} square_img_container`}
+          >
+            <Image
+              fill
+              className="square_img"
+              src={getMediaUrl(user?.avatar)}
+              alt=""
+            />
+          </Grid>
 
-        <Grid className={styles.header_user_block}>
-          <Typography className={styles.header_user_title} variant="h2">
-            {user?.name}
-          </Typography>
+          <Grid md={8} className={styles.header_user_block}>
+            <Typography className={styles.header_user_title} variant="h2">
+              {user?.name}
+            </Typography>
 
-          {user?.site && (
-            <MuiLink
-              href={`http://${user.site}`}
-              style={{ width: "70%" }}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {user.site}
-            </MuiLink>
-          )}
+            {user?.site && (
+              <MuiLink
+                href={`http://${user.site}`}
+                style={{ width: "70%" }}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {user.site}
+              </MuiLink>
+            )}
 
-          <Typography style={{ width: "70%" }}>{user?.description}</Typography>
+            <Typography style={{ width: "70%" }}>
+              {user?.description}
+            </Typography>
 
-          <SocialLinks
-            color="white"
-            links={getUserSocialLinks(user)}
-            sx={{ margin: "1.5rem 0" }}
-          />
+            <SocialLinks
+              color="white"
+              links={getUserSocialLinks(user)}
+              sx={{ margin: "1.5rem 0" }}
+            />
 
-          {isCurrentUser && (
-            <Link href="/artist/edit">
-              <Button color="secondary">Редактировать</Button>
-            </Link>
-          )}
+            {isCurrentUser && (
+              <Link href="/artist/edit">
+                <Button color="secondary">Редактировать</Button>
+              </Link>
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

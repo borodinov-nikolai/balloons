@@ -100,11 +100,11 @@ function Registration() {
           required
         />
 
-        <p className={styles.formPage__checkboxText}>
+        <div className={styles.formPage__checkboxText}>
           <a href={"/terms"} className={styles.formPage__link}>
             Принимаю пользовательское соглашение
           </a>
-        </p>
+        </div>
       </div>
 
       <Grid container style={{ margin: "1rem 0 0" }}>
@@ -118,12 +118,12 @@ function Registration() {
         />
       </Grid>
 
-      <p className={styles.formPage__text}>
+      <div className={styles.formPage__text}>
         У меня есть аккаунт
         <Link href={"/login"} className={styles.formPage__enterLink}>
           Войти
         </Link>
-      </p>
+      </div>
 
       <Button
         type="submit"

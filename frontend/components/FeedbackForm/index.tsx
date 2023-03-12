@@ -88,13 +88,13 @@ function FeedbackForm() {
             <div className="left-img">
               <img src={"images/block-form__left-column-img.svg"} alt="" />
             </div>
-            <p className={styles.leftTitle}>
+            <div className={styles.leftTitle}>
               Опишите свои потребности - и мы свяжемся с вами
-            </p>
-            <p className={styles.leftText}>
+            </div>
+            <div className={styles.leftText}>
               Мы обрабатываем все запросы и можем найти индивидуальное решение
               для каждого клиента
-            </p>
+            </div>
           </div>
 
           <div className={styles.column}>
@@ -241,14 +241,14 @@ function FeedbackForm() {
                   Отправить
                 </Button>
 
-                <p className={styles.politic}>
+                <div className={styles.politic}>
                   Отправляя сообщение вы соглашаетесь с{" "}
                   <div className="link">
                     <Link href={"/privacy-policy"}>
                       Политикой конфиденциальности
                     </Link>
                   </div>
-                </p>
+                </div>
               </div>
 
               <Confirm

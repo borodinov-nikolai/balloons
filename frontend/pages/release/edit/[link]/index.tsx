@@ -46,9 +46,7 @@ function UpdateRelease() {
     setValue,
     reset,
     formState: { errors },
-  } = useForm<CreateOrUpdateReleaseFormType>({
-    resetOptions: { keepDirtyValues: true },
-  })
+  } = useForm<CreateOrUpdateReleaseFormType>()
 
   const { user } = useAuth()
   const router = useRouter()

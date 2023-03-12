@@ -82,16 +82,17 @@ const Login: FunctionComponent = () => {
         />
       </Grid>
 
-      <p className={styles.formPage__text}>
+      <div className={styles.formPage__text}>
         Нет аккаунта?{" "}
         <Link href={"/registration"} className={styles.formPage__enterLink}>
           Зарегистрироваться
         </Link>
-      </p>
+      </div>
 
       <Button type="submit" disabled={loading} fullWidth>
         {loading ? "Проверка данных..." : "Вход"}
       </Button>
+
       {authError}
 
       <CloseButton />

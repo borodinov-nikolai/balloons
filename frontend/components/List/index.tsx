@@ -1,27 +1,15 @@
 import { Grid, Pagination } from "@mui/material"
 import { ChangeEvent, ReactElement } from "react"
 import { useRouter } from "next/router"
+import styles from "./List.module.scss"
 
 type ListProps = {
   children?: ReactElement[]
-  pageSize?: number
   pageCount?: number
 }
 
 function List(props: ListProps) {
-  const { children, pageCount, pageSize } = props
-  const emptyItems =
-    children?.length && pageSize
-      ? Array.from(
-          {
-            length:
-              children?.length > 3
-                ? pageSize % children?.length
-                : 4 - children?.length,
-          },
-          (_, i) => i
-        )
-      : []
+  const { children, pageCount } = props
 
   const router = useRouter()
   const page = Number(router.query.page) || 1
@@ -34,25 +22,19 @@ function List(props: ListProps) {
   }
 
   return (
-    <Grid container justifyContent="space-between" style={{ height: "100%" }}>
-      <>
-        {children}
+    <Grid container className={styles.list}>
+      {children}
 
-        {emptyItems.map((it) => (
-          <Grid key={it} item style={{ width: "24%" }} />
-        ))}
-
-        <Grid container justifyContent="center" style={{ margin: "2rem 0" }}>
-          {!!pageCount && pageCount > 1 && (
-            <Pagination
-              count={pageCount}
-              page={page}
-              size="large"
-              onChange={paginationHandler}
-            />
-          )}
-        </Grid>
-      </>
+      <Grid container justifyContent="center" style={{ margin: "2rem 0" }}>
+        {!!pageCount && pageCount > 1 && (
+          <Pagination
+            count={pageCount}
+            page={page}
+            size="large"
+            onChange={paginationHandler}
+          />
+        )}
+      </Grid>
     </Grid>
   )
 }

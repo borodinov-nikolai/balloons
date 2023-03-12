@@ -202,10 +202,10 @@ function Suggestion() {
         <Grid className={styles.text_part}>
           <Typography variant="h2">Мы предлагаем</Typography>
 
-          <p className={styles.column__text}>
+          <div className={styles.column__text}>
             Комплекс удобных услуг для вашей музыкальной деятельности. Узнайте
             подробности в карточках.
-          </p>
+          </div>
 
           <Button fullWidth href={"#contacts"} className={styles.column__btn}>
             Связаться с нами
@@ -305,9 +305,9 @@ function Suggestion() {
                         <img src={img} alt="" />
                       </div>
                       <div className={styles.slider__summary}>
-                        <p className={styles.slider__title}>{title}</p>
+                        <div className={styles.slider__title}>{title}</div>
                       </div>
-                      <p className={styles.slider__text}>{text}</p>
+                      <div className={styles.slider__text}>{text}</div>
 
                       <span className={styles.slider__effect} />
                     </Grid>
@@ -466,7 +466,7 @@ function Suggestion() {
                     <div className={styles.modal__slide_img}>
                       <img src={img} alt="" />
                     </div>
-                    <p className={styles.modal__slide_title}>{title}</p>
+                    <div className={styles.modal__slide_title}>{title}</div>
                   </div>
                 </div>
               )
@@ -492,7 +492,7 @@ function Suggestion() {
             {openModal && (
               <div className={styles.modal__description}>
                 {modalState?.fullText.split("\n").map((textPart) => {
-                  return <p key={textPart}>{textPart}</p>
+                  return <div key={textPart}>{textPart}</div>
                 })}
               </div>
             )}

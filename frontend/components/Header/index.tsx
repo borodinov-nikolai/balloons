@@ -60,12 +60,10 @@ function Header() {
         )}
 
         {isAuthenticated && !!user?.avatar?.url && (
-          <Image src={getMediaUrl(user.avatar)} width={30} height={30} alt="" />
+          <Image src={getMediaUrl(user.avatar)} fill alt="" />
         )}
 
-        {!isAuthenticated && (
-          <Image src={login} width={30} height={30} alt="" />
-        )}
+        {!isAuthenticated && <Image src={login} fill alt="" />}
       </>
     )
   }
@@ -248,7 +246,7 @@ function Header() {
                             user?.slug ? `/artist/${user?.slug}` : "/artist/new"
                           }
                         >
-                          <a>Профиль</a>
+                          Профиль
                         </Link>
                       </Grid>
 

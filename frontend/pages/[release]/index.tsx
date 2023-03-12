@@ -61,16 +61,15 @@ function ReleasePage() {
 
         <Grid className="content">
           <Grid container direction="column" alignItems="center">
-            <Grid className={styles.release_column_img}>
+            <Grid
+              className={`square_img_container ${styles.release_img_container}`}
+            >
               {release?.img && (
-                <Grid
-                  style={{
-                    background: `url(${getMediaUrl(
-                      release?.img
-                    )}) 50% 50% no-repeat`,
-                    width: "100%",
-                    height: "100%",
-                  }}
+                <Image
+                  src={getMediaUrl(release?.img)}
+                  alt=""
+                  fill
+                  className="square_img"
                 />
               )}
             </Grid>
