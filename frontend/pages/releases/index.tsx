@@ -1,6 +1,6 @@
 import withStandardLayout from "hoc/withStandardLayout"
 import SearchRow from "components/SearchRow"
-import { Grid, useMediaQuery } from "@mui/material"
+import { Grid } from "@mui/material"
 import { useRouter } from "next/router"
 import { NextPage } from "next"
 import { useEffect, useState } from "react"
@@ -8,7 +8,6 @@ import { API } from "lib/api"
 import ReleaseItem from "pages/releases/ReleaseItem"
 import { Pagination, ReleaseType } from "types/general"
 import List from "components/List"
-import Loader from "components/Loader"
 import { Theme } from "@mui/system"
 
 const Releases: NextPage = () => {
@@ -19,13 +18,7 @@ const Releases: NextPage = () => {
   const [pagination, setPagination] = useState<Pagination>()
   const page = Number(router.query?.page) || 1
   const searchQuery = router.query?.search || ""
-
-  const mediumScreen = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.between(788, 1040)
-  )
-
-  console.log("mediumScreen", mediumScreen)
-  const pageSize = mediumScreen ? 9 : 8
+  const pageSize = 8
 
   const offset = page * pageSize - pageSize
 
@@ -46,6 +39,7 @@ const Releases: NextPage = () => {
           params: {
             populate: ["img", "user"],
             "filters[name][$null]": "",
+            "filters[user][blocked]": "false",
             "filters[name][$contains]": searchQuery,
             "pagination[page]": page,
             "pagination[pageSize]": pageSize,
@@ -63,7 +57,7 @@ const Releases: NextPage = () => {
     }
 
     fetchData()
-  }, [mediumScreen, offset, page, pageSize, searchQuery])
+  }, [offset, page, pageSize, searchQuery])
 
   return (
     <>

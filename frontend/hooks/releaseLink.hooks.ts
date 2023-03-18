@@ -13,7 +13,6 @@ function useReleaseLink() {
       const {
         data: { data },
       } = await API.get("/release-link")
-      console.log("release-link", data)
       setError("")
       setUniqueLink(data)
     } catch (e) {

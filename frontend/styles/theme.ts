@@ -37,6 +37,11 @@ let theme = createTheme({
     },
   },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: { textOverflow: "ellipsis" },
+      },
+    },
     MuiButton: {
       defaultProps: {
         variant: "contained",

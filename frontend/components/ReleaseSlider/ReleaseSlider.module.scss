@@ -16,12 +16,12 @@
     z-index: 5;
 
     @media (max-width: 1023px) {
-      bottom: 35px;
+      bottom: 4.8vh;
       left: calc((100% - 220px) / 2 - 145px);
     }
 
     @media (max-width: 767px) {
-      bottom: 85px;
+      bottom: 4.8vh;
       max-width: 170px;
       width: 100%;
       left: 50%;
@@ -118,7 +118,7 @@
   @media (max-width: 767px) {
     width: 30px;
     height: 30px;
-    bottom: 95px;
+    bottom: 4.8vh;
     left: 20px;
     &::before {
       width: 20px;

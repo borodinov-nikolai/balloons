@@ -1,12 +1,13 @@
 import ListItem from "components/List/ListItem"
 import { ReleaseType } from "types/general"
+import { CSSProperties } from "react"
 
 type ReleaseItemType = {
   release: ReleaseType
-  sx?: object
+  styles?: CSSProperties
 }
 
-function ReleaseItem({ release, sx }: ReleaseItemType) {
+function ReleaseItem({ release, styles }: ReleaseItemType) {
   const { img, name, link, artistName } = release
   const year = new Date(release.date).getFullYear()
   const releaseType = release.type === "single" ? "Сингл" : "Альбом"
@@ -18,7 +19,7 @@ function ReleaseItem({ release, sx }: ReleaseItemType) {
       subTitle={artistName ? artistName : release.user?.name}
       description={`${year} ${releaseType}`}
       link={`/${link}`}
-      sx={sx}
+      style={styles}
     />
   )
 }

@@ -40,7 +40,6 @@ function FeedbackForm() {
   const files = watch("attachment")
 
   const submitHandler = async (form: FeedbackFormType) => {
-    console.log("form", form)
     try {
       const { status } = await API.post(
         "feedbacks",

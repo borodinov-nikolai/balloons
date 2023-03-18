@@ -80,16 +80,16 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
         </defs>
       </svg>
 
-      <Grid className={styles.header_bg_container}>
-        <Grid
-          className={styles.header_bg}
-          style={{
-            backgroundImage: `url(${getMediaUrl(user?.avatar)})`,
-          }}
-        />
-      </Grid>
-
       <Grid className={styles.header}>
+        <Grid className={styles.header_bg_container}>
+          <Grid
+            className={styles.header_bg}
+            style={{
+              backgroundImage: `url(${getMediaUrl(user?.avatar)})`,
+            }}
+          />
+        </Grid>
+
         <Grid container className={`${styles.header_content} content`}>
           <Grid
             md={4}

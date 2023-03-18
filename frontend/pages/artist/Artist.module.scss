@@ -12,11 +12,8 @@
 .header_bg_container {
   position: absolute;
   overflow: hidden;
-  top: 1rem;
-  height: 30vw;
-  min-height: 13rem;
-  max-height: 20rem;
   width: 100%;
+  height: 100%;
   z-index: -1;
   background: black;
 }
@@ -37,28 +34,48 @@
 }
 
 .header {
-  height: 30vw;
+  position: relative;
   width: 100%;
-  min-height: 13rem;
-  max-height: 20rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    height: 100%;
+  }
 }
 
 .header_content {
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .header_avatar {
-  width: 25%;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  bottom: -4rem;
+  margin: 1rem 0;
+  flex-grow: 1;
+
+  @media (max-width: 900px) {
+    align-items: flex-start;
+    bottom: 0;
+    width: 90%;
+  }
 }
 
 .header_user_block {
   padding: 2rem;
-  flex-grow: 1;
+  flex-grow: 6;
   color: white;
   flex-direction: column;
+
+  @media (max-width: 767px) {
+    width: 90%;
+  }
 }
 
-.header_user_title {
-}
 
 .right_column {
   width: 580px;

@@ -1,4 +1,5 @@
 import { ImageType } from "types/general"
+import { CSSProperties } from "react"
 
 export type ListItemType = {
   img?: ImageType
@@ -7,5 +8,5 @@ export type ListItemType = {
   subTitle?: string
   description?: string
   placeholder?: string
-  sx?: object
+  style?: CSSProperties
 }

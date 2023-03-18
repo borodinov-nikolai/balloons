@@ -68,9 +68,7 @@ const settings: Settings = {
   responsive: [
     {
       breakpoint: 768,
-      settings: {
-        arrows: false,
-      },
+      settings: { arrows: false },
     },
   ],
 }
@@ -86,6 +84,7 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
   const [artists, setArtists] = useState<UserType[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const sliderItemStyle = { width: "250px" }
 
   useEffect(() => {
     const fetchArtists = async () => {
@@ -164,7 +163,7 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
       <div className="content_slider">
         <Slider {...settings} className={`${styles.row} ${styles.row_main}`}>
           {artists.map((it: UserType) => (
-            <ArtistItem artist={it} key={it.id} sx={{ margin: "1rem" }} />
+            <ArtistItem artist={it} key={it.id} styles={sliderItemStyle} />
           ))}
         </Slider>
       </div>
@@ -173,7 +172,7 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
         <Slider {...settings} className={`${styles.row} ${styles.row_main}`}>
           {releases.map((it: ReleaseType) => {
             return (
-              <ReleaseItem key={it.id} release={it} sx={{ margin: "1rem" }} />
+              <ReleaseItem key={it.id} release={it} styles={sliderItemStyle} />
             )
           })}
         </Slider>

@@ -109,7 +109,7 @@ export async function createImg(width: number, height: number) {
     .toFormat("jpg")
     .toBuffer()
     .then((data) => data.toString("base64"))
-    .catch((e) => console.log(e))
+    .catch((e) => console.error(e))
 
   return { img: base64img + imgData, text }
 }

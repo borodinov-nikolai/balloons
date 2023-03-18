@@ -27,7 +27,7 @@ function ArtistPage() {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
     .map((it: ReleaseType) => (
-      <ReleaseItem key={it.id} release={it} sx={{ margin: "0 .5rem" }} />
+      <ReleaseItem key={it.id} release={it} styles={{ margin: "0 .5rem" }} />
     ))
 
   useEffect(() => {

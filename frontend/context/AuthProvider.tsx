@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (!user.slug) await router.push("/artist/new")
       }
     } catch (e) {
-      console.log("errors", e)
+      console.error(e)
 
       setError("Ошибка входа")
     }
@@ -120,7 +120,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         if (!user.slug) await router.push("/artist/new")
       }
     } catch (e) {
-      console.log("errors", e)
+      console.error(e)
 
       setError("Ошибка регистрации")
     }

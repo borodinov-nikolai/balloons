@@ -264,7 +264,7 @@ function Header() {
           ) : (
             <Link href={"/login"}>
               <Grid className={styles.personalAreaButton}>
-                <Image src={login} alt="" height={30} width={30} />
+                <Image src={login} alt="" fill />
               </Grid>
             </Link>
           )}

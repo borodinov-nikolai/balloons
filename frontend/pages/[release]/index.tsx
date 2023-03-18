@@ -47,7 +47,7 @@ function ReleasePage() {
     setLoading(false)
   }, [releaseLink])
 
-  return loading ? (
+  return !release ? (
     <Loader />
   ) : (
     <Grid className={styles.wrapper}>
