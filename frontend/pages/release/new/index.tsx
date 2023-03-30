@@ -23,7 +23,7 @@ import { useAuth } from "context/AuthProvider"
 import { CreateOrUpdateReleaseFormType, PlatformLinkType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
-import { SyntheticEvent, useEffect, useMemo, useState } from "react"
+import { SyntheticEvent, useMemo, useState } from "react"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
@@ -31,8 +31,7 @@ import RotateLeftIcon from "@mui/icons-material/RotateLeft"
 import { API } from "lib/api"
 
 function NewRelease() {
-  const { uniqueLink, isUniqueLink, fetchUniqueLink, checkUniqueLink } =
-    useReleaseLink()
+  const { uniqueLink, fetchUniqueLink } = useReleaseLink()
   const { user } = useAuth()
 
   const {
@@ -71,7 +70,6 @@ function NewRelease() {
   })
 
   const watchFieldArray = watch("platformLinks")
-  const watchLink = watch("link")
   const controlledFields = platformLinks.map((field, index) => {
     return {
       ...field,
@@ -113,7 +111,7 @@ function NewRelease() {
         data: JSON.stringify({
           ...form,
           platformLinks: form.platformLinks.filter((it) => !!it.link),
-          img: undefined,
+          img: form.img?.item(0),
         }),
         "files.img": form.img?.item(0),
       }
@@ -134,14 +132,6 @@ function NewRelease() {
     const { type, title } = value
     appendPlatformLink({ type, title, link: "" })
   }
-
-  useEffect(() => {
-    setValue("link", uniqueLink)
-  }, [setValue, uniqueLink])
-
-  useEffect(() => {
-    checkUniqueLink(watchLink)
-  }, [checkUniqueLink, watchLink])
 
   return (
     <>
@@ -381,11 +371,17 @@ function NewRelease() {
                             value: /[a-zA-Z0-9_-]/,
                             message: "Ссылка содержит недопустимые символы",
                           },
-                          validate: () => {
-                            console.log("isUniqueLink", isUniqueLink)
-                            return !isUniqueLink
-                              ? "Релиз с такой ссылкой уже существует"
-                              : true
+                          validate: async () => {
+                            try {
+                              const {
+                                data: { data },
+                              } = await API.get("/release-link")
+                              return !data
+                                ? "Релиз с такой ссылкой уже существует"
+                                : true
+                            } catch (e) {
+                              return "Ошибка проверки уникальности"
+                            }
                           },
                         })}
                       />

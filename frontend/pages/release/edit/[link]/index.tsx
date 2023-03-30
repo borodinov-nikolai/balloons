@@ -132,17 +132,6 @@ function UpdateRelease() {
         if (data.length > 0) {
           const release = data[0]
           setRelease(release)
-          reset({
-            type: release?.type,
-            name: release?.name,
-            date: release?.date ? new Date(release.date) : undefined,
-            artistName: release?.artistName,
-            link: release?.link,
-            platformLinks: release?.platformLinks,
-            video: release?.video,
-            vkPixel: release?.vkPixel,
-            facebookPixel: release?.facebookPixel,
-          })
         }
       } catch (e) {
         setError("Что-то пошло не так, перезагрузите страницу")
@@ -153,8 +142,38 @@ function UpdateRelease() {
     setLoading(false)
   }, [queryLink, reset])
 
+  useEffect(() => {
+    reset({
+      type: release?.type,
+      name: release?.name,
+      date: release?.date ? new Date(release.date) : undefined,
+      artistName: release?.artistName,
+      link: release?.link,
+      platformLinks: release?.platformLinks,
+      video: release?.video,
+      vkPixel: release?.vkPixel,
+      facebookPixel: release?.facebookPixel,
+    })
+  }, [release])
+
   const submitHandler = async (form: CreateOrUpdateReleaseFormType) => {
-    console.log("form", form)
+    try {
+      const formData = {
+        data: JSON.stringify({
+          ...form,
+          platformLinks: form.platformLinks.filter((it) => !!it.link),
+          img: form.img?.item(0),
+        }),
+        "files.img": form.img?.item(0),
+      }
+
+      await API.post("releases", formData, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      await router.push(`/artist/${user?.slug}`)
+    } catch (e: any) {
+      setError(e.message)
+    }
   }
 
   return (
@@ -245,12 +264,14 @@ function UpdateRelease() {
                   </Grid>
 
                   <TextField
+                    defaultValue=""
                     label="Имя артиста для этого релиза"
                     {...register("artistName")}
                   />
                   <Margin />
 
                   <TextField
+                    defaultValue=""
                     label="Название релиза"
                     error={!!errors.name}
                     helperText={errors.name?.message}
@@ -272,9 +293,7 @@ function UpdateRelease() {
                         <Grid
                           container
                           wrap="nowrap"
-                          style={{
-                            margin: ".5rem 0",
-                          }}
+                          style={{ margin: ".5rem 0" }}
                         >
                           <ReleaseLinkIcon
                             type={link.type}
@@ -308,9 +327,7 @@ function UpdateRelease() {
                       container
                       wrap="nowrap"
                       alignItems="center"
-                      style={{
-                        margin: ".5rem 0",
-                      }}
+                      style={{ margin: ".5rem 0" }}
                     >
                       <AddIcon
                         style={{
@@ -335,6 +352,7 @@ function UpdateRelease() {
                         onChange={addPlatformLinkHandler}
                         renderInput={(params) => (
                           <TextField
+                            defaultValue=""
                             {...params}
                             placeholder="Добавить витрину"
                           />
@@ -349,6 +367,7 @@ function UpdateRelease() {
                   <Typography variant="h5">Видео</Typography>
 
                   <TextField
+                    defaultValue=""
                     label="Ссылка на видео в YouTube / Vimeo"
                     {...register("video")}
                   />
@@ -365,6 +384,7 @@ function UpdateRelease() {
                     </FormLabel>
 
                     <TextField
+                      defaultValue=""
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -401,6 +421,7 @@ function UpdateRelease() {
                   <Typography variant="h5">Пиксель Вконтакте</Typography>
 
                   <TextField
+                    defaultValue=""
                     label="Вставить код пикселя Вконтакте"
                     {...register("vkPixel")}
                   />
@@ -409,6 +430,7 @@ function UpdateRelease() {
                   <Typography variant="h5">Пиксель Facebook</Typography>
 
                   <TextField
+                    defaultValue=""
                     label="Вставить код пикселя Facebook"
                     {...register("facebookPixel")}
                   />

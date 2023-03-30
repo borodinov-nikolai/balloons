@@ -1,11 +1,10 @@
-import React, { ChangeEvent, useState } from "react"
+import React, { ChangeEvent } from "react"
 import Image from "next/image"
 import left from "assets/search-row_vector-left.svg"
 import right from "assets/search-row_vector-right.svg"
 import styles from "./SearchRow.module.scss"
-import { useRouter } from "next/router"
 import { Typography } from "@mui/material"
-import useDebounce from "hooks/debounce.hooks"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 type SearchRowProps = {
   title: string
@@ -15,39 +14,15 @@ type SearchRowProps = {
 function SearchRow(props: SearchRowProps) {
   const { title, bg } = props
   const router = useRouter()
-  const searchQuery = String(router.query?.search) || ""
-  const [searchInput, setSearchInput] = useState<string>("")
-  const debouncedSearchInput = useDebounce(searchInput, 1500)
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const searchQuery = searchParams.get("search") || ""
 
   const onChangeHandler = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { search: e.target.value },
-      },
-      undefined,
-      { shallow: true }
-    )
-    // setSearchInput(e.target.value)
+    router.push(`${pathname}?search=${e.target.value}`)
   }
-
-  // useEffect(() => {
-  //   if (debouncedSearchInput)
-  //     router.push(
-  //       {
-  //         pathname: router.pathname,
-  //         query: { search: debouncedSearchInput },
-  //       },
-  //       undefined,
-  //       { shallow: false }
-  //     )
-  // }, [debouncedSearchInput, router])
-
-  // useEffect(() => {
-  //   if (router.query.search) setSearchInput(searchQuery)
-  // }, [])
 
   return (
     <section className="block_first-on-page">
@@ -63,7 +38,7 @@ function SearchRow(props: SearchRowProps) {
               className={styles.searchRow__input}
               placeholder="Поиск"
               onChange={onChangeHandler}
-              value={searchInput}
+              defaultValue={searchQuery}
             />
             <div className={styles.searchRow__rightBg}>
               <div className={styles.searchRow__inputImg} />

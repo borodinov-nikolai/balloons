@@ -2,24 +2,23 @@ import withStandardLayout from "hoc/withStandardLayout"
 import SearchRow from "components/SearchRow"
 import List from "components/List"
 import { UserType } from "types/auth"
-import { useRouter } from "next/router"
 import { Grid } from "@mui/material"
 import ArtistItem from "pages/artists/ArtistItem"
 import { useEffect, useState } from "react"
 import { API } from "lib/api"
+import { useRouter, useSearchParams } from "next/navigation"
+import { Pagination } from "types/general"
 
 function Artists() {
-  const limit = 8
   const router = useRouter()
-  const page = Number(router.query.page) || 1
-  const searchQuery = router.query.search || ""
+  const searchParams = useSearchParams()
+  const searchQuery = searchParams.get("search") || ""
   const [artists, setArtists] = useState<UserType[]>([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-  const offset = page * limit - limit
-
-  // usersCount
-  const pageCount = Math.floor(2 + limit - 1) || 0
+  const [pagination, setPagination] = useState<Pagination>()
+  const page = Number(searchParams.get("page")) || 1
+  const pageSize = 8
 
   const artistItems = artists.map((it: UserType) => (
     <ArtistItem key={it.id} artist={it} />
@@ -30,19 +29,22 @@ function Artists() {
       setLoading(true)
       try {
         const {
-          data: { data },
+          data: { data, meta },
         } = await API.get("/users", {
           params: {
             populate: { avatar: "*" },
             "filters[name][$null]": "",
+            "filters[$or][0][name][$containsi]": searchQuery,
             "filters[blocked]": "false",
-            start: offset,
-            limit,
+            "pagination[page]": page,
+            "pagination[pageSize]": pageSize,
             "sort[order]": "desc",
             "sort[createdAt]": "desc",
           },
         })
+
         setArtists(data)
+        setPagination(meta?.pagination)
         setError("")
       } catch (e) {
         setError("Что-то пошло не так, перезагрузите страницу")
@@ -51,7 +53,7 @@ function Artists() {
     }
 
     fetchData()
-  }, [offset, page])
+  }, [page, searchQuery])
 
   return (
     <>
@@ -61,7 +63,7 @@ function Artists() {
       />
 
       <Grid className="content" style={{ flexGrow: 1 }}>
-        <List pageCount={Math.trunc(pageCount / limit)}>
+        <List pageCount={pagination?.pageCount}>
           {loading
             ? [<div key={1}>Идет загрузка</div>]
             : (artists.length && artistItems) || [

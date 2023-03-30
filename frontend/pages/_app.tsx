@@ -13,22 +13,24 @@ import theme from "styles/theme"
 import "styles/globals.scss"
 import { useRouter } from "next/router"
 import { StyledEngineProvider } from "@mui/material"
+import { usePathname } from "next/navigation"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleStart = (url: string) => {
-      url !== router.pathname ? setLoading(true) : setLoading(false)
+      url.split("?")[0] !== pathname ? setLoading(true) : setLoading(false)
     }
     const handleComplete = (url: string) => setLoading(false)
 
     router.events.on("routeChangeStart", handleStart)
     router.events.on("routeChangeComplete", handleComplete)
     router.events.on("routeChangeError", handleComplete)
-  }, [loading, router])
+  }, [loading, router.pathname])
 
   return loading ? (
     <Loader />
