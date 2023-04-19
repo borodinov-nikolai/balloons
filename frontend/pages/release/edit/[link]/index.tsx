@@ -35,6 +35,7 @@ import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import Link from "next/link"
 import LoadImage from "components/FeedbackForm/LoadImage"
+import Loader from "components/Loader"
 
 function UpdateRelease() {
   const [release, setRelease] = useState<ReleaseType | null>(null)
@@ -113,7 +114,7 @@ function UpdateRelease() {
   }
 
   const deleteReleaseHandler = () => {
-    alert("Release deleted")
+    alert("Release not deleted")
   }
 
   useEffect(() => {
@@ -154,7 +155,7 @@ function UpdateRelease() {
       vkPixel: release?.vkPixel,
       facebookPixel: release?.facebookPixel,
     })
-  }, [release])
+  }, [reset, release])
 
   const submitHandler = async (form: CreateOrUpdateReleaseFormType) => {
     try {
@@ -167,7 +168,7 @@ function UpdateRelease() {
         "files.img": form.img?.item(0),
       }
 
-      await API.post("releases", formData, {
+      await API.put(`/releases/${release?.id}`, formData, {
         headers: { "Content-type": "multipart/form-data" },
       })
       await router.push(`/artist/${user?.slug}`)
@@ -176,7 +177,9 @@ function UpdateRelease() {
     }
   }
 
-  return (
+  return !release ? (
+    <Loader />
+  ) : (
     <>
       <section className="block block_first-on-page">
         <div className="vector__bg vector__bg_right-top">
@@ -210,23 +213,27 @@ function UpdateRelease() {
                     <FormLabel id="type">
                       <Typography variant="h5">Тип</Typography>
                     </FormLabel>
-                    <RadioGroup
-                      aria-labelledby="type"
-                      defaultValue="single"
-                      row
-                      {...register("type", { required: true })}
-                    >
-                      <FormControlLabel
-                        value="single"
-                        control={<Radio />}
-                        label="Сингл"
-                      />
-                      <FormControlLabel
-                        value="album"
-                        control={<Radio />}
-                        label="Альбом"
-                      />
-                    </RadioGroup>
+
+                    <Controller
+                      rules={{ required: true }}
+                      control={control}
+                      name="type"
+                      defaultValue={release?.type}
+                      render={({ field }) => (
+                        <RadioGroup aria-labelledby="type" row {...field}>
+                          <FormControlLabel
+                            value="single"
+                            control={<Radio />}
+                            label="Сингл"
+                          />
+                          <FormControlLabel
+                            value="album"
+                            control={<Radio />}
+                            label="Альбом"
+                          />
+                        </RadioGroup>
+                      )}
+                    />
                   </FormControl>
 
                   <FormControl>
@@ -244,7 +251,7 @@ function UpdateRelease() {
                             onChange={(newValue) => {
                               onChange(newValue)
                             }}
-                            value={value}
+                            value={value || 0}
                             // @ts-ignore
                             renderInput={(params) => <TextField {...params} />}
                           />
@@ -264,14 +271,13 @@ function UpdateRelease() {
                   </Grid>
 
                   <TextField
-                    defaultValue=""
                     label="Имя артиста для этого релиза"
                     {...register("artistName")}
                   />
+
                   <Margin />
 
                   <TextField
-                    defaultValue=""
                     label="Название релиза"
                     error={!!errors.name}
                     helperText={errors.name?.message}
@@ -352,7 +358,6 @@ function UpdateRelease() {
                         onChange={addPlatformLinkHandler}
                         renderInput={(params) => (
                           <TextField
-                            defaultValue=""
                             {...params}
                             placeholder="Добавить витрину"
                           />
@@ -367,7 +372,6 @@ function UpdateRelease() {
                   <Typography variant="h5">Видео</Typography>
 
                   <TextField
-                    defaultValue=""
                     label="Ссылка на видео в YouTube / Vimeo"
                     {...register("video")}
                   />
@@ -384,7 +388,6 @@ function UpdateRelease() {
                     </FormLabel>
 
                     <TextField
-                      defaultValue=""
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -396,10 +399,6 @@ function UpdateRelease() {
                       helperText={errors.link?.message}
                       {...register("link", {
                         required: "Обязательное поле",
-                        minLength: {
-                          value: 7,
-                          message: "Ссылка не может быть короче 7 символов",
-                        },
                         pattern: {
                           value: /[a-zA-Z0-9_]/,
                           message: "Ссылка содержит недопустимые символы",
@@ -421,7 +420,6 @@ function UpdateRelease() {
                   <Typography variant="h5">Пиксель Вконтакте</Typography>
 
                   <TextField
-                    defaultValue=""
                     label="Вставить код пикселя Вконтакте"
                     {...register("vkPixel")}
                   />
@@ -430,7 +428,6 @@ function UpdateRelease() {
                   <Typography variant="h5">Пиксель Facebook</Typography>
 
                   <TextField
-                    defaultValue=""
                     label="Вставить код пикселя Facebook"
                     {...register("facebookPixel")}
                   />

@@ -1,6 +1,6 @@
 import { Button, Collapse, Grid, Typography } from "@mui/material"
 import { ReleaseType } from "types/general"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from "./MyReleases.module.scss"
 import Image from "next/image"
 import { getMediaUrl } from "lib/media"
@@ -12,6 +12,7 @@ type MyReleasesProps = {
 
 function MyReleases({ releases }: MyReleasesProps) {
   const [openId, setOpenId] = useState<string | null>(null)
+  const [linkCopied, setLinkCopied] = useState<boolean>(false)
   const toggleHandler = (id: string) => {
     if (openId === id) {
       setOpenId(null)
@@ -20,6 +21,11 @@ function MyReleases({ releases }: MyReleasesProps) {
 
     setOpenId(id)
   }
+  useEffect(() => {
+    setTimeout(() => {
+      setLinkCopied(false)
+    }, 1000)
+  }, [linkCopied])
 
   return (
     <Grid container direction="column" className={styles.wrapper}>
@@ -65,8 +71,18 @@ function MyReleases({ releases }: MyReleasesProps) {
                   </a>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button fullWidth className={styles.purple}>
-                    Копировать ссылку
+                  <Button
+                    fullWidth
+                    className={linkCopied ? styles.green : styles.purple}
+                    onClick={(ev) => {
+                      ev.stopPropagation()
+                      navigator.clipboard.writeText(
+                        `https://linkmusic.ru/${realese.link}`
+                      )
+                      setLinkCopied(true)
+                    }}
+                  >
+                    {linkCopied ? "Скопировано" : "Копировать ссылку"}
                   </Button>
 
                   <Link href={`/release/edit/${realese.link}`}>

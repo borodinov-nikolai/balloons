@@ -44,6 +44,16 @@
   }
 }
 
+.green {
+  margin: .5rem 0;
+  background: #4cbe39;
+
+  &:hover {
+    background: #2a9b2c;
+  }
+}
+
+
 .orange {
   margin: .5rem 0;
   background: #FF6D30;
