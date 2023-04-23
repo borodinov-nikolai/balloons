@@ -14,9 +14,9 @@ import {
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import { useForm } from "react-hook-form"
 import { UpdateProfileFormType } from "types/general"
-import Margin from "components/FeedbackForm/Margin"
-import LoadImage from "components/FeedbackForm/LoadImage"
+import Margin from "components/Margin"
 import { useAuth } from "context/AuthProvider"
+import LoadImage from "components/LoadImage"
 
 function NewProfile() {
   const {
@@ -36,7 +36,7 @@ function NewProfile() {
     <>
       <section className="block block_first-on-page">
         <Grid className="vector__bg vector__bg_right-top">
-          <img src={"/assets/vector-bg_catalog-right.svg"} alt="" />
+          <img src="/assets/vector-bg_catalog-right.svg" alt="" />
         </Grid>
 
         <div className="content">

@@ -19,7 +19,6 @@ import {
   Typography,
 } from "@mui/material"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
-import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
 import {
@@ -34,8 +33,9 @@ import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import Link from "next/link"
-import LoadImage from "components/FeedbackForm/LoadImage"
 import Loader from "components/Loader"
+import LoadImage from "components/LoadImage"
+import Margin from "components/Margin"
 
 function UpdateRelease() {
   const [release, setRelease] = useState<ReleaseType | null>(null)
@@ -183,7 +183,7 @@ function UpdateRelease() {
     <>
       <section className="block block_first-on-page">
         <div className="vector__bg vector__bg_right-top">
-          <img src={"/assets/vector-bg_catalog-right.svg"} alt="" />
+          <img src="/assets/vector-bg_catalog-right.svg" alt="" />
         </div>
 
         <div className="content">

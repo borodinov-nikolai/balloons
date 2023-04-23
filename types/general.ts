@@ -139,3 +139,11 @@ export type UpdateProfileFormType = {
   instagram?: string
   avatar?: FileList
 }
+
+export type SliderType = {
+  id: string
+  textMain: string
+  img: ImageType
+  link?: string
+  description?: string
+}

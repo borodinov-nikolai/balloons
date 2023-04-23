@@ -1,29 +1,40 @@
 import styles from "./ReleaseSlider.module.scss"
 import Link from "next/link"
 import { Button, Grid, Typography } from "@mui/material"
+import { getMediaUrl } from "lib/media"
+import { ImageType } from "types/general"
 
-const ReleaseSliderSlide = (props: any) => {
-  let { bg } = props
+type ReleaseSlideProps = {
+  img: ImageType
+  textMain: string
+  link?: string
+  description?: string
+}
+
+const ReleaseSliderSlide = (props: ReleaseSlideProps) => {
+  let { img, textMain, link, description } = props
   return (
     <div
-      style={{ backgroundImage: `url(${bg})` }}
+      style={{ backgroundImage: `url(${getMediaUrl(img)})` }}
       className={`block ${styles.slide}`}
     >
       <div className={styles.slideContent}>
-        <Typography className={styles.slideTitle}>
-          Расскажи <br /> всем о релизе
-        </Typography>
+        <Typography className={styles.slideTitle}>{textMain}</Typography>
+
         <Grid container direction="column" className={styles.slideSubtitle}>
-          <Grid style={{ marginBottom: "2rem" }}>
-            Создай уникальную страницу своего <br /> музыкального релиза
-          </Grid>
-          <Link href="/release/new">
-            <Button
-              className={`${styles.slideButton} ${styles.slideButtonMain}`}
-            >
-              Создать релиз
-            </Button>
-          </Link>
+          {description && (
+            <Grid style={{ marginBottom: "2rem" }}>{description}</Grid>
+          )}
+
+          {link && (
+            <Link href={link}>
+              <Button
+                className={`${styles.slideButton} ${styles.slideButtonMain}`}
+              >
+                Релиз
+              </Button>
+            </Link>
+          )}
         </Grid>
       </div>
     </div>

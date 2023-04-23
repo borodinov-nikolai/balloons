@@ -1,16 +1,11 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Slider, { Settings } from "react-slick"
 import { Grid } from "@mui/material"
 import ReleaseSliderMainSlide from "components/ReleaseSlider/ReleaseSliderMainSlide"
-import ReleaseSliderSlide from "components/ReleaseSlider/ReleaseSliderSlide"
 import styles from "./ReleaseSlider.module.scss"
-
-const slidesData = [
-  <ReleaseSliderMainSlide key="0" />,
-  <ReleaseSliderSlide key="1" bg="/assets/slide1-bg.png" />,
-  <ReleaseSliderSlide key="2" bg="/assets/slide2-bg.png" />,
-  <ReleaseSliderSlide key="3" bg="/assets/slide1-bg.png" />,
-]
+import { API } from "lib/api"
+import { SliderType } from "types/general"
+import ReleaseSliderSlide from "components/ReleaseSlider/ReleaseSliderSlide"
 
 function PrevArrow(props: any) {
   const { onClick } = props
@@ -48,9 +43,49 @@ const settings: Settings = {
 }
 
 const ReleaseSlider = () => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [sliders, setSliders] = useState<SliderType[]>([])
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const {
+          data: { data, meta },
+        } = await API.get("/sliders", {
+          params: {
+            populate: { img: "*" },
+            "sort[order]": "desc",
+            "sort[createdAt]": "desc",
+          },
+        })
+
+        setSliders(data)
+        setError("")
+      } catch (e) {
+        setError("Что-то пошло не так, перезагрузите страницу")
+      }
+      setLoading(false)
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <Grid className={`${styles.releaseSlider} block_first-on-page`}>
-      <Slider {...settings}>{slidesData}</Slider>
+      <Slider {...settings}>
+        <ReleaseSliderMainSlide key="0" />
+        {sliders.map((slide) => (
+          <ReleaseSliderSlide
+            key={slide.id}
+            img={slide.img}
+            textMain={slide.textMain}
+            link={slide?.link}
+            description={slide?.description}
+          />
+        ))}
+      </Slider>
 
       <svg className={styles.vinylRecord__center} viewBox="0 0 290 290">
         <linearGradient id="grad">
