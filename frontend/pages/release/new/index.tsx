@@ -113,6 +113,7 @@ function NewRelease() {
           platformLinks: form.platformLinks.filter((it) => !!it.link),
           img: form.img?.item(0),
         }),
+        "files.img": form.img?.item(0),
       }
 
       await API.post("releases", formData, {
@@ -362,10 +363,6 @@ function NewRelease() {
                         helperText={errors.link?.message}
                         {...register("link", {
                           required: "Обязательное поле",
-                          minLength: {
-                            value: 3,
-                            message: "Ссылка не может быть короче 3 символов",
-                          },
                           pattern: {
                             value: /[a-zA-Z0-9_-]/,
                             message: "Ссылка содержит недопустимые символы",

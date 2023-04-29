@@ -403,11 +403,18 @@ function UpdateRelease() {
                           value: /[a-zA-Z0-9_]/,
                           message: "Ссылка содержит недопустимые символы",
                         },
-                        // validate: () =>
-                        // // @ts-ignore
-                        // uniqLinkData?.releases.length > 0
-                        //   ? "Релиз с такой ссылкой уже существует"
-                        //   : true,
+                        validate: async () => {
+                          try {
+                            const {
+                              data: { data },
+                            } = await API.get("/release-link")
+                            return !data
+                              ? "Релиз с такой ссылкой уже существует"
+                              : true
+                          } catch (e) {
+                            return "Ошибка проверки уникальности"
+                          }
+                        },
                       })}
                     />
                   </FormControl>

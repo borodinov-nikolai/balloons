@@ -16,7 +16,7 @@ type LoadImageProps = {
   required?: boolean
 }
 
-function Index({
+function LoadImage({
   formFieldName,
   register,
   errors,
@@ -105,4 +105,4 @@ function Index({
   )
 }
 
-export default Index
+export default LoadImage
