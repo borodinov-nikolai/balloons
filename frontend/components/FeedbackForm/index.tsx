@@ -13,13 +13,13 @@ import {
 } from "@mui/material"
 import { Controller, useForm } from "react-hook-form"
 import { FeedbackFormType } from "types/general"
-import Margin from "components/FeedbackForm/Margin"
 import { SyntheticEvent, useEffect, useRef, useState } from "react"
 import IMask from "imask"
 import { API } from "lib/api"
 import CloseIcon from "@mui/icons-material/Close"
 import Confirm from "components/Confirm"
 import Link from "next/link"
+import Margin from "components/Margin"
 
 function FeedbackForm() {
   const {

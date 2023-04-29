@@ -19,7 +19,6 @@ import {
   Typography,
 } from "@mui/material"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
-import Margin from "components/FeedbackForm/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
 import {
@@ -34,7 +33,9 @@ import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import Link from "next/link"
-import LoadImage from "components/FeedbackForm/LoadImage"
+import Loader from "components/Loader"
+import LoadImage from "components/LoadImage"
+import Margin from "components/Margin"
 
 function UpdateRelease() {
   const [release, setRelease] = useState<ReleaseType | null>(null)
@@ -113,7 +114,7 @@ function UpdateRelease() {
   }
 
   const deleteReleaseHandler = () => {
-    alert("Release deleted")
+    alert("Release not deleted")
   }
 
   useEffect(() => {
@@ -132,17 +133,6 @@ function UpdateRelease() {
         if (data.length > 0) {
           const release = data[0]
           setRelease(release)
-          reset({
-            type: release?.type,
-            name: release?.name,
-            date: release?.date ? new Date(release.date) : undefined,
-            artistName: release?.artistName,
-            link: release?.link,
-            platformLinks: release?.platformLinks,
-            video: release?.video,
-            vkPixel: release?.vkPixel,
-            facebookPixel: release?.facebookPixel,
-          })
         }
       } catch (e) {
         setError("Что-то пошло не так, перезагрузите страницу")
@@ -153,15 +143,47 @@ function UpdateRelease() {
     setLoading(false)
   }, [queryLink, reset])
 
+  useEffect(() => {
+    reset({
+      type: release?.type,
+      name: release?.name,
+      date: release?.date ? new Date(release.date) : undefined,
+      artistName: release?.artistName,
+      link: release?.link,
+      platformLinks: release?.platformLinks,
+      video: release?.video,
+      vkPixel: release?.vkPixel,
+      facebookPixel: release?.facebookPixel,
+    })
+  }, [reset, release])
+
   const submitHandler = async (form: CreateOrUpdateReleaseFormType) => {
-    console.log("form", form)
+    try {
+      const formData = {
+        data: JSON.stringify({
+          ...form,
+          platformLinks: form.platformLinks.filter((it) => !!it.link),
+          img: form.img?.item(0),
+        }),
+        "files.img": form.img?.item(0),
+      }
+
+      await API.put(`/releases/${release?.id}`, formData, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      await router.push(`/artist/${user?.slug}`)
+    } catch (e: any) {
+      setError(e.message)
+    }
   }
 
-  return (
+  return !release ? (
+    <Loader />
+  ) : (
     <>
       <section className="block block_first-on-page">
         <div className="vector__bg vector__bg_right-top">
-          <img src={"/assets/vector-bg_catalog-right.svg"} alt="" />
+          <img src="/assets/vector-bg_catalog-right.svg" alt="" />
         </div>
 
         <div className="content">
@@ -191,23 +213,27 @@ function UpdateRelease() {
                     <FormLabel id="type">
                       <Typography variant="h5">Тип</Typography>
                     </FormLabel>
-                    <RadioGroup
-                      aria-labelledby="type"
-                      defaultValue="single"
-                      row
-                      {...register("type", { required: true })}
-                    >
-                      <FormControlLabel
-                        value="single"
-                        control={<Radio />}
-                        label="Сингл"
-                      />
-                      <FormControlLabel
-                        value="album"
-                        control={<Radio />}
-                        label="Альбом"
-                      />
-                    </RadioGroup>
+
+                    <Controller
+                      rules={{ required: true }}
+                      control={control}
+                      name="type"
+                      defaultValue={release?.type}
+                      render={({ field }) => (
+                        <RadioGroup aria-labelledby="type" row {...field}>
+                          <FormControlLabel
+                            value="single"
+                            control={<Radio />}
+                            label="Сингл"
+                          />
+                          <FormControlLabel
+                            value="album"
+                            control={<Radio />}
+                            label="Альбом"
+                          />
+                        </RadioGroup>
+                      )}
+                    />
                   </FormControl>
 
                   <FormControl>
@@ -225,7 +251,7 @@ function UpdateRelease() {
                             onChange={(newValue) => {
                               onChange(newValue)
                             }}
-                            value={value}
+                            value={value || 0}
                             // @ts-ignore
                             renderInput={(params) => <TextField {...params} />}
                           />
@@ -248,6 +274,7 @@ function UpdateRelease() {
                     label="Имя артиста для этого релиза"
                     {...register("artistName")}
                   />
+
                   <Margin />
 
                   <TextField
@@ -272,9 +299,7 @@ function UpdateRelease() {
                         <Grid
                           container
                           wrap="nowrap"
-                          style={{
-                            margin: ".5rem 0",
-                          }}
+                          style={{ margin: ".5rem 0" }}
                         >
                           <ReleaseLinkIcon
                             type={link.type}
@@ -308,9 +333,7 @@ function UpdateRelease() {
                       container
                       wrap="nowrap"
                       alignItems="center"
-                      style={{
-                        margin: ".5rem 0",
-                      }}
+                      style={{ margin: ".5rem 0" }}
                     >
                       <AddIcon
                         style={{
@@ -376,10 +399,6 @@ function UpdateRelease() {
                       helperText={errors.link?.message}
                       {...register("link", {
                         required: "Обязательное поле",
-                        minLength: {
-                          value: 7,
-                          message: "Ссылка не может быть короче 7 символов",
-                        },
                         pattern: {
                           value: /[a-zA-Z0-9_]/,
                           message: "Ссылка содержит недопустимые символы",

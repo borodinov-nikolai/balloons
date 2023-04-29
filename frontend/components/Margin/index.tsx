@@ -1,7 +1,7 @@
 import { Box } from "@mui/material"
 
-const Margin = () => {
+const Index = () => {
   return <Box sx={{ height: ".75rem" }} />
 }
 
-export default Margin
+export default Index

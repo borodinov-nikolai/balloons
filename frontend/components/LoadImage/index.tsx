@@ -1,7 +1,7 @@
 import { FormControl, FormHelperText, Grid, Typography } from "@mui/material"
 import Image from "next/image"
 import CloseIcon from "@mui/icons-material/Close"
-import styles from "./LoadImage.module.scss"
+import styles from "components/LoadImage/LoadImage.module.scss"
 import { ImageType } from "types/general"
 import { useEffect } from "react"
 import { getMediaUrl } from "lib/media"
@@ -16,7 +16,7 @@ type LoadImageProps = {
   required?: boolean
 }
 
-function LoadImage({
+function Index({
   formFieldName,
   register,
   errors,
@@ -105,4 +105,4 @@ function LoadImage({
   )
 }
 
-export default LoadImage
+export default Index

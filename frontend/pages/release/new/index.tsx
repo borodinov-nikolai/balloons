@@ -16,19 +16,19 @@ import {
   Typography,
 } from "@mui/material"
 import { Controller, useFieldArray, useForm } from "react-hook-form"
-import LoadImage from "components/FeedbackForm/LoadImage"
-import Margin from "components/FeedbackForm/Margin"
+import Margin from "components/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
 import { CreateOrUpdateReleaseFormType, PlatformLinkType } from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
-import { SyntheticEvent, useEffect, useMemo, useState } from "react"
+import { SyntheticEvent, useMemo, useState } from "react"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import RotateLeftIcon from "@mui/icons-material/RotateLeft"
 import { API } from "lib/api"
+import LoadImage from "components/LoadImage"
 
 function NewRelease() {
   const { uniqueLink, fetchUniqueLink } = useReleaseLink()
@@ -136,7 +136,7 @@ function NewRelease() {
     <>
       <section className="block block_first-on-page">
         <div className="vector__bg vector__bg_right-top">
-          <img src={"/assets/vector-bg_catalog-right.svg"} alt="" />
+          <img src="/assets/vector-bg_catalog-right.svg" alt="" />
         </div>
 
         <div className="content">

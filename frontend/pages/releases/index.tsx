@@ -1,14 +1,13 @@
 import withStandardLayout from "hoc/withStandardLayout"
 import SearchRow from "components/SearchRow"
 import { Grid } from "@mui/material"
-import { useRouter } from "next/router"
+import { useRouter, useSearchParams } from "next/navigation"
 import { NextPage } from "next"
 import { useEffect, useState } from "react"
-import { API } from "lib/api"
 import ReleaseItem from "pages/releases/ReleaseItem"
 import { Pagination, ReleaseType } from "types/general"
 import List from "components/List"
-import { Theme } from "@mui/system"
+import { API } from "lib/api"
 
 const Releases: NextPage = () => {
   const router = useRouter()
@@ -16,17 +15,10 @@ const Releases: NextPage = () => {
   const [error, setError] = useState("")
   const [releases, setReleases] = useState<ReleaseType[]>([])
   const [pagination, setPagination] = useState<Pagination>()
-  const page = Number(router.query?.page) || 1
-  const searchQuery = router.query?.search || ""
+  const searchParams = useSearchParams()
+  const searchQuery = searchParams.get("search") || ""
+  const page = Number(searchParams.get("page")) || 1
   const pageSize = 8
-
-  const offset = page * pageSize - pageSize
-
-  const releaseItems = loading
-    ? [<div key={1}>Идет загрузка</div>]
-    : releases?.map((it: ReleaseType) => (
-        <ReleaseItem key={it.id} release={it} />
-      ))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +32,7 @@ const Releases: NextPage = () => {
             populate: ["img", "user"],
             "filters[name][$null]": "",
             "filters[user][blocked]": "false",
-            "filters[name][$contains]": searchQuery,
+            "filters[name][$containsi]": searchQuery,
             "pagination[page]": page,
             "pagination[pageSize]": pageSize,
             "sort[createdAt]": "desc",
@@ -57,7 +49,7 @@ const Releases: NextPage = () => {
     }
 
     fetchData()
-  }, [offset, page, pageSize, searchQuery])
+  }, [page, pageSize, searchQuery])
 
   return (
     <>
@@ -70,7 +62,10 @@ const Releases: NextPage = () => {
         <List pageCount={pagination?.pageCount}>
           {loading
             ? [<div key={1}>Идет загрузка</div>]
-            : (releases.length && releaseItems) || [
+            : (releases.length &&
+                releases?.map((it: ReleaseType) => (
+                  <ReleaseItem key={it.id} release={it} />
+                ))) || [
                 <Grid
                   key={1}
                   container

@@ -13,9 +13,6 @@ function ArtistItem(props: ArtistsItemType) {
     styles,
   } = props
 
-  console.log("ArtistItem name", name)
-  console.log("ArtistItem style", styles)
-
   return (
     <ListItem
       img={avatar}
