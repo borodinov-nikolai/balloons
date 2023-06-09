@@ -4,8 +4,9 @@ import { useRouter } from "next/router"
 import Loader from "components/Loader"
 import { useEffect } from "react"
 
-function withPrivateRoute<T>(Component: NextComponentType<T>) {
-  const PrivateRoute = (props: T) => {
+function withPrivateRoute(Component: NextComponentType) {
+  // @ts-ignore
+  const PrivateRoute = (props) => {
     const { isAuthenticated, user, loading } = useAuth()
     const router = useRouter()
 
@@ -42,50 +43,3 @@ function withPrivateRoute<T>(Component: NextComponentType<T>) {
 }
 
 export default withPrivateRoute
-
-// import { NextComponentType, NextPageContext } from "next";
-// import { UserType } from "types/auth";
-// import Router from "next/router";
-//
-// const login = "/login?redirected=true"; // Define your login route address.
-//
-// const checkUserAuthentication = () => {
-//   return { user: null };
-// };
-//
-// function withPrivateRoute(
-//   WrappedComponent: NextComponentType<NextPageContext & UserType>
-// ) {
-//   const hocComponent: NextComponentType = ({ ...props }) => (
-//     <WrappedComponent {...props} />
-//   );
-//
-//   hocComponent.getInitialProps = async (
-//     context: NextPageContext & UserType
-//   ) => {
-//     const userAuth = await checkUserAuthentication();
-//
-//     // Are you an authorized user or not?
-//     if (!userAuth?.user) {
-//       // Handle server-side and client-side rendering.
-//       if (context.res) {
-//         context.res?.writeHead(302, { Location: login });
-//         context.res?.end();
-//       } else {
-//         Router.push(login);
-//       }
-//     } else if (WrappedComponent.getInitialProps) {
-//       const wrappedProps = await WrappedComponent.getInitialProps({
-//         ...context,
-//         ...userAuth,
-//       });
-//       return { ...wrappedProps, ...userAuth };
-//     }
-//
-//     return { ...userAuth };
-//   };
-//
-//   return hocComponent;
-// }
-//
-// export default withPrivateRoute;

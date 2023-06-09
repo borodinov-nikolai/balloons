@@ -17,7 +17,7 @@ function List(props: ListProps) {
   const page = Number(router.query.page) || 1
 
   const paginationHandler = (_: ChangeEvent<unknown>, value: number) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams.toString())
     params.set("page", String(value))
     router.push(`${pathname}?${params}`)
   }
