@@ -1,5 +1,5 @@
 import React from "react"
-import { useCountUp } from "react-countup"
+// import { useCountUp } from "react-countup"
 import VisibilitySensor from "react-visibility-sensor"
 
 function Counter(props: { number: number }) {
@@ -28,16 +28,13 @@ function Counter(props: { number: number }) {
 function CounterText(props: { endNumber: number }) {
   const { endNumber } = props
   const countUpRef = React.useRef(null)
-  let redrawCount = false
-  // eslint-disable-next-line no-unused-vars
-  const countUp = useCountUp({
-    ref: countUpRef,
-    start: 0,
-    end: endNumber,
-    duration: 2,
-    // @ts-ignore
-    redraw: redrawCount,
-  })
+
+  // useCountUp({
+  //   ref: countUpRef,
+  //   start: 0,
+  //   end: endNumber,
+  //   duration: 2,
+  // })
 
   return <div ref={countUpRef} />
 }
