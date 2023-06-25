@@ -81,8 +81,8 @@ function Artists() {
 
       <div className="vector__bg vector__bg_10">
         <svg
-          width="344"
-          height="492"
+          width="400"
+          height="850"
           viewBox="0 0 344 492"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

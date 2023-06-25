@@ -297,13 +297,14 @@
   height: 100%;
   margin-right: 5px;
 }
-
+.sendBtn {
+  width: 60%;
+}
 .btnRow :global {
   margin-top: 50px;
-  padding: 0 60px 0 0;
+
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
   @media (max-width: 767px) {
     flex-flow: column-reverse;
@@ -338,7 +339,7 @@
 }
 
 .politic {
-  padding: 0 2rem;
+  padding: 0 0 0 2rem;
   color: #5A5A5A;
   width: 100%;
   line-height: 1.5;

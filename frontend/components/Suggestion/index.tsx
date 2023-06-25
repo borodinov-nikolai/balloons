@@ -12,6 +12,8 @@ import {
 } from "@mui/material"
 import styles from "./Suggestion.module.scss"
 import { SuggestionType } from "components/Suggestion/types"
+import useWindowSize from "hooks/size.hooks"
+import suggestionLines from "./../../public/assets/suggestion_lines.svg"
 
 const listData: SuggestionType[] = [
   {
@@ -193,7 +195,7 @@ function Suggestion() {
   const [modalState, changeModalState] = useState<
     (SuggestionType & { slideIndex?: number; text?: string }) | null
   >(null)
-
+  const size = useWindowSize()
   return (
     <div className={`${styles.blockSuggestion} block`}>
       <span key="services-anchor" id="services" className="block__anchor" />
@@ -213,63 +215,63 @@ function Suggestion() {
 
           <div className="vector__bg vector__bg_5">
             <svg
-              width="392"
+              width="255"
               height="561"
-              viewBox="0 0 392 561"
+              viewBox="0 0 255 561"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                d="M70.3064 45.5329C70.3064 45.5329 177.383 46.7252 202.57 153.914C227.206 258.749 307.746 237.835 341.338 288.65C374.93 339.465 353.915 428.647 262.396 433.246C180.754 437.351 181.539 486.845 163.577 514.34C145.615 541.834 104.717 558.762 104.717 558.762"
-                stroke="url(#paint0_linear_599:66)"
-                strokeWidth="3"
-                strokeMiterlimit="10"
+                d="M-66.6936 45.5329C-66.6936 45.5329 40.3833 46.7252 65.5697 153.914C90.2061 258.749 170.746 237.835 204.338 288.65C237.93 339.465 216.915 428.647 125.396 433.246C43.754 437.351 44.5393 486.845 26.5769 514.34C8.61455 541.834 -32.283 558.762 -32.283 558.762"
+                stroke="url(#paint0_linear_599_66)"
+                stroke-width="3"
+                stroke-miterlimit="10"
               />
               <path
-                d="M105.683 458.86C105.683 458.86 183.798 393.529 253.271 390.313C322.743 387.097 320.282 336.333 308.312 318.401C283.475 281.215 194.712 291.715 175.264 227.304C160.663 178.892 180.449 105.516 96.5811 86.4733"
-                stroke="url(#paint1_linear_599:66)"
-                strokeWidth="3"
-                strokeMiterlimit="10"
+                d="M-31.3175 458.86C-31.3175 458.86 46.7981 393.529 116.271 390.313C185.743 387.097 183.282 336.333 171.312 318.401C146.475 281.215 57.7118 291.715 38.2644 227.304C23.663 178.892 43.4493 105.516 -40.4189 86.4733"
+                stroke="url(#paint1_linear_599_66)"
+                stroke-width="3"
+                stroke-miterlimit="10"
               />
               <path
-                d="M110.961 405.799C110.961 405.799 217.219 395.48 194.697 349.621C168.912 297.071 135.917 304.892 152.478 228.033C158.414 200.725 140.515 99.2704 83.3549 132.48"
-                stroke="url(#paint2_linear_599:66)"
-                strokeWidth="3"
-                strokeMiterlimit="10"
+                d="M-26.0389 405.799C-26.0389 405.799 80.2193 395.48 57.6974 349.621C31.9118 297.071 -1.0826 304.892 15.4785 228.033C21.4144 200.725 3.51523 99.2704 -53.6451 132.48"
+                stroke="url(#paint2_linear_599_66)"
+                stroke-width="3"
+                stroke-miterlimit="10"
               />
               <defs>
                 <linearGradient
-                  id="paint0_linear_599:66"
-                  x1="143.523"
+                  id="paint0_linear_599_66"
+                  x1="6.52285"
                   y1="30.1515"
-                  x2="248.24"
+                  x2="111.24"
                   y2="528.611"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#3434FF" />
-                  <stop offset="1" stopColor="#FF6534" />
+                  <stop stop-color="#3434FF" />
+                  <stop offset="1" stop-color="#FF6534" />
                 </linearGradient>
                 <linearGradient
-                  id="paint1_linear_599:66"
-                  x1="142.775"
+                  id="paint1_linear_599_66"
+                  x1="5.77549"
                   y1="76.7687"
-                  x2="218.085"
+                  x2="81.085"
                   y2="435.247"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#3434FF" />
-                  <stop offset="1" stopColor="#FF6534" />
+                  <stop stop-color="#3434FF" />
+                  <stop offset="1" stop-color="#FF6534" />
                 </linearGradient>
                 <linearGradient
-                  id="paint2_linear_599:66"
-                  x1="100.498"
+                  id="paint2_linear_599_66"
+                  x1="-36.5022"
                   y1="126.077"
-                  x2="157.471"
+                  x2="20.4708"
                   y2="397.272"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stopColor="#3434FF" />
-                  <stop offset="1" stopColor="#FF6534" />
+                  <stop stop-color="#3434FF" />
+                  <stop offset="1" stop-color="#FF6534" />
                 </linearGradient>
               </defs>
             </svg>
@@ -371,7 +373,7 @@ function Suggestion() {
       <div className="vector__bg vector__bg_5 vector__bg_5_2">
         <svg
           width="392"
-          height="561"
+          height={size.width > 1024 ? "700" : "650"}
           viewBox="0 0 392 561"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -447,7 +449,7 @@ function Suggestion() {
               return (
                 <div
                   key={id}
-                  style={{ width: "45vw" }}
+                  style={{ width: "45vw", height: '100%' }}
                   onClick={() => {
                     changeModalState({
                       title,

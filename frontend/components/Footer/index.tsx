@@ -85,8 +85,9 @@ const Footer = ({ links }: FooterProps) => {
               <a href="/privacy-policy">Политика конфиденциальности</a>
             </p>
           </div>
-
-          <SocialLinks color="darkGray" links={links} />
+          <div>
+            <SocialLinks color="darkGray" links={links} />
+          </div>
         </div>
       </div>
     </div>

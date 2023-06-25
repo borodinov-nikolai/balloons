@@ -1,13 +1,15 @@
 import { Button, Grid } from "@mui/material"
 import styles from "./ReleaseSlider.module.scss"
 import Link from "next/link"
+import useWindowSize from "hooks/size.hooks"
 
 const ReleaseSliderMainSlide = () => {
+  const size = useWindowSize()
   return (
     <Grid className={`block ${styles.slide} ${styles.slideMain}`}>
       <Grid className={styles.mainSlideBgImg}>
         <svg
-          width="926"
+          width={size.width > 1023 ? "926" : '1200'}
           height="487"
           viewBox="0 0 926 487"
           fill="none"
@@ -72,7 +74,7 @@ const ReleaseSliderMainSlide = () => {
       <Grid className="vector__bg vector__bg_7">
         <svg
           width="483"
-          height="667"
+          height={size.width < 1024 ? "600px" : '1000px'}
           viewBox="0 0 483 667"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

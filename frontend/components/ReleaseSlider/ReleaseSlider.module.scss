@@ -8,11 +8,12 @@
   .slick-dots {
     list-style: none;
     display: flex !important;
+    
     position: absolute;
     width: 220px;
     justify-content: space-between;
     left: calc((100% - 220px) / 2 - 19%); //ToDo Сделать адаптивную ширину
-    bottom: 22px;
+    bottom: 49px;
     z-index: 5;
 
     @media (max-width: 1023px) {
