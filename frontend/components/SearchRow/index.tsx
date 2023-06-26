@@ -5,6 +5,8 @@ import right from "assets/search-row_vector-right.svg"
 import styles from "./SearchRow.module.scss"
 import { Typography } from "@mui/material"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import useWindowSize from "hooks/size.hooks"
+import right_mobile from 'assets/right-mobile-search.png'
 
 type SearchRowProps = {
   title: string
@@ -23,6 +25,7 @@ function SearchRow(props: SearchRowProps) {
   ) => {
     router.push(`${pathname}?search=${e.target.value}`)
   }
+  const size = useWindowSize()
 
   return (
     <section className="block_first-on-page">
@@ -45,14 +48,15 @@ function SearchRow(props: SearchRowProps) {
             </div>
           </div>
           <div
-            className={`${styles.searchRow__vector} ${styles.searchRow__vector_left}`}
+             className={`${styles.searchRow__vector} ${styles.searchRow__vector_left}`} 
           >
-            <Image src={left} alt="" height={43} width={43} />
+            <Image src={left} alt=""  />
           </div>
           <div
             className={`${styles.searchRow__vector} ${styles.searchRow__vector_right}`}
           >
-            <Image src={right} alt="" height={43} width={43} />
+            {size.width > 767 ? <Image src={right} alt=""  /> : <Image style={{position: 'absolute', top: '130px', right: '230px'}} src={right_mobile} alt="" />}
+            
           </div>
         </div>
       </div>

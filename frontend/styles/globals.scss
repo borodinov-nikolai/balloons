@@ -379,9 +379,7 @@ a {
   bottom: -42%;
   display: none;
   left: -80%;
-  @media (max-width: 1439px) {
-    display: block;
-  }
+
   @media (max-width: 1023px) {
     display: none;
   }
@@ -392,10 +390,10 @@ a {
   bottom: -20%;
   left: -110px;
   z-index: 6;
-  @media (max-width: 1439px) {
-    display: none
-  }
 
+  @media (max-width: 1439px) {
+    display: block;
+  }
   @media (max-width: 1023px) {
     display: block;
     top: -230px;
@@ -512,8 +510,9 @@ a {
 
 .vector__footer {
   width: 218px;
+  z-index: 1;
   height: 310px;
-  bottom: 60%;
+  bottom: 7%;
   left: -70px;
 
   @media (max-width: 1439px) {

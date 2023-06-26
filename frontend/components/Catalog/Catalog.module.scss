@@ -32,6 +32,7 @@
   line-height: 1;
   white-space: nowrap;
   margin-bottom: 3rem;
+  z-index: 9;
   @media (max-width: 1023px) {
     width: 100%;
   }
