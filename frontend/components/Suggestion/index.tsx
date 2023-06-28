@@ -449,7 +449,7 @@ function Suggestion() {
               return (
                 <div
                   key={id}
-                  style={{ width: "45vw", height: '100%' }}
+                  style={{ width: "45vw", height: "100%" }}
                   onClick={() => {
                     changeModalState({
                       title,

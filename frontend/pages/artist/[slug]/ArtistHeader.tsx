@@ -17,8 +17,6 @@ type ArtistHeaderProps = {
 }
 
 function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
-
-
   const [isOpenModal, setIsOpenModal] = useState(false)
   return (
     <Grid className="content content_full-screen">
@@ -140,8 +138,12 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
                 <Button
                   size="large"
                   fullWidth
-                  onClick={() =>setIsOpenModal(true)}
-                  style={{ backgroundColor: "#D4AA00", height: '20%', fontSize: '120%'}}
+                  onClick={() => setIsOpenModal(true)}
+                  style={{
+                    backgroundColor: "#D4AA00",
+                    height: "20%",
+                    fontSize: "120%",
+                  }}
                 >
                   ЗАКАЗАТЬ ВЫСТУПЛЕНИЕ
                 </Button>
@@ -152,13 +154,19 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
 
             {isCurrentUser && (
               <Link href="/artist/edit">
-                <Button sx={{mt: '20px'}} color="secondary">Редактировать</Button>
+                <Button sx={{ mt: "20px" }} color="secondary">
+                  Редактировать
+                </Button>
               </Link>
             )}
           </Grid>
         </Grid>
       </Grid>
-      <BookModal open={isOpenModal} setState={setIsOpenModal} username={user?.name}/>
+      <BookModal
+        open={isOpenModal}
+        setState={setIsOpenModal}
+        username={user?.name}
+      />
     </Grid>
   )
 }

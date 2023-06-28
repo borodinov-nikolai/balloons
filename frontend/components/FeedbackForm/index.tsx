@@ -84,7 +84,10 @@ function FeedbackForm() {
         <div className={styles.row}>
           <div className={styles.leftColumn}>
             <div className="left-img">
-              <img src={"/assets/headphones-notes.png"} alt="headphones and notes"/>
+              <img
+                src={"/assets/headphones-notes.png"}
+                alt="headphones and notes"
+              />
             </div>
             <div className={styles.leftTitle}>
               Опишите свои потребности - и мы свяжемся с вами
@@ -235,7 +238,10 @@ function FeedbackForm() {
               </Grid>
 
               <div className={styles.btnRow}>
-                <Button className={styles.sendBtn} onClick={handleSubmit(submitHandler)}>
+                <Button
+                  className={styles.sendBtn}
+                  onClick={handleSubmit(submitHandler)}
+                >
                   Отправить
                 </Button>
 

@@ -6,7 +6,7 @@ import styles from "./SearchRow.module.scss"
 import { Typography } from "@mui/material"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import useWindowSize from "hooks/size.hooks"
-import right_mobile from 'assets/right-mobile-search.png'
+import right_mobile from "assets/right-mobile-search.png"
 
 type SearchRowProps = {
   title: string
@@ -48,15 +48,22 @@ function SearchRow(props: SearchRowProps) {
             </div>
           </div>
           <div
-             className={`${styles.searchRow__vector} ${styles.searchRow__vector_left}`} 
+            className={`${styles.searchRow__vector} ${styles.searchRow__vector_left}`}
           >
-            <Image src={left} alt=""  />
+            <Image src={left} alt="" />
           </div>
           <div
             className={`${styles.searchRow__vector} ${styles.searchRow__vector_right}`}
           >
-            {size.width > 767 ? <Image src={right} alt=""  /> : <Image style={{position: 'absolute', top: '130px', right: '230px'}} src={right_mobile} alt="" />}
-            
+            {size.width > 767 ? (
+              <Image src={right} alt="" />
+            ) : (
+              <Image
+                style={{ position: "absolute", top: "130px", right: "230px" }}
+                src={right_mobile}
+                alt=""
+              />
+
           </div>
         </div>
       </div>

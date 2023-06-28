@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useAuth } from "context/AuthProvider"
 import { useRouter } from "next/router"
 import { UserType } from "types/auth"
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add"
 import MyReleases from "components/MyReleases"
 import { API } from "lib/api"
 import Loader from "components/Loader"
@@ -80,7 +80,7 @@ function ArtistPage() {
 
           <Grid className="content" style={{ marginTop: "12rem" }}>
             <Grid container justifyContent="space-between" alignItems="center">
-              <Typography variant="h2" >
+              <Typography variant="h2">
                 {isCurrentUser ? "МОИ РЕЛИЗЫ" : "РЕЛИЗЫ"}
               </Typography>
 
@@ -90,7 +90,9 @@ function ArtistPage() {
                 </Link>
               ) : (
                 <Link href="/release/new">
-                  <IconButton  sx={{bgcolor: '#D4AA00', color: 'white'}}><AddIcon /></IconButton>
+                  <IconButton sx={{ bgcolor: "#D4AA00", color: "white" }}>
+                    <AddIcon />
+                  </IconButton>
                 </Link>
               )}
             </Grid>
@@ -98,23 +100,30 @@ function ArtistPage() {
             {isCurrentUser ? (
               <MyReleases releases={user?.releases} />
             ) : (
-              <Box sx={{ overflow: 'scroll'}}>
-                              <Grid container sx={{flexWrap: size.width < 1024 && size.width > 400 ? 'nowrap' : 'wrap',  width: size.width > 400 && size.width< 1024 ? '200%': '100%' }}>
-                {user?.releases?.length
-                  ? releaseItems
-                  : [
-                      <Grid
-                        key={1}
-                        container
-                        style={{ fontSize: "1rem", margin: "1rem 0" }}
-                        justifyContent="center"
-                      >
-                        У артиста пока нет рилизов
-                      </Grid>,
-                    ]}
-              </Grid>
+              <Box sx={{ overflow: "scroll" }}>
+                <Grid
+                  container
+                  sx={{
+                    flexWrap:
+                      size.width < 1024 && size.width > 400 ? "nowrap" : "wrap",
+                    width:
+                      size.width > 400 && size.width < 1024 ? "200%" : "100%",
+                  }}
+                >
+                  {user?.releases?.length
+                    ? releaseItems
+                    : [
+                        <Grid
+                          key={1}
+                          container
+                          style={{ fontSize: "1rem", margin: "1rem 0" }}
+                          justifyContent="center"
+                        >
+                          У артиста пока нет рилизов
+                        </Grid>,
+                      ]}
+                </Grid>
               </Box>
-
             )}
           </Grid>
         </>

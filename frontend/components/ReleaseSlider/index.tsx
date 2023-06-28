@@ -29,16 +29,18 @@ function NextArrow(props: any) {
 
 const settings: Settings = {
   dots: true,
-  infinite: false,
   speed: 500,
   slidesToShow: 1,
   slidesToScroll: 1,
+  infinite: true,
   variableWidth: true,
+  autoplay: true,
+  autoplaySpeed: 5000,
   prevArrow: <PrevArrow />, //ToDo сделать неактивными кнопки, если двигаться некуда
   nextArrow: <NextArrow />,
   centerMode: true,
   customPaging: (i: number) => (
-    <div className={styles.paginationItem}>0{i + 1}</div>
+    <div className={styles.paginationItem}>{`0${i + 1}`}</div>
   ),
 }
 

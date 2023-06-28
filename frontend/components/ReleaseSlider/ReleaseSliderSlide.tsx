@@ -23,12 +23,15 @@ const ReleaseSliderSlide = (props: ReleaseSlideProps) => {
 
         <Grid container direction="column" className={styles.slideSubtitle}>
           {description && (
-            <Grid style={{ marginBottom: "2rem" }}>{description}</Grid>
+            <Grid style={{ marginBottom: "2rem", marginTop: "2rem" }}>
+              {description}
+            </Grid>
           )}
 
           {link && (
             <Link href={link}>
               <Button
+                sx={{ mt: "79px" }}
                 className={`${styles.slideButton} ${styles.slideButtonMain}`}
               >
                 Релиз

@@ -104,11 +104,11 @@ function Registration() {
         <div className={styles.formPage__checkboxText}>
           Принимаю
           <a href={"/terms"} className={styles.formPage__link}>
-             пользовательское соглашение
+            пользовательское соглашение
           </a>
         </div>
       </div>
-      <div style={{marginTop: 0}} className={styles.formPage__checkboxRow}>
+      <div style={{ marginTop: 0 }} className={styles.formPage__checkboxRow}>
         <Checkbox
           id="privacy-policy"
           checked={userAgreement}
@@ -118,15 +118,13 @@ function Registration() {
           name="privacy-policy"
           required
         />
-      <div className={styles.formPage__checkboxText}>
-          Принимаю  
+        <div className={styles.formPage__checkboxText}>
+          Принимаю
           <a href={"/privacy-policy"} className={styles.formPage__link}>
-
-«Политику конфиденциальности»
+            «Политику конфиденциальности»
           </a>
         </div>
       </div>
-
 
       <Grid container style={{ margin: "1rem 0 0" }}>
         <Captcha
@@ -141,7 +139,11 @@ function Registration() {
 
       <div className={styles.formPage__text}>
         У меня есть аккаунт
-        <Link sx={{ml: '4px'}} href={"/login"} className={styles.formPage__enterLink}>
+        <Link
+          sx={{ ml: "4px" }}
+          href={"/login"}
+          className={styles.formPage__enterLink}
+        >
           Войти
         </Link>
       </div>

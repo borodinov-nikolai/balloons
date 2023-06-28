@@ -416,8 +416,8 @@ a {
 .vector__bg_7 {
   width: 685px;
   height: 708px;
-  bottom: -280px;
-  left: -150px;
+ bottom: -50%;
+
   z-index: -1;
   @media (max-width: 1023px) {
     transform: scale(0.7) rotate(60deg);
