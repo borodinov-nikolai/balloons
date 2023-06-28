@@ -38,7 +38,6 @@ function FeedbackForm() {
   const [submitError, setSubmitError] = useState("")
   const [status, setStatus] = useState("")
   const files = watch("attachment")
-
   const submitHandler = async (form: FeedbackFormType) => {
     try {
       const { status } = await API.post(

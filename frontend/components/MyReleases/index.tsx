@@ -54,8 +54,8 @@ function MyReleases({ releases }: MyReleasesProps) {
                   <Image
                     src={getMediaUrl(realese.img)}
                     alt="realese img"
-                    width={250}
-                    height={250}
+                    width={200}
+                    height={200}
                     className={styles.img}
                   />
                 </Grid>

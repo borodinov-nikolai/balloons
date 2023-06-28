@@ -6,6 +6,7 @@ import LinkWrapper from "components/LinkWrapper"
 import { ReactElement } from "react"
 import Link from "next/link"
 import { getMediaUrl } from "lib/media"
+import useWindowSize from "hooks/size.hooks"
 
 function ListItem({
   img,
@@ -17,9 +18,12 @@ function ListItem({
   style,
 }: ListItemType) {
   const placeholderUrl = placeholder ? placeholder : "/assets/placeholder.png"
-
+  const size = useWindowSize()
   return (
+    <div style={{width: size.width > 768 ? '25%' :  size.width < 1000 && size.width > 420 ? '200px' : '100%'}}>
+
     <LinkWrapper
+    
       condition={!!link}
       wrapper={
         !!link
@@ -35,7 +39,7 @@ function ListItem({
             )
       }
     >
-      <Grid className={`${styles.item_img_container} square_img_container`}>
+      <Grid  className={`${styles.item_img_container} square_img_container`}>
         <Image
           src={img?.url ? getMediaUrl(img) : placeholderUrl}
           alt="list img"
@@ -62,6 +66,9 @@ function ListItem({
         </Typography>
       )}
     </LinkWrapper>
+
+    </div>
+
   )
 }
 

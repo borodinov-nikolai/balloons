@@ -90,7 +90,7 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
     )
 
   return (
-    <Grid container className={styles.links} sx={sx}>
+    <Grid container className={styles.links}  sx={sx}>
       {socialLinks}
     </Grid>
   )

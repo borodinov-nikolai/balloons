@@ -8,6 +8,8 @@ import { getMediaUrl } from "lib/media"
 import getUserSocialLinks from "lib/getUserSocialLinks"
 
 import styles from "pages/artist/Artist.module.scss"
+import BookModal from "./BookModal"
+import { useState } from "react"
 
 type ArtistHeaderProps = {
   user?: UserType
@@ -15,12 +17,16 @@ type ArtistHeaderProps = {
 }
 
 function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
+
+
+  const [isOpenModal, setIsOpenModal] = useState(false)
   return (
     <Grid className="content content_full-screen">
       <svg
+        style={{ zIndex: 9 }}
         className="vector__bg_right-small"
         width="149"
-        height="313"
+        height=""
         viewBox="0 0 149 313"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -96,6 +102,7 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
             className={`${styles.header_avatar} square_img_container`}
           >
             <Image
+              style={{ borderRadius: "10px" }}
               fill
               className="square_img"
               src={getMediaUrl(user?.avatar)}
@@ -103,9 +110,13 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
             />
           </Grid>
 
-          <Grid md={8} className={styles.header_user_block}>
+          <Grid md={5} className={styles.header_user_block}>
             <Typography className={styles.header_user_title} variant="h2">
               {user?.name}
+            </Typography>
+
+            <Typography style={{ width: "70%" }}>
+              {user?.description}
             </Typography>
 
             {user?.site && (
@@ -119,24 +130,35 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
               </MuiLink>
             )}
 
-            <Typography style={{ width: "70%" }}>
-              {user?.description}
-            </Typography>
-
             <SocialLinks
               color="white"
               links={getUserSocialLinks(user)}
               sx={{ margin: "1.5rem 0" }}
             />
+            {user?.canBookPerformance && !isCurrentUser ? (
+              <>
+                <Button
+                  size="large"
+                  fullWidth
+                  onClick={() =>setIsOpenModal(true)}
+                  style={{ backgroundColor: "#D4AA00", height: '20%', fontSize: '120%'}}
+                >
+                  ЗАКАЗАТЬ ВЫСТУПЛЕНИЕ
+                </Button>
+              </>
+            ) : (
+              ""
+            )}
 
             {isCurrentUser && (
               <Link href="/artist/edit">
-                <Button color="secondary">Редактировать</Button>
+                <Button sx={{mt: '20px'}} color="secondary">Редактировать</Button>
               </Link>
             )}
           </Grid>
         </Grid>
       </Grid>
+      <BookModal open={isOpenModal} setState={setIsOpenModal} username={user?.name}/>
     </Grid>
   )
 }

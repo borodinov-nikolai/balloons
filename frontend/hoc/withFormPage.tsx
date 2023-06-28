@@ -1,11 +1,194 @@
 import React, { FunctionComponent, useState } from "react"
 import styles from "pages/registration/Registration.module.scss"
+import useWindowSize from "hooks/size.hooks"
 
 const withFormPage = (FormComponent: FunctionComponent) => (props: any) => {
   const [isCaptchaVerified, setCaptchaVerified] = useState(false)
-
+  const size = useWindowSize()
   return (
     <div className={`wrapper ${styles.formPageWrapper}`}>
+      <div className={styles.bgline1}>
+        <svg
+          width="291"
+          height="386"
+          viewBox="0 0 291 386"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M235.393 -125C235.393 -125 154.229 -11.4569 245.223 100.968C347.229 226.993 254.53 359.993 147.906 375.731C41.2824 391.47 -26.2619 260.648 -193.493 351.975C-364.475 445.357 -492.483 305.671 -492.483 305.671"
+            stroke="#204CEC"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+          <path
+            d="M86.6784 -88.9167C86.6784 -88.9167 100.083 44.2992 177.879 139.64C255.676 234.98 185.878 291.679 148.114 297.081C69.7873 308.263 -21.1887 178.903 -129.026 229.334C-210.06 267.26 -283.382 379.975 -407.508 291.949"
+            stroke="#204CEC"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+          <path
+            d="M62.5357 -12.1517C62.5357 -12.1517 142.117 86.0325 55.0951 110.506C-44.5975 138.581 -73.2521 85.8693 -154.973 198.448C-183.948 238.516 -338.768 334.728 -362.504 220.194"
+            stroke="#204CEC"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+        </svg>
+      </div>
+      <div className={styles.bgline2}>
+        <svg
+          width="307"
+          height="249"
+          viewBox="0 0 307 249"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M-160.999 107.167C-160.999 107.167 -65.9568 142.812 -4.10619 57.7256C65.2256 -37.656 176.107 2.42985 207.234 74.3709C238.361 146.312 159.172 218.387 254.808 318.676C352.594 421.214 278.56 537.434 278.56 537.434"
+            stroke="#204CEC"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+          <path
+            d="M-107.657 204.846C-107.657 204.846 -16.596 170.354 35.737 97.7551C88.0699 25.1565 141.039 63.517 151.943 89.0294C174.542 141.949 100.791 230.21 156.518 296.473C198.414 346.261 291.398 376.553 252.925 480.321"
+            stroke="#204CEC"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+          <path
+            d="M-49.1851 207.357C-49.1851 207.357 4.80956 132.969 38.383 189.496C76.8708 254.245 45.2348 284.297 139.704 320.515C173.306 333.328 270.038 423.979 194.045 462.212"
+            stroke="#204CEC"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+        </svg>
+      </div>
+
+      {size.width > 1100 ? (
+        <div className={styles.bgline3}>
+          <svg
+            width="926"
+            height="293"
+            viewBox="0 0 926 293"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M925.001 -147C925.001 -147 786.324 -83.9057 810.98 72.1777C838.623 247.144 678.426 322.347 569.058 278.992C459.689 235.637 467.238 74.9568 259.335 70.0144C46.7659 64.9669 2.00098 -137.13 2.00098 -137.13"
+              stroke="url(#paint0_linear_0_1)"
+              stroke-width="3"
+              stroke-miterlimit="10"
+            />
+            <path
+              d="M764.001 -193C764.001 -193 704.058 -59.857 725.532 72.626C747.007 205.109 650.229 220.601 611.641 205.109C531.617 172.956 516.241 1.15056 386.974 -10.0222C289.821 -18.3905 159.19 48.091 90.001 -102.748"
+              stroke="url(#paint1_linear_0_1)"
+              stroke-width="3"
+              stroke-miterlimit="10"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear_0_1"
+                x1="463.501"
+                y1="-147"
+                x2="463.501"
+                y2="291"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#204CEC" />
+                <stop offset="1" stop-color="#FD6436" />
+              </linearGradient>
+              <linearGradient
+                id="paint1_linear_0_1"
+                x1="427.001"
+                y1="-193"
+                x2="427.001"
+                y2="210"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#204CEC" />
+                <stop offset="1" stop-color="#FD6436" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      ) : (
+        <div className={styles.bgline3M}>
+          <svg
+            width="657"
+            height="338"
+            viewBox="0 0 657 338"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M882.565 1.11979C882.565 1.11979 731.127 17.8177 705.875 173.806C677.572 348.666 501.912 370.157 411.519 294.856C321.127 219.554 378.411 69.2421 182.419 -0.292966C-17.974 -71.3835 2.52247 -277.362 2.52247 -277.362"
+              stroke="url(#paint0_linear_0_1)"
+              stroke-width="3"
+              stroke-miterlimit="10"
+            />
+            <path
+              d="M743.941 -92.7974C743.941 -92.7974 645.464 15.0102 624.549 147.583C603.635 280.156 506.852 264.692 475.02 237.938C409.015 182.431 447.988 14.4 328.653 -36.5305C238.956 -74.7808 94.1062 -52.3554 75.4105 -217.25"
+              stroke="url(#paint1_linear_0_1)"
+              stroke-width="3"
+              stroke-miterlimit="10"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear_0_1"
+                x1="444.083"
+                y1="-142.81"
+                x2="307.482"
+                y2="273.344"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#204CEC" />
+                <stop offset="1" stop-color="#FD6436" />
+              </linearGradient>
+              <linearGradient
+                id="paint1_linear_0_1"
+                x1="423.749"
+                y1="-197.899"
+                x2="298.064"
+                y2="185.001"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#204CEC" />
+                <stop offset="1" stop-color="#FD6436" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      )}
+
+      <div className={styles.bgline4}>
+        <svg
+          width="313"
+          height="389"
+          viewBox="0 0 313 389"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M385.181 1.92009C385.181 1.92009 247.444 -2.16709 209.435 134.329C172.256 267.828 69.7991 236.71 23.9408 300.282C-21.9175 363.854 0.422529 479.624 117.852 490.341C222.607 499.904 219 563.5 240.652 599.794C262.304 636.088 314 660 314 660"
+            stroke="#FC6338"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+          <path
+            d="M318 531.5C318 531.5 220.991 443.4 131.835 435.619C42.6797 427.838 48.5094 362.697 64.8411 340.268C98.727 293.761 212.303 311.92 240.688 230.124C262.003 168.645 240.414 73.263 349.247 53.1804"
+            stroke="#FC6338"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+          <path
+            d="M314 463C314 463 177.92 444.155 209.285 386.374C245.197 320.161 287.209 331.949 269.95 232.258C263.751 196.834 292.09 67.3288 363.841 113.029"
+            stroke="#FC6338"
+            stroke-width="3"
+            stroke-miterlimit="10"
+          />
+        </svg>
+      </div>
+
       <div className="vector__bg vector__bg_reg1">
         <svg
           width="291"
@@ -126,7 +309,7 @@ const withFormPage = (FormComponent: FunctionComponent) => (props: any) => {
             d="M318 531.5C318 531.5 220.991 443.4 131.835 435.619C42.6797 427.838 48.5094 362.697 64.8411 340.268C98.727 293.761 212.303 311.92 240.688 230.124C262.003 168.645 240.414 73.263 349.247 53.1804"
             stroke="#FC6338"
             strokeWidth="3"
-            strokeMiterlimit="10"
+            strokeMiterlimity="10"
           />
           <path
             d="M314 463C314 463 177.92 444.155 209.285 386.374C245.197 320.161 287.209 331.949 269.95 232.258C263.751 196.834 292.09 67.3288 363.841 113.029"
@@ -163,22 +346,23 @@ const withFormPage = (FormComponent: FunctionComponent) => (props: any) => {
             </linearGradient>
           </defs>
         </svg>
-
-        <svg className="vinylRecordReg__center" viewBox="0 0 400 400">
-          <path
-            d="M200,200 m-172,0 a172,172 0 1,1 345,0 a172,172 0 1,1 -345,0"
-            fillOpacity="0"
-            id="tophalf"
-          />
-          <text fill="#fff">
-            <textPath xlinkHref="#tophalf" startOffset="2%">
-              Стань частью Link Music -
-            </textPath>
-            <textPath xlinkHref="#tophalf" startOffset="52%">
-              Стань частью Link Music -
-            </textPath>
-          </text>
-        </svg>
+        <div className={styles.vinylRecordReg__center}>
+          <svg viewBox="0 0 400 400">
+            <path
+              d="M200,200 m-172,0 a172,172 0 1,1 345,0 a172,172 0 1,1 -345,0"
+              fillOpacity="0"
+              id="tophalf"
+            />
+            <text fill="#fff">
+              <textPath xlinkHref="#tophalf" startOffset="2%">
+                СТАНЬ ЧАСТЬЮ LINK MUSIC -
+              </textPath>
+              <textPath xlinkHref="#tophalf" startOffset="52%">
+                СТАНЬ ЧАСТЬЮ LINK MUSIC -
+              </textPath>
+            </text>
+          </svg>
+        </div>
       </div>
       <div className={styles.formPage__notes}>
         <svg

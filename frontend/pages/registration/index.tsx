@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import IMask from "imask"
 import {
+  Box,
   Button,
   Checkbox,
   Grid,
@@ -30,6 +31,7 @@ function Registration() {
     formState: { errors },
   } = useForm<signUpFormType>()
   const [userAgreement, toggleUserAgreement] = useState(false)
+  const [privacyPolicy, togglePrivacyPolicy] = useState(false)
   const phoneInputRef = useRef()
 
   useEffect(() => {
@@ -92,20 +94,39 @@ function Registration() {
       <div className={styles.formPage__checkboxRow}>
         <Checkbox
           id="user-agreement"
-          checked={userAgreement}
+          checked={privacyPolicy}
           onChange={() => {
-            toggleUserAgreement(!userAgreement)
+            togglePrivacyPolicy(!privacyPolicy)
           }}
           name="user-agreement"
           required
         />
-
         <div className={styles.formPage__checkboxText}>
+          Принимаю
           <a href={"/terms"} className={styles.formPage__link}>
-            Принимаю пользовательское соглашение
+             пользовательское соглашение
           </a>
         </div>
       </div>
+      <div style={{marginTop: 0}} className={styles.formPage__checkboxRow}>
+        <Checkbox
+          id="privacy-policy"
+          checked={userAgreement}
+          onChange={() => {
+            toggleUserAgreement(!userAgreement)
+          }}
+          name="privacy-policy"
+          required
+        />
+      <div className={styles.formPage__checkboxText}>
+          Принимаю  
+          <a href={"/privacy-policy"} className={styles.formPage__link}>
+
+«Политику конфиденциальности»
+          </a>
+        </div>
+      </div>
+
 
       <Grid container style={{ margin: "1rem 0 0" }}>
         <Captcha
@@ -120,7 +141,7 @@ function Registration() {
 
       <div className={styles.formPage__text}>
         У меня есть аккаунт
-        <Link href={"/login"} className={styles.formPage__enterLink}>
+        <Link sx={{ml: '4px'}} href={"/login"} className={styles.formPage__enterLink}>
           Войти
         </Link>
       </div>
