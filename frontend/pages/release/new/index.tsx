@@ -196,6 +196,7 @@ function NewRelease() {
                         return (
                           <DatePicker
                             onChange={(newValue) => {
+                              // @ts-ignore
                               onChange(newValue)
                             }}
                             value={value}
@@ -207,8 +208,8 @@ function NewRelease() {
                     />
                     <Margin />
                   </FormControl>
-
                   <Margin />
+
                   <Typography variant="h5">Основная информация</Typography>
                   <Margin />
 

@@ -115,6 +115,7 @@ function FeedbackForm() {
                     defaultValue=""
                     control={control}
                     render={({ field }) => (
+                      // @ts-ignore
                       <Select
                         displayEmpty
                         labelId="message-form-label"

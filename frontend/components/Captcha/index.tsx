@@ -102,7 +102,6 @@ function Captcha({
     <Grid container style={{ position: "relative" }}>
       <Grid container className={styles.captcha}>
         <TextField
-        
           className={styles.captcha__input}
           variant="outlined"
           error={!!errors?.captcha}

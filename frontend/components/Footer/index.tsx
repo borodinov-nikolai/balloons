@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import SocialLinks from "components/SocialLinks"
 import styles from "./Footer.module.scss"
 import { UserSocialLinksType } from "types/general"
+import Link from "next/link"
 
 type FooterProps = {
   links: UserSocialLinksType
@@ -81,8 +82,8 @@ const Footer = ({ links }: FooterProps) => {
             <p>Copyright © {year} ООО «Линк Мьюзик»</p>
             <p>
               Правовая информация:{" "}
-              <a href="/terms">Пользовательское соглашение</a>,{" "}
-              <a href="/privacy-policy">Политика конфиденциальности</a>
+              <Link href="/terms">Пользовательское соглашение</Link>,{" "}
+              <Link href="/privacy-policy">Политика конфиденциальности</Link>
             </p>
           </div>
           <div>

@@ -3,7 +3,6 @@ import {
   Button,
   Dialog,
   DialogContent,
-  DialogTitle,
   FormLabel,
   TextField,
   Typography,
@@ -12,7 +11,7 @@ import React, { FC } from "react"
 
 import style from "./../Artist.module.scss"
 interface BookProps {
-  open: boolean,
+  open: boolean
   setState: Function
   username: string | undefined
 }
@@ -24,9 +23,13 @@ const BookModal: FC<BookProps> = ({ open, setState, username }: BookProps) => {
     <div>
       <Dialog open={open} onClose={onClose}>
         <DialogContent>
-          <Box  className={style.modalHeader}><Typography variant='h2'>{username}</Typography></Box>
-          <Box><Typography>Заполните поля:</Typography></Box>
-          <Box sx={{display: 'flex', flexDirection: 'column'}}>
+          <Box className={style.modalHeader}>
+            <Typography variant="h2">{username}</Typography>
+          </Box>
+          <Box>
+            <Typography>Заполните поля:</Typography>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
             <TextField
               required
               className={style.textField}
@@ -37,9 +40,17 @@ const BookModal: FC<BookProps> = ({ open, setState, username }: BookProps) => {
               className={style.textField}
               label={"Нормер телефона"}
             ></TextField>
-            <TextField required className={style.textField}  label={'E-mail'}></TextField>
+            <TextField
+              required
+              className={style.textField}
+              label={"E-mail"}
+            ></TextField>
             <FormLabel required>Дата мероприятия</FormLabel>
-            <TextField required className={style.textField} type='date'></TextField>
+            <TextField
+              required
+              className={style.textField}
+              type="date"
+            ></TextField>
             <TextField
               required
               className={style.textField}
@@ -47,15 +58,15 @@ const BookModal: FC<BookProps> = ({ open, setState, username }: BookProps) => {
               label={"Сообщение"}
             ></TextField>
           </Box>
-          <Box sx={{display: 'flex', justifyContent: 'center'}}>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button variant="contained" className={style.book__button}>
               Заказать
             </Button>
-
+          </Box>
         </DialogContent>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default BookModal;
+export default BookModal

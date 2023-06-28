@@ -20,55 +20,60 @@ function ListItem({
   const placeholderUrl = placeholder ? placeholder : "/assets/placeholder.png"
   const size = useWindowSize()
   return (
-    <div style={{width: size.width > 768 ? '25%' :  size.width < 1000 && size.width > 420 ? '200px' : '100%'}}>
-
-    <LinkWrapper
-    
-      condition={!!link}
-      wrapper={
-        !!link
-          ? (children: ReactElement) => (
-              <Grid style={style} className={styles.item_container}>
-                <Link href={link || ""}>{children}</Link>
-              </Grid>
-            )
-          : (children: ReactElement) => (
-              <Grid style={style} className={styles.item_container}>
-                {children}
-              </Grid>
-            )
-      }
+    <div
+      style={{
+        width:
+          size.width > 768
+            ? "25%"
+            : size.width < 1000 && size.width > 420
+            ? "200px"
+            : "100%",
+      }}
     >
-      <Grid  className={`${styles.item_img_container} square_img_container`}>
-        <Image
-          src={img?.url ? getMediaUrl(img) : placeholderUrl}
-          alt="list img"
-          className="square_img"
-          fill
-        />
-      </Grid>
+      <LinkWrapper
+        condition={!!link}
+        wrapper={
+          !!link
+            ? (children: ReactElement) => (
+                <Grid style={style} className={styles.item_container}>
+                  <Link href={link || ""}>{children}</Link>
+                </Grid>
+              )
+            : (children: ReactElement) => (
+                <Grid style={style} className={styles.item_container}>
+                  {children}
+                </Grid>
+              )
+        }
+      >
+        <Grid className={`${styles.item_img_container} square_img_container`}>
+          <Image
+            src={img?.url ? getMediaUrl(img) : placeholderUrl}
+            alt="list img"
+            className="square_img"
+            fill
+          />
+        </Grid>
 
-      {title && (
-        <Typography title={title} variant="h5" className={styles.title}>
-          {title}
-        </Typography>
-      )}
+        {title && (
+          <Typography title={title} variant="h5" className={styles.title}>
+            {title}
+          </Typography>
+        )}
 
-      {subTitle && (
-        <Typography title={subTitle} className={styles.sub_title}>
-          {subTitle}
-        </Typography>
-      )}
+        {subTitle && (
+          <Typography title={subTitle} className={styles.sub_title}>
+            {subTitle}
+          </Typography>
+        )}
 
-      {description && (
-        <Typography title={description} className={styles.description}>
-          {description}
-        </Typography>
-      )}
-    </LinkWrapper>
-
+        {description && (
+          <Typography title={description} className={styles.description}>
+            {description}
+          </Typography>
+        )}
+      </LinkWrapper>
     </div>
-
   )
 }
 

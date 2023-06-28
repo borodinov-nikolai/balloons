@@ -27,7 +27,7 @@ function NewsPage() {
         {newsArticle?.content?.document && (
           <Typography>
             {/* @ts-ignore */}
-            <DocumentRenderer document={newsArticle.content.document} />
+            {/*<DocumentRenderer document={newsArticle.content.document} />*/}
           </Typography>
         )}
       </Grid>

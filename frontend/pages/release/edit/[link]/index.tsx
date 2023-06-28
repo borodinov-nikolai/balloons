@@ -249,6 +249,7 @@ function UpdateRelease() {
                         return (
                           <DatePicker
                             onChange={(newValue) => {
+                              // @ts-ignore
                               onChange(newValue)
                             }}
                             value={value || 0}

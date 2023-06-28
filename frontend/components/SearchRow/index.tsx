@@ -63,7 +63,7 @@ function SearchRow(props: SearchRowProps) {
                 src={right_mobile}
                 alt=""
               />
-
+            )}
           </div>
         </div>
       </div>
