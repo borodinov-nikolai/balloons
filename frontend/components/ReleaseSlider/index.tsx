@@ -34,7 +34,7 @@ const settings: Settings = {
   slidesToScroll: 1,
   infinite: true,
   variableWidth: true,
-  autoplay: true,
+  autoplay: false, //change it smak
   autoplaySpeed: 5000,
   prevArrow: <PrevArrow />, //ToDo сделать неактивными кнопки, если двигаться некуда
   nextArrow: <NextArrow />,

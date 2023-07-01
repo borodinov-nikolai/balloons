@@ -436,7 +436,7 @@ function Suggestion() {
 
       <Modal
         open={openModal}
-        className={`block ${styles.modal}`}
+        className={`block_suggestion ${styles.modal}`}
         style={{ background: modalState?.bgColor }}
       >
         <div>

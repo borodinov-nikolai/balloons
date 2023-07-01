@@ -57,14 +57,26 @@ a {
 }
 
 .block {
+   width: 100%;
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  align-items: flex-start;
+  margin: 0 auto;
+   position: relative;
+   @media (max-width: 767px) {
+    align-items: center;
+  }
+}
+.block_suggestion {
   width: 100%;
   display: flex;
   flex-flow: column;
   flex-grow: 1;
   align-items: flex-start;
   margin: 0 auto;
-  position: relative;
-  @media (max-width: 767px) {
+
+   @media (max-width: 767px) {
     align-items: center;
   }
 }

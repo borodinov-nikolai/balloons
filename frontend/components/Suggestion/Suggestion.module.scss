@@ -417,8 +417,8 @@
 
 .modal {
   justify-content: center;
-  align-items: center;
-  position: absolute;
+   align-items: center;
+
 
   & > div:first-of-type {
     background: inherit;
@@ -440,7 +440,7 @@
   border-radius: 10px;
   font-family: Gilroy, sans-serif;
   font-style: normal;
-  height: 90vh;
+  height: 75vh;
 
   @media (max-width: 1023px) {
     max-width: 566px;
@@ -596,6 +596,7 @@
     top: 0;
     left: 0;
   }
+
 }
 
 .modal__slide {

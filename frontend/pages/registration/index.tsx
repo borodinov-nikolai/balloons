@@ -104,7 +104,7 @@ function Registration() {
         <div className={styles.formPage__checkboxText}>
           Принимаю
           <a href={"/terms"} className={styles.formPage__link}>
-            пользовательское соглашение
+            «Пользовательское соглашение»
           </a>
         </div>
       </div>

@@ -66,6 +66,7 @@ function NewProfile() {
 
                   <FormControl>
                     <TextField
+                      InputLabelProps={{ shrink: true }}
                       label="Имя артиста / Название группы"
                       error={!!errors.name}
                       helperText={
@@ -95,22 +96,47 @@ function NewProfile() {
                     Ссылки на соцсети
                   </Typography>
 
-                  <TextField label="VK" {...register("vk")} />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    label="VK"
+                    {...register("vk")}
+                  />
                   <Margin />
                   <TextField
+                    InputLabelProps={{ shrink: true }}
                     label="Одноклассники"
                     {...register("odnoklassniki")}
                   />
                   <Margin />
-                  <TextField label="Youtube" {...register("youtube")} />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    label="Youtube"
+                    {...register("youtube")}
+                  />
                   <Margin />
-                  <TextField label="Rutube" {...register("rutube")} />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    label="Rutube"
+                    {...register("rutube")}
+                  />
                   <Margin />
-                  <TextField label="Telegram" {...register("telegram")} />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    label="Telegram"
+                    {...register("telegram")}
+                  />
                   <Margin />
-                  <TextField label="Facebook" {...register("facebook")} />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    label="Facebook"
+                    {...register("facebook")}
+                  />
                   <Margin />
-                  <TextField label="Instagram" {...register("instagram")} />
+                  <TextField
+                    InputLabelProps={{ shrink: true }}
+                    label="Instagram"
+                    {...register("instagram")}
+                  />
                   <Margin />
                 </Grid>
 

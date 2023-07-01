@@ -136,13 +136,13 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
             {user?.canBookPerformance && !isCurrentUser ? (
               <>
                 <Button
-                  size="large"
-                  fullWidth
+                  size="medium"
                   onClick={() => setIsOpenModal(true)}
                   style={{
                     backgroundColor: "#D4AA00",
-                    height: "20%",
-                    fontSize: "120%",
+                    height: "15%",
+                    fontSize: "100%",
+                    marginTop: "20px",
                   }}
                 >
                   ЗАКАЗАТЬ ВЫСТУПЛЕНИЕ

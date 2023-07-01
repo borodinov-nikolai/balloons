@@ -83,17 +83,18 @@ function ArtistPage() {
               <Typography variant="h2">
                 {isCurrentUser ? "МОИ РЕЛИЗЫ" : "РЕЛИЗЫ"}
               </Typography>
-
-              {isCurrentUser && size.width > 400 ? (
+              {isCurrentUser ? (
                 <Link href="/release/new">
                   <Button>СОЗДАТЬ НОВЫЙ</Button>
                 </Link>
-              ) : (
+              ) : isCurrentUser && size.width < 400 ? (
                 <Link href="/release/new">
                   <IconButton sx={{ bgcolor: "#D4AA00", color: "white" }}>
                     <AddIcon />
                   </IconButton>
                 </Link>
+              ) : (
+                ""
               )}
             </Grid>
 

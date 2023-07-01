@@ -87,7 +87,11 @@ const Footer = ({ links }: FooterProps) => {
             </p>
           </div>
           <div>
-            <SocialLinks color="darkGray" links={links} />
+            <SocialLinks
+              color="darkGray"
+              links={links}
+              sx={{ flexWrap: "nowrap" }}
+            />
           </div>
         </div>
       </div>
