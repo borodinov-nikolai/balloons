@@ -8,7 +8,7 @@ import Link from "next/link"
 import { getMediaUrl } from "lib/media"
 import useWindowSize from "hooks/size.hooks"
 
-function ListItem({
+function ListItemArtist({
   img,
   title,
   link,
@@ -45,8 +45,10 @@ function ListItem({
           <Image
             src={img?.url ? getMediaUrl(img) : placeholderUrl}
             alt="list img"
-            className="square_img"
-            fill
+            width={size.width < 1000 && size.width > 420 ? 253 : undefined}
+            height={size.width < 1000 && size.width > 420 ? 253 : undefined}
+            fill={size.width < 1000 && size.width > 420 ? false : true}
+            className="square_release"
           />
         </Grid>
 
@@ -72,4 +74,4 @@ function ListItem({
   )
 }
 
-export default ListItem
+export default ListItemArtist

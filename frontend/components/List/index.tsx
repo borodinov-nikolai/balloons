@@ -3,6 +3,7 @@ import { ChangeEvent, ReactElement } from "react"
 import { useRouter } from "next/router"
 import styles from "./List.module.scss"
 import { usePathname, useSearchParams } from "next/navigation"
+import useWindowSize from "hooks/size.hooks"
 
 type ListProps = {
   children?: ReactElement[]
@@ -21,6 +22,7 @@ function List(props: ListProps) {
     params.set("page", String(value))
     router.push(`${pathname}?${params}`)
   }
+  const size = useWindowSize()
 
   return (
     <Grid container className={styles.list}>
@@ -30,8 +32,9 @@ function List(props: ListProps) {
         {!!pageCount && pageCount > 1 && (
           <Pagination
             count={pageCount}
+            siblingCount={size.width < 500 ? 0 : 1}
             page={page}
-            size="large"
+            size={size.width < 500 ? "medium" : "large"}
             onChange={paginationHandler}
           />
         )}

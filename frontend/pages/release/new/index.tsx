@@ -223,10 +223,9 @@ function NewRelease() {
                     {...register("artistName")}
                     multiline
                   />
-
                   <FormControl>
+                    <FormLabel>Название релиза</FormLabel>
                     <TextField
-                      label="Название релиза"
                       {...register("name", {
                         required: "Обязательное поле",
                       })}

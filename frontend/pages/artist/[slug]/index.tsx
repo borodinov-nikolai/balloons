@@ -14,6 +14,7 @@ import Loader from "components/Loader"
 import { ReleaseType } from "types/general"
 import ReleaseItem from "pages/releases/ReleaseItem"
 import useWindowSize from "hooks/size.hooks"
+import ReleaseItemArtist from "pages/releases/ReleaseItemArtist"
 
 function ArtistPage() {
   const { user: currentUser } = useAuth()
@@ -30,7 +31,11 @@ function ArtistPage() {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
     .map((it: ReleaseType) => (
-      <ReleaseItem key={it.id} release={it} styles={{ margin: "0 .5rem" }} />
+      <ReleaseItemArtist
+        key={it.id}
+        release={it}
+        styles={{ margin: "0 .5rem" }}
+      />
     ))
 
   useEffect(() => {
@@ -83,11 +88,11 @@ function ArtistPage() {
               <Typography variant="h2">
                 {isCurrentUser ? "МОИ РЕЛИЗЫ" : "РЕЛИЗЫ"}
               </Typography>
-              {isCurrentUser ? (
+              {isCurrentUser && size.width > 500 ? (
                 <Link href="/release/new">
                   <Button>СОЗДАТЬ НОВЫЙ</Button>
                 </Link>
-              ) : isCurrentUser && size.width < 400 ? (
+              ) : isCurrentUser && size.width < 500 ? (
                 <Link href="/release/new">
                   <IconButton sx={{ bgcolor: "#D4AA00", color: "white" }}>
                     <AddIcon />

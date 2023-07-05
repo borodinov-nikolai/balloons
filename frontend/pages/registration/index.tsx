@@ -150,7 +150,12 @@ function Registration() {
 
       <Button
         type="submit"
-        disabled={!userAgreement || Object.keys(errors).length !== 0 || loading}
+        disabled={
+          !userAgreement ||
+          Object.keys(errors).length !== 0 ||
+          loading ||
+          !privacyPolicy
+        }
         fullWidth
       >
         {loading ? "Проверка данных..." : "ЗАРЕГИСТРИРОВАТЬСЯ"}

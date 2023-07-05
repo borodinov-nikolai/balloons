@@ -1,6 +1,7 @@
 import { UserType } from "types/auth"
 import ListItem from "components/List/ListItem"
 import { CSSProperties } from "react"
+import ListItemArtist from "components/List/ListItemArtist"
 
 type ArtistsItemType = {
   artist: UserType

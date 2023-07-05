@@ -4,6 +4,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Button,
   Grid,
   Modal,
@@ -200,7 +201,16 @@ function Suggestion() {
     <div className={`${styles.blockSuggestion} block`}>
       <span key="services-anchor" id="services" className="block__anchor" />
 
-      <Grid container className="content">
+      <Grid
+        container
+        style={{
+          marginTop: "45px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        className="content"
+      >
         <Grid className={styles.text_part}>
           <Typography variant="h2">Мы предлагаем</Typography>
 
@@ -209,7 +219,7 @@ function Suggestion() {
             подробности в карточках.
           </div>
 
-          <Button fullWidth href={"#contacts"} className={styles.column__btn}>
+          <Button href={"#contacts"} className={styles.column__btn}>
             Связаться с нами
           </Button>
 
@@ -277,7 +287,6 @@ function Suggestion() {
             </svg>
           </div>
         </Grid>
-
         <Slider {...settings} className={styles.column__slider}>
           {!isMobile &&
             listData.map(

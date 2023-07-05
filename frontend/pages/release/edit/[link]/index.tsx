@@ -277,9 +277,8 @@ function UpdateRelease() {
                   />
 
                   <Margin />
-
+                  <FormLabel>Название релиза</FormLabel>
                   <TextField
-                    label="Название релиза"
                     error={!!errors.name}
                     helperText={errors.name?.message}
                     {...register("name", { required: "Обязательное поле" })}
