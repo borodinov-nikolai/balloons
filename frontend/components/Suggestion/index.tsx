@@ -347,15 +347,19 @@ function Suggestion() {
                       className={styles.slider__summary}
                       expandIcon={<ExpandSlideIcon />}
                     >
-                      <Typography variant="h5">{title}</Typography>
+                      <Typography sx={{ color: "white" }} variant="h5">
+                        {title}
+                      </Typography>
                     </AccordionSummary>
 
                     <AccordionDetails className={styles.slider__details}>
-                      <div className={styles.slider__img}>
-                        <img src={img} alt="" />
-                      </div>
                       <Typography>{text}</Typography>
+                      <div className={styles.slider__img}>
+                        <img width="97%" src={img} alt="" />
+                      </div>
                       <Button
+                        fullWidth
+                        style={{ marginTop: "15px" }}
                         onClick={() => {
                           changeModalState({
                             title,
