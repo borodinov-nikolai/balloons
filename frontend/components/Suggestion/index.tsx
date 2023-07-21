@@ -355,7 +355,7 @@ function Suggestion() {
                     <AccordionDetails className={styles.slider__details}>
                       <Typography>{text}</Typography>
                       <div className={styles.slider__img}>
-                        <img width="97%" src={img} alt="" />
+                        <img src={img} width={"97%"} alt="" />
                       </div>
                       <Button
                         fullWidth

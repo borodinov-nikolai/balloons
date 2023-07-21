@@ -14,12 +14,55 @@ import "styles/globals.scss"
 import { useRouter } from "next/router"
 import { StyledEngineProvider } from "@mui/material"
 import { usePathname } from "next/navigation"
+import axios from "axios"
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
   const pathname = usePathname()
+  const [href, setHref] = useState(router.pathname)
+
+  useEffect(() => {
+    if (router.pathname == `/[release]`) {
+      window.ym(94315322, "hit", window.location.pathname)
+      /*  const getData = async () => {
+        const res = await axios
+          .get(
+            "https://api-metrika.yandex.net/stat/v1/data?dimensions=ym:s:searchEngineName&metrics=ym:s:visits,ym:s:users&filters=ym:s:trafficSourceName=='Переходыизпоисковыхсистем'ANDym:pv:URL=@'help'&id=94315322",
+            {
+              headers: {
+                Authorization:
+                  "Bearer y0_AgAEA7qkbq8fAAowRQAAAADn2xuj326ugKWkSRmnGsBEA7S3W6eIfp0",
+              },
+            }
+          )
+          .catch((e) => {
+            console.log(e)
+          })
+        await console.log(res)
+        await console.log("rere")
+      }
+      getData() */
+    }
+  })
+
+  /*   axios
+    .get(
+      "https://api-metrika.yandex.net/stat/v1/data?dimensions=ym:s:searchEngineName&metrics=ym:s:visits,ym:s:users&filters=ym:s:trafficSourceName=='Переходы из поисковых систем' AND ym:pv:URL=@'help'&id=94315322",
+      {
+        headers: {
+          Authorization:
+            "Bearer y0_AgAEA7qkbq8fAAowRQAAAADn2xuj326ugKWkSRmnGsBEA7S3W6eIfp0",
+        },
+      }
+    )
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((e) => {
+      console.log(e)
+    }) */
 
   useEffect(() => {
     const handleStart = (url: string) => {

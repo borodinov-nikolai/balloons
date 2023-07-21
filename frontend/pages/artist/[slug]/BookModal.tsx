@@ -21,7 +21,7 @@ const BookModal: FC<BookProps> = ({ open, setState, username }: BookProps) => {
   }
   return (
     <div>
-      <Dialog open={open} onClose={onClose}>
+      <Dialog fullWidth open={open} onClose={onClose}>
         <DialogContent>
           <Box className={style.modalHeader}>
             <Typography variant="h2">{username}</Typography>
@@ -60,7 +60,7 @@ const BookModal: FC<BookProps> = ({ open, setState, username }: BookProps) => {
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button variant="contained" className={style.book__button}>
-              Заказать
+              Отправить заявку
             </Button>
           </Box>
         </DialogContent>

@@ -60,9 +60,11 @@ function MyReleases({ releases }: MyReleasesProps) {
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Button fullWidth className={styles.blue}>
-                    Сводка по релизу
-                  </Button>
+                  <Link href={`/release/statistics/${realese.link}`}>
+                    <Button fullWidth className={styles.blue}>
+                      Сводка по релизу
+                    </Button>
+                  </Link>
 
                   <a href={`/${realese.link}`} target="_blank" rel="noreferrer">
                     <Button fullWidth className={styles.red}>
