@@ -16,6 +16,8 @@ import { StyledEngineProvider } from "@mui/material"
 import { usePathname } from "next/navigation"
 import axios from "axios"
 
+declare const window: any
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const { global } = pageProps
   const router = useRouter()

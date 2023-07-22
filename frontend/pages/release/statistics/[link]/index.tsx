@@ -5,11 +5,12 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import translate from "translate"
 import { useRouter } from "next/router"
-function Statistics(props) {
+
+function Statistics(props: any) {
   const [locations, setLocations] = useState<string>("countries")
-  const [ages, setAges] = useState<Object>({})
-  const [genders, setGenders] = useState<Object>({})
-  const [socials, setSocials] = useState<Object>({})
+  const [ages, setAges] = useState<any>({})
+  const [genders, setGenders] = useState<any>({})
+  const [socials, setSocials] = useState<any>({})
   const [timeSorting, setTimeSorting] = useState("year")
   const [cities, setCities] = useState<any[]>()
   const [countries, setCountries] = useState<any[]>()
@@ -32,12 +33,12 @@ function Statistics(props) {
         const countriesArray: any[] = []
         const allCountries = res.data.data
         const formatCountries = async () => {
-          allCountries.forEach(async (e) => {
-            const transtaleCountry = async (e: Object) => {
+          allCountries.forEach(async (e: any) => {
+            const transtaleCountry = async (e: any) => {
               const country = await translate(e.dimensions[0].name, "ru")
               return country
             }
-            const setData = async (e) => {
+            const setData = async (e: any) => {
               const translatedCountry = await transtaleCountry(e)
               countriesArray.push({
                 name: translatedCountry,
@@ -70,14 +71,14 @@ function Statistics(props) {
             console.log(e)
           })
         const citiesArray: any[] = []
-        const allCities = res.data.data
+        const allCities = res?.data.data
         const formatCities = async () => {
-          allCities.map((e) => {
-            const transtaleCity = async (e: Object) => {
+          allCities.map((e: any) => {
+            const transtaleCity = async (e: any) => {
               const country = await translate(e.dimensions[0].name, "ru")
               return country
             }
-            const setData = async (e) => {
+            const setData = async (e: any) => {
               const translatedCity = await transtaleCity(e)
               citiesArray.push({
                 name: translatedCity,
@@ -104,14 +105,14 @@ function Statistics(props) {
           )
           .catch((e) => console.log(e))
         setGenders({
-          male: !res.data.data[0]
+          male: !res?.data.data[0]
             ? 0
             : timeSorting == "week"
             ? res.data.data[0].metrics[0][1]
             : timeSorting == "day"
             ? res.data.data[0].metrics[0][6]
             : res.data.data[0].metrics[0],
-          female: !res.data.data[1]
+          female: !res?.data.data[1]
             ? 0
             : timeSorting == "week"
             ? res.data.data[1].metrics[0][1]
@@ -119,7 +120,7 @@ function Statistics(props) {
             ? res.data.data[1].metrics[0][6]
             : res.data.data[1].metrics[0],
         })
-        console.log(res.data.data)
+        console.log(res?.data.data)
       }
       const getAges = async () => {
         const res = await axios.get(
@@ -212,17 +213,19 @@ function Statistics(props) {
         let yandex = 0
         let yt = 0
         const filterSocials = async () => {
-          await res.data.data.map((e) => {
-            if (e.dimensions[0].id == "vkontakte") {
-              vk = e.metrics[0]
-            } else if (e.dimensions[0].id == "instagram") {
-              inst = e.metrics[0]
-            } else if (e.dimensions[0].id == "facebook") {
-              fb = e.metrics[0]
-            } else if (e.dimensions[0].id == "youtube") {
-              yt = e.metrics[0]
+          await res.data.data.map(
+            (e: { dimensions: { id: string }[]; metrics: number[] }) => {
+              if (e.dimensions[0].id == "vkontakte") {
+                vk = e.metrics[0]
+              } else if (e.dimensions[0].id == "instagram") {
+                inst = e.metrics[0]
+              } else if (e.dimensions[0].id == "facebook") {
+                fb = e.metrics[0]
+              } else if (e.dimensions[0].id == "youtube") {
+                yt = e.metrics[0]
+              }
             }
-          })
+          )
         }
         const res1 = await axios.get(
           `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${router.pathname}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SearchEngineRoot&id=${CounterID}&group=${timeSorting}`,
@@ -234,15 +237,17 @@ function Statistics(props) {
           }
         )
         const filterSearchEngines = async () => {
-          await res1.data.data.map((e) => {
-            if (e.dimensions[0].id == "google") {
-              google = e.metrics[0]
-            } else if (e.dimensions[0].id == "yandex") {
-              yandex = e.metrics[0]
-            } else if (e.dimensions[0].id == "youtube") {
-              yt = e.metrics[0]
+          await res1.data.data.map(
+            (e: { dimensions: { id: string }[]; metrics: number[] }) => {
+              if (e.dimensions[0].id == "google") {
+                google = e.metrics[0]
+              } else if (e.dimensions[0].id == "yandex") {
+                yandex = e.metrics[0]
+              } else if (e.dimensions[0].id == "youtube") {
+                yt = e.metrics[0]
+              }
             }
-          })
+          )
         }
         await filterSearchEngines()
         await filterSocials()
