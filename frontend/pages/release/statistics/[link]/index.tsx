@@ -17,7 +17,7 @@ function Statistics(props: any) {
   const [timeSorting, setTimeSorting] = useState("year")
   const [cities, setCities] = useState<any[]>()
   const [countries, setCountries] = useState<any[]>()
-  const router = useRouter()
+
   const pathname = usePathname()
   const path = pathname.slice(pathname.lastIndexOf("/"))
   const CounterID = 94315322
@@ -34,8 +34,6 @@ function Statistics(props: any) {
             },
           }
         )
-        console.log(res)
-
         let countriesArray: any[] = []
         const allCountries = res.data.data
         const formatCountries = async () => {
@@ -94,6 +92,7 @@ function Statistics(props: any) {
             setData(e)
           })
         }
+        await citiesArray.splice(0, 5)
         setCities([])
         setCities(citiesArray.sort((a, b) => a.count - b.count))
         await formatCities()
@@ -257,15 +256,18 @@ function Statistics(props: any) {
         }
         await filterSearchEngines()
         await filterSocials()
-        setSocials({
-          vk: vk,
-          inst: inst,
-          fb: fb,
-          yandex: yandex,
-          yt: yt,
-          google: google,
+        let socialsAndSearchEngines = [
+          { name: "vk", count: vk },
+          { name: "inst", count: inst },
+          { name: "fb", count: fb },
+          { name: "yandex", count: yandex },
+          { name: "yt", count: yt },
+          { name: "google", count: google },
+        ]
+        socialsAndSearchEngines.sort((a, b) => {
+          return b.count - a.count
         })
-        await console.log(socials)
+        setSocials(socialsAndSearchEngines)
       }
 
       await getSocials()
@@ -277,7 +279,7 @@ function Statistics(props: any) {
   }, [timeSorting])
   return (
     <>
-      {!countries ? (
+      {!countries || !cities || !genders || !socials || !ages ? (
         <Loader />
       ) : (
         <section className="block block-statistics block_first-on-page">
@@ -403,222 +405,268 @@ function Statistics(props: any) {
                   <p>Социальные сети и поисковики</p>
                 </div>
                 <div className="statistics-tablet__main-content">
-                  <div className={style.statistics__tablet__row}>
-                    <div className={style.statistics__tablet__img}>
-                      <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                  {socials.map((e: Object, index: number) => {
+                    return (
+                      <div
+                        key={index}
+                        className={style.statistics__tablet__row}
                       >
-                        <g clip-path="url(#clip0_887_4139)">
-                          <path
-                            d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
-                            fill="#4D76A1"
-                          />
-                          <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M13.4707 20.1403H14.5695C14.5695 20.1403 14.9014 20.1038 15.0709 19.9211C15.2269 19.7534 15.2219 19.4385 15.2219 19.4385C15.2219 19.4385 15.2004 17.9641 15.8847 17.7469C16.5593 17.5331 17.4255 19.1719 18.3437 19.8021C19.0379 20.279 19.5655 20.1744 19.5655 20.1744L22.0205 20.1403C22.0205 20.1403 23.3047 20.0611 22.6958 19.0514C22.6459 18.9688 22.3412 18.3045 20.8705 16.9394C19.3312 15.5106 19.5373 15.7417 21.3916 13.2703C22.5209 11.7652 22.9723 10.8463 22.8313 10.4527C22.6968 10.0779 21.8662 10.1769 21.8662 10.1769L19.1021 10.1942C19.1021 10.1942 18.8972 10.1662 18.7452 10.2571C18.5967 10.3461 18.5011 10.5538 18.5011 10.5538C18.5011 10.5538 18.0637 11.7185 17.4802 12.709C16.2493 14.7991 15.7572 14.9094 15.556 14.7796C15.0881 14.4772 15.2049 13.5645 15.2049 12.9161C15.2049 10.8907 15.5121 10.0462 14.6067 9.82755C14.3062 9.75493 14.0851 9.70701 13.3167 9.69928C12.3304 9.68905 11.4956 9.70227 11.023 9.93387C10.7085 10.0878 10.4659 10.431 10.6137 10.4507C10.7964 10.4752 11.2101 10.5623 11.4295 10.861C11.7128 11.2463 11.7028 12.1118 11.7028 12.1118C11.7028 12.1118 11.8655 14.4961 11.3227 14.7924C10.9501 14.9955 10.439 14.5807 9.34167 12.6846C8.7794 11.7133 8.35489 10.6396 8.35489 10.6396C8.35489 10.6396 8.27304 10.439 8.12704 10.3317C7.94985 10.2016 7.70228 10.1602 7.70228 10.1602L5.07563 10.1774C5.07563 10.1774 4.68132 10.1884 4.53657 10.3599C4.4078 10.5124 4.52634 10.8278 4.52634 10.8278C4.52634 10.8278 6.58274 15.6389 8.91117 18.0634C11.0462 20.2862 13.4707 20.1403 13.4707 20.1403Z"
-                            fill="white"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_887_4139">
-                            <rect width="28" height="28" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className={style.statistics__tablet__name}>
-                      Вконтакте
-                    </div>
-                    <div className={style.statistics_tablet__number}>
-                      {socials.vk}
-                    </div>
-                  </div>
-                  <div className={style.statistics__tablet__row}>
-                    <div className={style.statistics__tablet__img}>
-                      <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clipPath="url(#clip0_887:4147)">
-                          <path
-                            d="M1.74966 1.90517C-0.450671 4.19067 -0.000337188 6.6185 -0.000337188 13.9942C-0.000337188 20.1192 -1.069 26.2593 4.524 27.7048C6.2705 28.154 21.7452 28.154 23.4893 27.7025C25.818 27.1017 27.7127 25.2128 27.9717 21.9193C28.0078 21.4597 28.0078 6.53683 27.9705 6.06783C27.6952 2.55967 25.5357 0.537833 22.6902 0.128333C22.038 0.0338328 21.9073 0.00583279 18.5613 -5.47051e-07C6.69283 0.00583279 4.09116 -0.522667 1.74966 1.90517V1.90517Z"
-                            fill="url(#paint0_linear_887:4147)"
-                          />
-                          <path
-                            d="M14.0002 6.00771C10.7234 6.00771 7.61177 5.71645 6.42325 8.76431C5.93232 10.0231 6.00361 11.658 6.00361 13.9989C6.00361 16.053 5.93773 17.9836 6.42325 19.2325C7.60907 22.2822 10.746 21.99 13.9984 21.99C17.1362 21.99 20.3715 22.3165 21.5744 19.2325C22.0663 17.9611 21.9941 16.3506 21.9941 13.9989C21.9941 10.8771 22.1664 8.8617 20.6512 7.34859C19.1171 5.81564 17.0423 6.00771 13.9966 6.00771H14.0002ZM13.2837 7.44778C20.1188 7.43696 20.9888 6.6777 20.5086 17.2253C20.3381 20.9557 17.4954 20.5464 14.0011 20.5464C7.62982 20.5464 7.44662 20.3642 7.44662 13.9953C7.44662 7.55238 7.952 7.45139 13.2837 7.44598V7.44778ZM18.2688 8.77423C17.739 8.77423 17.3095 9.20346 17.3095 9.73277C17.3095 10.2621 17.739 10.6913 18.2688 10.6913C18.7985 10.6913 19.2281 10.2621 19.2281 9.73277C19.2281 9.20346 18.7985 8.77423 18.2688 8.77423V8.77423ZM14.0002 9.89508C11.7323 9.89508 9.89406 11.7328 9.89406 13.9989C9.89406 16.2649 11.7323 18.1018 14.0002 18.1018C16.268 18.1018 18.1054 16.2649 18.1054 13.9989C18.1054 11.7328 16.268 9.89508 14.0002 9.89508V9.89508ZM14.0002 11.3352C17.5243 11.3352 17.5288 16.6626 14.0002 16.6626C10.477 16.6626 10.4716 11.3352 14.0002 11.3352Z"
-                            fill="white"
-                          />
-                        </g>
-                        <defs>
-                          <linearGradient
-                            id="paint0_linear_887:4147"
-                            x1="1.80335"
-                            y1="26.2116"
-                            x2="27.8264"
-                            y2="3.68897"
-                            gradientUnits="userSpaceOnUse"
-                          >
-                            <stop stopColor="#FFDD55" />
-                            <stop offset="0.5" stopColor="#FF543E" />
-                            <stop offset="1" stopColor="#C837AB" />
-                          </linearGradient>
-                          <clipPath id="clip0_887:4147">
-                            <rect width="28" height="28" rx="14" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className={style.statistics__tablet__name}>
-                      Instagram
-                    </div>
-                    <div className={style.statistics_tablet__number}>
-                      {socials.inst}
-                    </div>
-                  </div>
-                  <div className={style.statistics__tablet__row}>
-                    <div className={style.statistics__tablet__img}>
-                      <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_887_4169)">
-                          <path
-                            d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
-                            fill="#3B5998"
-                          />
-                          <path
-                            d="M17.5206 14.548H15.0225V23.7H11.2376V14.548H9.4375V11.3317H11.2376V9.25031C11.2376 7.76192 11.9446 5.43124 15.0562 5.43124L17.8598 5.44297V8.56501H15.8256C15.4919 8.56501 15.0227 8.73172 15.0227 9.44173V11.3347H17.8513L17.5206 14.548Z"
-                            fill="white"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_887_4169">
-                            <rect width="28" height="28" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className={style.statistics__tablet__name}>
-                      Facebook
-                    </div>
-                    <div className={style.statistics_tablet__number}>
-                      {socials.fb}
-                    </div>
-                  </div>
-                  <div className={style.statistics__tablet__row}>
-                    <div className={style.statistics__tablet__img}>
-                      <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <g clip-path="url(#clip0_887_4193)">
-                          <path
-                            d="M14 28.0001C21.732 28.0001 28.0001 21.732 28.0001 14C28.0001 6.26803 21.732 0 14 0C6.26803 0 0 6.26803 0 14C0 21.732 6.26803 28.0001 14 28.0001Z"
-                            fill="#D42428"
-                          />
-                          <path
-                            d="M23.8979 4.099C29.3653 9.56683 29.3658 18.4315 23.8979 23.8993C18.4306 29.3667 9.56548 29.3669 4.09766 23.8993L23.8979 4.099Z"
-                            fill="#CC202D"
-                          />
-                          <path
-                            d="M21.3244 11.2984C21.3244 10.1248 20.3736 9.17352 19.2006 9.17352H9.23663C8.06388 9.17352 7.11328 10.125 7.11328 11.2984V16.9963C7.11328 18.17 8.06406 19.1212 9.23663 19.1212H19.2005C20.3737 19.1212 21.3242 18.1697 21.3242 16.9963V11.2984H21.3244ZM12.7973 16.5511V11.1994L16.8558 13.8754L12.7973 16.5511Z"
-                            fill="white"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_887_4193">
-                            <rect width="28" height="28" fill="white" />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className={style.statistics__tablet__name}>
-                      YouTube
-                    </div>
-                    <div className={style.statistics_tablet__number}>
-                      {socials.yt}
-                    </div>
-                  </div>
-                  <div className={style.statistics__tablet__row}>
-                    <div className={style.statistics__tablet__img}>
-                      <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle cx="14" cy="14" r="14" fill="#D7143A" />
-                        <path
-                          d="M16.9416 7H14.9525C12.9373 7 10.9039 8.4881 10.9039 11.8127C10.9039 13.5347 11.6337 14.8759 12.9716 15.6387L10.5229 20.0708C10.4068 20.2804 10.4037 20.518 10.5147 20.7063C10.6231 20.8902 10.8213 21 11.0446 21H12.2833C12.5647 21 12.7841 20.864 12.8893 20.6257L15.1852 16.135H15.3528V20.4403C15.3528 20.7437 15.6088 21 15.9119 21H16.994C17.3338 21 17.5711 20.7627 17.5711 20.4229V7.61258C17.5711 7.25192 17.3123 7 16.9416 7ZM15.3528 14.1402H15.0572C13.9111 14.1402 13.2269 13.2046 13.2269 11.6376C13.2269 9.68909 14.0912 8.99486 14.9001 8.99486H15.3528V14.1402Z"
-                          fill="white"
-                        />
-                      </svg>
-                    </div>
-                    <div className={style.statistics__tablet__name}>Яндекс</div>
-                    <div className={style.statistics_tablet__number}>
-                      {socials.yandex}
-                    </div>
-                  </div>
-                  <div className={style.statistics__tablet__row}>
-                    <div className={style.statistics__tablet__img}>
-                      <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 28 28"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle cx="14" cy="14" r="14" fill="white" />
-                        <g clip-path="url(#clip0_887_4245)">
-                          <path
-                            d="M8.98918 15.8776L8.36263 18.2166L6.07258 18.2651C5.3882 16.9957 5 15.5434 5 14C5 12.5076 5.36295 11.1002 6.00631 9.86099H6.0068L8.04559 10.2348L8.9387 12.2613C8.75177 12.8063 8.64989 13.3913 8.64989 14C8.64996 14.6607 8.76963 15.2937 8.98918 15.8776Z"
-                            fill="#FBBB00"
-                          />
-                          <path
-                            d="M22.8402 12.3187C22.9436 12.8631 22.9975 13.4254 22.9975 14C22.9975 14.6444 22.9297 15.2729 22.8007 15.8791C22.3625 17.9422 21.2177 19.7437 19.6319 21.0185L19.6314 21.018L17.0634 20.887L16.7 18.6182C17.7523 18.0011 18.5747 17.0353 19.0079 15.8791H14.1953V12.3187H19.0781H22.8402Z"
-                            fill="#518EF8"
-                          />
-                          <path
-                            d="M19.6355 21.018L19.636 21.0185C18.0937 22.2582 16.1344 23 14.0016 23C10.5742 23 7.59434 21.0843 6.07422 18.2651L8.99082 15.8777C9.75086 17.9061 11.7076 19.3501 14.0016 19.3501C14.9877 19.3501 15.9114 19.0835 16.7041 18.6182L19.6355 21.018Z"
-                            fill="#28B446"
-                          />
-                          <path
-                            d="M19.7462 7.07197L16.8306 9.45894C16.0102 8.94615 15.0404 8.64992 14.0015 8.64992C11.6556 8.64992 9.6622 10.1601 8.94023 12.2613L6.0083 9.86098H6.00781C7.50568 6.97307 10.5231 5 14.0015 5C16.1852 5 18.1875 5.77787 19.7462 7.07197Z"
-                            fill="#F14336"
-                          />
-                        </g>
-                        <defs>
-                          <clipPath id="clip0_887_4245">
-                            <rect
-                              width="18"
-                              height="18"
-                              fill="white"
-                              transform="translate(5 5)"
-                            />
-                          </clipPath>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className={style.statistics__tablet__name}>Google</div>
-                    <div className={style.statistics_tablet__number}>
-                      {socials.google}
-                    </div>
-                  </div>
+                        {e.name == "vk" ? (
+                          <>
+                            <div className={style.statistics__tablet__img}>
+                              <svg
+                                width="28"
+                                height="28"
+                                viewBox="0 0 28 28"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g clip-path="url(#clip0_887_4139)">
+                                  <path
+                                    d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
+                                    fill="#4D76A1"
+                                  />
+                                  <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M13.4707 20.1403H14.5695C14.5695 20.1403 14.9014 20.1038 15.0709 19.9211C15.2269 19.7534 15.2219 19.4385 15.2219 19.4385C15.2219 19.4385 15.2004 17.9641 15.8847 17.7469C16.5593 17.5331 17.4255 19.1719 18.3437 19.8021C19.0379 20.279 19.5655 20.1744 19.5655 20.1744L22.0205 20.1403C22.0205 20.1403 23.3047 20.0611 22.6958 19.0514C22.6459 18.9688 22.3412 18.3045 20.8705 16.9394C19.3312 15.5106 19.5373 15.7417 21.3916 13.2703C22.5209 11.7652 22.9723 10.8463 22.8313 10.4527C22.6968 10.0779 21.8662 10.1769 21.8662 10.1769L19.1021 10.1942C19.1021 10.1942 18.8972 10.1662 18.7452 10.2571C18.5967 10.3461 18.5011 10.5538 18.5011 10.5538C18.5011 10.5538 18.0637 11.7185 17.4802 12.709C16.2493 14.7991 15.7572 14.9094 15.556 14.7796C15.0881 14.4772 15.2049 13.5645 15.2049 12.9161C15.2049 10.8907 15.5121 10.0462 14.6067 9.82755C14.3062 9.75493 14.0851 9.70701 13.3167 9.69928C12.3304 9.68905 11.4956 9.70227 11.023 9.93387C10.7085 10.0878 10.4659 10.431 10.6137 10.4507C10.7964 10.4752 11.2101 10.5623 11.4295 10.861C11.7128 11.2463 11.7028 12.1118 11.7028 12.1118C11.7028 12.1118 11.8655 14.4961 11.3227 14.7924C10.9501 14.9955 10.439 14.5807 9.34167 12.6846C8.7794 11.7133 8.35489 10.6396 8.35489 10.6396C8.35489 10.6396 8.27304 10.439 8.12704 10.3317C7.94985 10.2016 7.70228 10.1602 7.70228 10.1602L5.07563 10.1774C5.07563 10.1774 4.68132 10.1884 4.53657 10.3599C4.4078 10.5124 4.52634 10.8278 4.52634 10.8278C4.52634 10.8278 6.58274 15.6389 8.91117 18.0634C11.0462 20.2862 13.4707 20.1403 13.4707 20.1403Z"
+                                    fill="white"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_887_4139">
+                                    <rect width="28" height="28" fill="white" />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </div>
+                            <div className={style.statistics__tablet__name}>
+                              Вконтакте
+                            </div>
+                          </>
+                        ) : e.name == "inst" ? (
+                          <>
+                            <div className={style.statistics__tablet__img}>
+                              <svg
+                                width="28"
+                                height="28"
+                                viewBox="0 0 28 28"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g clipPath="url(#clip0_887:4147)">
+                                  <path
+                                    d="M1.74966 1.90517C-0.450671 4.19067 -0.000337188 6.6185 -0.000337188 13.9942C-0.000337188 20.1192 -1.069 26.2593 4.524 27.7048C6.2705 28.154 21.7452 28.154 23.4893 27.7025C25.818 27.1017 27.7127 25.2128 27.9717 21.9193C28.0078 21.4597 28.0078 6.53683 27.9705 6.06783C27.6952 2.55967 25.5357 0.537833 22.6902 0.128333C22.038 0.0338328 21.9073 0.00583279 18.5613 -5.47051e-07C6.69283 0.00583279 4.09116 -0.522667 1.74966 1.90517V1.90517Z"
+                                    fill="url(#paint0_linear_887:4147)"
+                                  />
+                                  <path
+                                    d="M14.0002 6.00771C10.7234 6.00771 7.61177 5.71645 6.42325 8.76431C5.93232 10.0231 6.00361 11.658 6.00361 13.9989C6.00361 16.053 5.93773 17.9836 6.42325 19.2325C7.60907 22.2822 10.746 21.99 13.9984 21.99C17.1362 21.99 20.3715 22.3165 21.5744 19.2325C22.0663 17.9611 21.9941 16.3506 21.9941 13.9989C21.9941 10.8771 22.1664 8.8617 20.6512 7.34859C19.1171 5.81564 17.0423 6.00771 13.9966 6.00771H14.0002ZM13.2837 7.44778C20.1188 7.43696 20.9888 6.6777 20.5086 17.2253C20.3381 20.9557 17.4954 20.5464 14.0011 20.5464C7.62982 20.5464 7.44662 20.3642 7.44662 13.9953C7.44662 7.55238 7.952 7.45139 13.2837 7.44598V7.44778ZM18.2688 8.77423C17.739 8.77423 17.3095 9.20346 17.3095 9.73277C17.3095 10.2621 17.739 10.6913 18.2688 10.6913C18.7985 10.6913 19.2281 10.2621 19.2281 9.73277C19.2281 9.20346 18.7985 8.77423 18.2688 8.77423V8.77423ZM14.0002 9.89508C11.7323 9.89508 9.89406 11.7328 9.89406 13.9989C9.89406 16.2649 11.7323 18.1018 14.0002 18.1018C16.268 18.1018 18.1054 16.2649 18.1054 13.9989C18.1054 11.7328 16.268 9.89508 14.0002 9.89508V9.89508ZM14.0002 11.3352C17.5243 11.3352 17.5288 16.6626 14.0002 16.6626C10.477 16.6626 10.4716 11.3352 14.0002 11.3352Z"
+                                    fill="white"
+                                  />
+                                </g>
+                                <defs>
+                                  <linearGradient
+                                    id="paint0_linear_887:4147"
+                                    x1="1.80335"
+                                    y1="26.2116"
+                                    x2="27.8264"
+                                    y2="3.68897"
+                                    gradientUnits="userSpaceOnUse"
+                                  >
+                                    <stop stopColor="#FFDD55" />
+                                    <stop offset="0.5" stopColor="#FF543E" />
+                                    <stop offset="1" stopColor="#C837AB" />
+                                  </linearGradient>
+                                  <clipPath id="clip0_887:4147">
+                                    <rect
+                                      width="28"
+                                      height="28"
+                                      rx="14"
+                                      fill="white"
+                                    />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </div>
+                            <div className={style.statistics__tablet__name}>
+                              Instagram
+                            </div>
+                          </>
+                        ) : e.name == "fb" ? (
+                          <>
+                            <div className={style.statistics__tablet__row}>
+                              <div className={style.statistics__tablet__img}>
+                                <svg
+                                  width="28"
+                                  height="28"
+                                  viewBox="0 0 28 28"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g clip-path="url(#clip0_887_4169)">
+                                    <path
+                                      d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
+                                      fill="#3B5998"
+                                    />
+                                    <path
+                                      d="M17.5206 14.548H15.0225V23.7H11.2376V14.548H9.4375V11.3317H11.2376V9.25031C11.2376 7.76192 11.9446 5.43124 15.0562 5.43124L17.8598 5.44297V8.56501H15.8256C15.4919 8.56501 15.0227 8.73172 15.0227 9.44173V11.3347H17.8513L17.5206 14.548Z"
+                                      fill="white"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_887_4169">
+                                      <rect
+                                        width="28"
+                                        height="28"
+                                        fill="white"
+                                      />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              </div>
+                              <div className={style.statistics__tablet__name}>
+                                Facebook
+                              </div>
+                              <div className={style.statistics_tablet__number}>
+                                {socials.fb}
+                              </div>
+                            </div>
+                          </>
+                        ) : e.name == "yt" ? (
+                          <>
+                            <div className={style.statistics__tablet__row}>
+                              <div className={style.statistics__tablet__img}>
+                                <svg
+                                  width="28"
+                                  height="28"
+                                  viewBox="0 0 28 28"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <g clip-path="url(#clip0_887_4193)">
+                                    <path
+                                      d="M14 28.0001C21.732 28.0001 28.0001 21.732 28.0001 14C28.0001 6.26803 21.732 0 14 0C6.26803 0 0 6.26803 0 14C0 21.732 6.26803 28.0001 14 28.0001Z"
+                                      fill="#D42428"
+                                    />
+                                    <path
+                                      d="M23.8979 4.099C29.3653 9.56683 29.3658 18.4315 23.8979 23.8993C18.4306 29.3667 9.56548 29.3669 4.09766 23.8993L23.8979 4.099Z"
+                                      fill="#CC202D"
+                                    />
+                                    <path
+                                      d="M21.3244 11.2984C21.3244 10.1248 20.3736 9.17352 19.2006 9.17352H9.23663C8.06388 9.17352 7.11328 10.125 7.11328 11.2984V16.9963C7.11328 18.17 8.06406 19.1212 9.23663 19.1212H19.2005C20.3737 19.1212 21.3242 18.1697 21.3242 16.9963V11.2984H21.3244ZM12.7973 16.5511V11.1994L16.8558 13.8754L12.7973 16.5511Z"
+                                      fill="white"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_887_4193">
+                                      <rect
+                                        width="28"
+                                        height="28"
+                                        fill="white"
+                                      />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              </div>
+                              <div className={style.statistics__tablet__name}>
+                                YouTube
+                              </div>
+                              <div className={style.statistics_tablet__number}>
+                                {socials.yt}
+                              </div>
+                            </div>
+                          </>
+                        ) : e.name == "yandex" ? (
+                          <>
+                            <div className={style.statistics__tablet__row}>
+                              <div className={style.statistics__tablet__img}>
+                                <svg
+                                  width="28"
+                                  height="28"
+                                  viewBox="0 0 28 28"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <circle
+                                    cx="14"
+                                    cy="14"
+                                    r="14"
+                                    fill="#D7143A"
+                                  />
+                                  <path
+                                    d="M16.9416 7H14.9525C12.9373 7 10.9039 8.4881 10.9039 11.8127C10.9039 13.5347 11.6337 14.8759 12.9716 15.6387L10.5229 20.0708C10.4068 20.2804 10.4037 20.518 10.5147 20.7063C10.6231 20.8902 10.8213 21 11.0446 21H12.2833C12.5647 21 12.7841 20.864 12.8893 20.6257L15.1852 16.135H15.3528V20.4403C15.3528 20.7437 15.6088 21 15.9119 21H16.994C17.3338 21 17.5711 20.7627 17.5711 20.4229V7.61258C17.5711 7.25192 17.3123 7 16.9416 7ZM15.3528 14.1402H15.0572C13.9111 14.1402 13.2269 13.2046 13.2269 11.6376C13.2269 9.68909 14.0912 8.99486 14.9001 8.99486H15.3528V14.1402Z"
+                                    fill="white"
+                                  />
+                                </svg>
+                              </div>
+                              <div className={style.statistics__tablet__name}>
+                                Яндекс
+                              </div>
+                              <div className={style.statistics_tablet__number}>
+                                {socials.yandex}
+                              </div>
+                            </div>
+                          </>
+                        ) : e.name == "google" ? (
+                          <>
+                            <div className={style.statistics__tablet__row}>
+                              <div className={style.statistics__tablet__img}>
+                                <svg
+                                  width="28"
+                                  height="28"
+                                  viewBox="0 0 28 28"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <circle cx="14" cy="14" r="14" fill="white" />
+                                  <g clip-path="url(#clip0_887_4245)">
+                                    <path
+                                      d="M8.98918 15.8776L8.36263 18.2166L6.07258 18.2651C5.3882 16.9957 5 15.5434 5 14C5 12.5076 5.36295 11.1002 6.00631 9.86099H6.0068L8.04559 10.2348L8.9387 12.2613C8.75177 12.8063 8.64989 13.3913 8.64989 14C8.64996 14.6607 8.76963 15.2937 8.98918 15.8776Z"
+                                      fill="#FBBB00"
+                                    />
+                                    <path
+                                      d="M22.8402 12.3187C22.9436 12.8631 22.9975 13.4254 22.9975 14C22.9975 14.6444 22.9297 15.2729 22.8007 15.8791C22.3625 17.9422 21.2177 19.7437 19.6319 21.0185L19.6314 21.018L17.0634 20.887L16.7 18.6182C17.7523 18.0011 18.5747 17.0353 19.0079 15.8791H14.1953V12.3187H19.0781H22.8402Z"
+                                      fill="#518EF8"
+                                    />
+                                    <path
+                                      d="M19.6355 21.018L19.636 21.0185C18.0937 22.2582 16.1344 23 14.0016 23C10.5742 23 7.59434 21.0843 6.07422 18.2651L8.99082 15.8777C9.75086 17.9061 11.7076 19.3501 14.0016 19.3501C14.9877 19.3501 15.9114 19.0835 16.7041 18.6182L19.6355 21.018Z"
+                                      fill="#28B446"
+                                    />
+                                    <path
+                                      d="M19.7462 7.07197L16.8306 9.45894C16.0102 8.94615 15.0404 8.64992 14.0015 8.64992C11.6556 8.64992 9.6622 10.1601 8.94023 12.2613L6.0083 9.86098H6.00781C7.50568 6.97307 10.5231 5 14.0015 5C16.1852 5 18.1875 5.77787 19.7462 7.07197Z"
+                                      fill="#F14336"
+                                    />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_887_4245">
+                                      <rect
+                                        width="18"
+                                        height="18"
+                                        fill="white"
+                                        transform="translate(5 5)"
+                                      />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                              </div>
+                              <div className={style.statistics__tablet__name}>
+                                Google
+                              </div>
+                              <div className={style.statistics_tablet__number}>
+                                {socials.google}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          ""
+                        )}
+
+                        <div className={style.statistics_tablet__number}>
+                          {e.count}
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
 
