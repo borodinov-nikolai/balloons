@@ -1,32 +1,66 @@
-import CountUp from "react-countup"
 import withStandardLayout from "hoc/withStandardLayout"
 import style from "./../Statistics.module.scss"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import translate from "translate"
-import { useRouter } from "next/router"
-import { GetServerSideProps } from "next"
 import { usePathname } from "next/navigation"
 import Loader from "components/Loader"
-
+interface NameCount {
+  name: string
+  count: number
+}
 function Statistics(props: any) {
   const [locations, setLocations] = useState<string>("countries")
   const [ages, setAges] = useState<any>({})
   const [genders, setGenders] = useState<any>({})
-  const [socials, setSocials] = useState<any>({})
-  const [timeSorting, setTimeSorting] = useState("year")
+  const [socials, setSocials] = useState<any>([])
+  const [timeSorting, setTimeSorting] = useState("year") // year == for all the time, week& == for two weeks
   const [cities, setCities] = useState<any[]>()
   const [countries, setCountries] = useState<any[]>()
+  const [date1, setDate1] = useState<string>("2023-07-20")
+  const [date2, setDate2] = useState<string>("")
 
   const pathname = usePathname()
   const path = pathname.slice(pathname.lastIndexOf("/"))
   const CounterID = 94315322
   /* const CounterID = 29761725 */
+
+  const setAlltime = () => {
+    setDate1("2023-07-20")
+  }
+  const setMonth = () => {
+    const monthNum = parseInt(date2.slice(5, 7)) - 1
+    const month =
+      monthNum < 10
+        ? `0${monthNum}`
+        : monthNum == 0
+        ? "12"
+        : monthNum.toString()
+    const date = month + date2.slice(7)
+    const dateString = date2.slice(0, 5).toString() + date.toString()
+    setDate1(dateString)
+  }
   useEffect(() => {
     ;(async () => {
+      const getDate = async () => {
+        const res = await axios.get(
+          `https://api-metrika.yandex.net/stat/v1/data?id=94315322&metrics=ym:s:visits`,
+          {
+            headers: {
+              Authorization:
+                "Bearer y0_AgAEA7qkbq8fAAowRQAAAADn2xuj326ugKWkSRmnGsBEA7S3W6eIfp0",
+            },
+          }
+        )
+        setDate2(res.data.query.date2)
+      }
       const getCountries = async () => {
         const res = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCountry&limit=6&group=${timeSorting}`,
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCountry&limit=6${
+            timeSorting == "year" || timeSorting == "month"
+              ? `&date1=${date1}`
+              : ""
+          }&group=${timeSorting}`,
           {
             headers: {
               Authorization:
@@ -47,23 +81,34 @@ function Statistics(props: any) {
 
               countriesArray.push({
                 name: translatedCountry,
-                count: e.metrics[0][0],
+                count:
+                  timeSorting == "week"
+                    ? e.metrics[0][1]
+                    : timeSorting == "day"
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                    ? e.metrics[0][0] + e.metrics[0][1]
+                    : e.metrics[0],
               })
             }
             await setData(e)
           })
-          /*      console.log(
-            countriesArray.sort((a, b) => a.count - b.count),
-            "sort"
-          ) */
         }
+        setCountries([])
         await formatCountries()
-        await setCountries(countriesArray.sort((a, b) => a.count - b.count))
+        const sorted = countriesArray.sort(
+          (a: NameCount, b: NameCount) => a.count - b.count
+        )
+        setCountries(sorted)
       }
       const getCities = async () => {
         const res = await axios
           .get(
-            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCity&limit=6&group=${timeSorting}`,
+            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCity&limit=6${
+              timeSorting == "year" || timeSorting == "month"
+                ? `&date1=${date1}`
+                : ""
+            }&group=${timeSorting}`,
             {
               headers: {
                 Authorization:
@@ -86,21 +131,33 @@ function Statistics(props: any) {
               const translatedCity = await transtaleCity(e)
               citiesArray.push({
                 name: translatedCity,
-                count: e.metrics[0],
+                count:
+                  timeSorting == "week"
+                    ? e.metrics[0][1]
+                    : timeSorting == "day"
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                    ? e.metrics[0][0] + e.metrics[0][1]
+                    : e.metrics[0],
               })
             }
             setData(e)
           })
         }
-        await citiesArray.splice(0, 5)
         setCities([])
-        setCities(citiesArray.sort((a, b) => a.count - b.count))
         await formatCities()
+        const sorted = citiesArray.sort((a, b) => a.count - b.count)
+        await sorted.pop()
+        setCities(sorted)
       }
       const getGenders = async () => {
         const res = await axios
           .get(
-            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:gender&id=${CounterID}&group=${timeSorting}`,
+            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:gender&id=${CounterID}${
+              timeSorting == "year" || timeSorting == "month"
+                ? `&date1=${date1}`
+                : ""
+            }&group=${timeSorting}`,
             {
               headers: {
                 Authorization:
@@ -129,7 +186,11 @@ function Statistics(props: any) {
       }
       const getAges = async () => {
         const res = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:ageInterval&id=${CounterID}&group=${timeSorting}`,
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:ageInterval&id=${CounterID}${
+            timeSorting == "year" || timeSorting == "month"
+              ? `&date1=${date1}`
+              : ""
+          }&group=${timeSorting}`,
           {
             headers: {
               Authorization:
@@ -152,6 +213,8 @@ function Statistics(props: any) {
                   ? e.metrics[0][1]
                   : timeSorting == "day"
                   ? e.metrics[0][6]
+                  : timeSorting == "week&" || timeSorting == "month"
+                  ? e.metrics[0][0] + e.metrics[0][1]
                   : e.metrics[0]
             } else if (e.dimensions[0].id == 18) {
               age18 =
@@ -159,6 +222,8 @@ function Statistics(props: any) {
                   ? e.metrics[0][1]
                   : timeSorting == "day"
                   ? e.metrics[0][6]
+                  : timeSorting == "week&" || timeSorting == "month"
+                  ? e.metrics[0][0] + e.metrics[0][1]
                   : e.metrics[0]
             } else if (e.dimensions[0].id == 25) {
               age25 =
@@ -166,6 +231,8 @@ function Statistics(props: any) {
                   ? e.metrics[0][1]
                   : timeSorting == "day"
                   ? e.metrics[0][6]
+                  : timeSorting == "week&" || timeSorting == "month"
+                  ? e.metrics[0][0] + e.metrics[0][1]
                   : e.metrics[0]
             } else if (e.dimensions[0].id == 35) {
               age35 =
@@ -173,6 +240,8 @@ function Statistics(props: any) {
                   ? e.metrics[0][1]
                   : timeSorting == "day"
                   ? e.metrics[0][6]
+                  : timeSorting == "week&" || timeSorting == "month"
+                  ? e.metrics[0][0] + e.metrics[0][1]
                   : e.metrics[0]
             } else if (e.dimensions[0].id == 45) {
               age45 =
@@ -180,6 +249,8 @@ function Statistics(props: any) {
                   ? e.metrics[0][1]
                   : timeSorting == "day"
                   ? e.metrics[0][6]
+                  : timeSorting == "week&" || timeSorting == "month"
+                  ? e.metrics[0][0] + e.metrics[0][1]
                   : e.metrics[0]
             } else if (e.dimensions[0].id == 55) {
               age55 =
@@ -187,6 +258,8 @@ function Statistics(props: any) {
                   ? e.metrics[0][1]
                   : timeSorting == "day"
                   ? e.metrics[0][6]
+                  : timeSorting == "week&" || timeSorting == "month"
+                  ? e.metrics[0][0] + e.metrics[0][1]
                   : e.metrics[0]
             }
           })
@@ -203,7 +276,11 @@ function Statistics(props: any) {
       }
       const getSocials = async () => {
         const res = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SocialNetwork&id=${CounterID}&group=${timeSorting}`,
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SocialNetwork&id=${CounterID}${
+            timeSorting == "year" || timeSorting == "month"
+              ? `&date1=${date1}`
+              : ""
+          }&group=${timeSorting}`,
           {
             headers: {
               Authorization:
@@ -219,21 +296,53 @@ function Statistics(props: any) {
         let yt = 0
         const filterSocials = async () => {
           await res.data.data.map(
-            (e: { dimensions: { id: string }[]; metrics: number[] }) => {
+            (e: { dimensions: { id: string }[]; metrics: any }) => {
               if (e.dimensions[0].id == "vkontakte") {
-                vk = e.metrics[0]
+                vk =
+                  timeSorting == "week"
+                    ? e.metrics[0][1]
+                    : timeSorting == "day"
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                    ? e.metrics[0][0] + e.metrics[0][1]
+                    : e.metrics[0]
               } else if (e.dimensions[0].id == "instagram") {
-                inst = e.metrics[0]
+                inst =
+                  timeSorting == "week"
+                    ? e.metrics[0][1]
+                    : timeSorting == "day"
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                    ? e.metrics[0][0] + e.metrics[0][1]
+                    : e.metrics[0]
               } else if (e.dimensions[0].id == "facebook") {
-                fb = e.metrics[0]
+                fb =
+                  timeSorting == "week"
+                    ? e.metrics[0][1]
+                    : timeSorting == "day"
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                    ? e.metrics[0][0] + e.metrics[0][1]
+                    : e.metrics[0]
               } else if (e.dimensions[0].id == "youtube") {
-                yt = e.metrics[0]
+                yt =
+                  timeSorting == "week"
+                    ? e.metrics[0][1]
+                    : timeSorting == "day"
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                    ? e.metrics[0][0] + e.metrics[0][1]
+                    : e.metrics[0]
               }
             }
           )
         }
         const res1 = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SearchEngineRoot&id=${CounterID}&group=${timeSorting}`,
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SearchEngineRoot&id=${CounterID}${
+            timeSorting == "year" || timeSorting == "month"
+              ? `&date1=${date1}`
+              : ""
+          }&group=${timeSorting}`,
           {
             headers: {
               Authorization:
@@ -269,7 +378,7 @@ function Statistics(props: any) {
         })
         setSocials(socialsAndSearchEngines)
       }
-
+      await getDate()
       await getSocials()
       await getCountries()
       await getCities()
@@ -279,7 +388,7 @@ function Statistics(props: any) {
   }, [timeSorting])
   return (
     <>
-      {!countries || !cities || !genders || !socials || !ages ? (
+      {!countries || !cities || !genders || !socials || !ages || !date1 ? (
         <Loader />
       ) : (
         <section className="block block-statistics block_first-on-page">
@@ -349,7 +458,10 @@ function Statistics(props: any) {
             <h2 className="statistics__title">Сводка по релизу</h2>
             <div className={style.statistics__sorting}>
               <div
-                onClick={() => setTimeSorting("year")}
+                onClick={() => {
+                  setTimeSorting("year")
+                  setAlltime()
+                }}
                 style={{
                   background: timeSorting == "year" ? "#d4aa00" : "",
                   color: timeSorting == "year" ? "#ffffff" : "",
@@ -393,7 +505,10 @@ function Statistics(props: any) {
                   background: timeSorting == "month" ? "#d4aa00" : "",
                   color: timeSorting == "month" ? "#ffffff" : "",
                 }}
-                onClick={() => setTimeSorting("month")}
+                onClick={() => {
+                  setTimeSorting("month")
+                  setMonth()
+                }}
                 className={style.block_statistics__sorting_item}
               >
                 30 дней
@@ -404,8 +519,8 @@ function Statistics(props: any) {
                 <div className={style.statistics__tablet__title}>
                   <p>Социальные сети и поисковики</p>
                 </div>
-                <div className="statistics-tablet__main-content">
-                  {socials.map((e: Object, index: number) => {
+                <div className={style.statistics__tablet__main__content}>
+                  {socials.map((e: NameCount, index: number) => {
                     return (
                       <div
                         key={index}
@@ -494,167 +609,146 @@ function Statistics(props: any) {
                           </>
                         ) : e.name == "fb" ? (
                           <>
-                            <div className={style.statistics__tablet__row}>
-                              <div className={style.statistics__tablet__img}>
-                                <svg
-                                  width="28"
-                                  height="28"
-                                  viewBox="0 0 28 28"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g clip-path="url(#clip0_887_4169)">
-                                    <path
-                                      d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
-                                      fill="#3B5998"
-                                    />
-                                    <path
-                                      d="M17.5206 14.548H15.0225V23.7H11.2376V14.548H9.4375V11.3317H11.2376V9.25031C11.2376 7.76192 11.9446 5.43124 15.0562 5.43124L17.8598 5.44297V8.56501H15.8256C15.4919 8.56501 15.0227 8.73172 15.0227 9.44173V11.3347H17.8513L17.5206 14.548Z"
-                                      fill="white"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_887_4169">
-                                      <rect
-                                        width="28"
-                                        height="28"
-                                        fill="white"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
-                              </div>
-                              <div className={style.statistics__tablet__name}>
-                                Facebook
-                              </div>
-                              <div className={style.statistics_tablet__number}>
-                                {socials.fb}
-                              </div>
+                            <div className={style.statistics__tablet__img}>
+                              <svg
+                                width="28"
+                                height="28"
+                                viewBox="0 0 28 28"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g clip-path="url(#clip0_887_4169)">
+                                  <path
+                                    d="M14 28C21.732 28 28 21.732 28 14C28 6.26801 21.732 0 14 0C6.26801 0 0 6.26801 0 14C0 21.732 6.26801 28 14 28Z"
+                                    fill="#3B5998"
+                                  />
+                                  <path
+                                    d="M17.5206 14.548H15.0225V23.7H11.2376V14.548H9.4375V11.3317H11.2376V9.25031C11.2376 7.76192 11.9446 5.43124 15.0562 5.43124L17.8598 5.44297V8.56501H15.8256C15.4919 8.56501 15.0227 8.73172 15.0227 9.44173V11.3347H17.8513L17.5206 14.548Z"
+                                    fill="white"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_887_4169">
+                                    <rect width="28" height="28" fill="white" />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </div>
+                            <div className={style.statistics__tablet__name}>
+                              Facebook
+                            </div>
+                            <div className={style.statistics_tablet__number}>
+                              {socials.fb}
                             </div>
                           </>
                         ) : e.name == "yt" ? (
                           <>
-                            <div className={style.statistics__tablet__row}>
-                              <div className={style.statistics__tablet__img}>
-                                <svg
-                                  width="28"
-                                  height="28"
-                                  viewBox="0 0 28 28"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <g clip-path="url(#clip0_887_4193)">
-                                    <path
-                                      d="M14 28.0001C21.732 28.0001 28.0001 21.732 28.0001 14C28.0001 6.26803 21.732 0 14 0C6.26803 0 0 6.26803 0 14C0 21.732 6.26803 28.0001 14 28.0001Z"
-                                      fill="#D42428"
-                                    />
-                                    <path
-                                      d="M23.8979 4.099C29.3653 9.56683 29.3658 18.4315 23.8979 23.8993C18.4306 29.3667 9.56548 29.3669 4.09766 23.8993L23.8979 4.099Z"
-                                      fill="#CC202D"
-                                    />
-                                    <path
-                                      d="M21.3244 11.2984C21.3244 10.1248 20.3736 9.17352 19.2006 9.17352H9.23663C8.06388 9.17352 7.11328 10.125 7.11328 11.2984V16.9963C7.11328 18.17 8.06406 19.1212 9.23663 19.1212H19.2005C20.3737 19.1212 21.3242 18.1697 21.3242 16.9963V11.2984H21.3244ZM12.7973 16.5511V11.1994L16.8558 13.8754L12.7973 16.5511Z"
-                                      fill="white"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_887_4193">
-                                      <rect
-                                        width="28"
-                                        height="28"
-                                        fill="white"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
-                              </div>
-                              <div className={style.statistics__tablet__name}>
-                                YouTube
-                              </div>
-                              <div className={style.statistics_tablet__number}>
-                                {socials.yt}
-                              </div>
+                            <div className={style.statistics__tablet__img}>
+                              <svg
+                                width="28"
+                                height="28"
+                                viewBox="0 0 28 28"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <g clip-path="url(#clip0_887_4193)">
+                                  <path
+                                    d="M14 28.0001C21.732 28.0001 28.0001 21.732 28.0001 14C28.0001 6.26803 21.732 0 14 0C6.26803 0 0 6.26803 0 14C0 21.732 6.26803 28.0001 14 28.0001Z"
+                                    fill="#D42428"
+                                  />
+                                  <path
+                                    d="M23.8979 4.099C29.3653 9.56683 29.3658 18.4315 23.8979 23.8993C18.4306 29.3667 9.56548 29.3669 4.09766 23.8993L23.8979 4.099Z"
+                                    fill="#CC202D"
+                                  />
+                                  <path
+                                    d="M21.3244 11.2984C21.3244 10.1248 20.3736 9.17352 19.2006 9.17352H9.23663C8.06388 9.17352 7.11328 10.125 7.11328 11.2984V16.9963C7.11328 18.17 8.06406 19.1212 9.23663 19.1212H19.2005C20.3737 19.1212 21.3242 18.1697 21.3242 16.9963V11.2984H21.3244ZM12.7973 16.5511V11.1994L16.8558 13.8754L12.7973 16.5511Z"
+                                    fill="white"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_887_4193">
+                                    <rect width="28" height="28" fill="white" />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </div>
+                            <div className={style.statistics__tablet__name}>
+                              YouTube
+                            </div>
+                            <div className={style.statistics_tablet__number}>
+                              {socials.yt}
                             </div>
                           </>
                         ) : e.name == "yandex" ? (
                           <>
-                            <div className={style.statistics__tablet__row}>
-                              <div className={style.statistics__tablet__img}>
-                                <svg
-                                  width="28"
-                                  height="28"
-                                  viewBox="0 0 28 28"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <circle
-                                    cx="14"
-                                    cy="14"
-                                    r="14"
-                                    fill="#D7143A"
-                                  />
-                                  <path
-                                    d="M16.9416 7H14.9525C12.9373 7 10.9039 8.4881 10.9039 11.8127C10.9039 13.5347 11.6337 14.8759 12.9716 15.6387L10.5229 20.0708C10.4068 20.2804 10.4037 20.518 10.5147 20.7063C10.6231 20.8902 10.8213 21 11.0446 21H12.2833C12.5647 21 12.7841 20.864 12.8893 20.6257L15.1852 16.135H15.3528V20.4403C15.3528 20.7437 15.6088 21 15.9119 21H16.994C17.3338 21 17.5711 20.7627 17.5711 20.4229V7.61258C17.5711 7.25192 17.3123 7 16.9416 7ZM15.3528 14.1402H15.0572C13.9111 14.1402 13.2269 13.2046 13.2269 11.6376C13.2269 9.68909 14.0912 8.99486 14.9001 8.99486H15.3528V14.1402Z"
-                                    fill="white"
-                                  />
-                                </svg>
-                              </div>
-                              <div className={style.statistics__tablet__name}>
-                                Яндекс
-                              </div>
-                              <div className={style.statistics_tablet__number}>
-                                {socials.yandex}
-                              </div>
+                            <div className={style.statistics__tablet__img}>
+                              <svg
+                                width="28"
+                                height="28"
+                                viewBox="0 0 28 28"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle cx="14" cy="14" r="14" fill="#D7143A" />
+                                <path
+                                  d="M16.9416 7H14.9525C12.9373 7 10.9039 8.4881 10.9039 11.8127C10.9039 13.5347 11.6337 14.8759 12.9716 15.6387L10.5229 20.0708C10.4068 20.2804 10.4037 20.518 10.5147 20.7063C10.6231 20.8902 10.8213 21 11.0446 21H12.2833C12.5647 21 12.7841 20.864 12.8893 20.6257L15.1852 16.135H15.3528V20.4403C15.3528 20.7437 15.6088 21 15.9119 21H16.994C17.3338 21 17.5711 20.7627 17.5711 20.4229V7.61258C17.5711 7.25192 17.3123 7 16.9416 7ZM15.3528 14.1402H15.0572C13.9111 14.1402 13.2269 13.2046 13.2269 11.6376C13.2269 9.68909 14.0912 8.99486 14.9001 8.99486H15.3528V14.1402Z"
+                                  fill="white"
+                                />
+                              </svg>
+                            </div>
+                            <div className={style.statistics__tablet__name}>
+                              Яндекс
+                            </div>
+                            <div className={style.statistics_tablet__number}>
+                              {socials.yandex}
                             </div>
                           </>
                         ) : e.name == "google" ? (
                           <>
-                            <div className={style.statistics__tablet__row}>
-                              <div className={style.statistics__tablet__img}>
-                                <svg
-                                  width="28"
-                                  height="28"
-                                  viewBox="0 0 28 28"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <circle cx="14" cy="14" r="14" fill="white" />
-                                  <g clip-path="url(#clip0_887_4245)">
-                                    <path
-                                      d="M8.98918 15.8776L8.36263 18.2166L6.07258 18.2651C5.3882 16.9957 5 15.5434 5 14C5 12.5076 5.36295 11.1002 6.00631 9.86099H6.0068L8.04559 10.2348L8.9387 12.2613C8.75177 12.8063 8.64989 13.3913 8.64989 14C8.64996 14.6607 8.76963 15.2937 8.98918 15.8776Z"
-                                      fill="#FBBB00"
+                            <div className={style.statistics__tablet__img}>
+                              <svg
+                                width="28"
+                                height="28"
+                                viewBox="0 0 28 28"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <circle cx="14" cy="14" r="14" fill="white" />
+                                <g clip-path="url(#clip0_887_4245)">
+                                  <path
+                                    d="M8.98918 15.8776L8.36263 18.2166L6.07258 18.2651C5.3882 16.9957 5 15.5434 5 14C5 12.5076 5.36295 11.1002 6.00631 9.86099H6.0068L8.04559 10.2348L8.9387 12.2613C8.75177 12.8063 8.64989 13.3913 8.64989 14C8.64996 14.6607 8.76963 15.2937 8.98918 15.8776Z"
+                                    fill="#FBBB00"
+                                  />
+                                  <path
+                                    d="M22.8402 12.3187C22.9436 12.8631 22.9975 13.4254 22.9975 14C22.9975 14.6444 22.9297 15.2729 22.8007 15.8791C22.3625 17.9422 21.2177 19.7437 19.6319 21.0185L19.6314 21.018L17.0634 20.887L16.7 18.6182C17.7523 18.0011 18.5747 17.0353 19.0079 15.8791H14.1953V12.3187H19.0781H22.8402Z"
+                                    fill="#518EF8"
+                                  />
+                                  <path
+                                    d="M19.6355 21.018L19.636 21.0185C18.0937 22.2582 16.1344 23 14.0016 23C10.5742 23 7.59434 21.0843 6.07422 18.2651L8.99082 15.8777C9.75086 17.9061 11.7076 19.3501 14.0016 19.3501C14.9877 19.3501 15.9114 19.0835 16.7041 18.6182L19.6355 21.018Z"
+                                    fill="#28B446"
+                                  />
+                                  <path
+                                    d="M19.7462 7.07197L16.8306 9.45894C16.0102 8.94615 15.0404 8.64992 14.0015 8.64992C11.6556 8.64992 9.6622 10.1601 8.94023 12.2613L6.0083 9.86098H6.00781C7.50568 6.97307 10.5231 5 14.0015 5C16.1852 5 18.1875 5.77787 19.7462 7.07197Z"
+                                    fill="#F14336"
+                                  />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_887_4245">
+                                    <rect
+                                      width="18"
+                                      height="18"
+                                      fill="white"
+                                      transform="translate(5 5)"
                                     />
-                                    <path
-                                      d="M22.8402 12.3187C22.9436 12.8631 22.9975 13.4254 22.9975 14C22.9975 14.6444 22.9297 15.2729 22.8007 15.8791C22.3625 17.9422 21.2177 19.7437 19.6319 21.0185L19.6314 21.018L17.0634 20.887L16.7 18.6182C17.7523 18.0011 18.5747 17.0353 19.0079 15.8791H14.1953V12.3187H19.0781H22.8402Z"
-                                      fill="#518EF8"
-                                    />
-                                    <path
-                                      d="M19.6355 21.018L19.636 21.0185C18.0937 22.2582 16.1344 23 14.0016 23C10.5742 23 7.59434 21.0843 6.07422 18.2651L8.99082 15.8777C9.75086 17.9061 11.7076 19.3501 14.0016 19.3501C14.9877 19.3501 15.9114 19.0835 16.7041 18.6182L19.6355 21.018Z"
-                                      fill="#28B446"
-                                    />
-                                    <path
-                                      d="M19.7462 7.07197L16.8306 9.45894C16.0102 8.94615 15.0404 8.64992 14.0015 8.64992C11.6556 8.64992 9.6622 10.1601 8.94023 12.2613L6.0083 9.86098H6.00781C7.50568 6.97307 10.5231 5 14.0015 5C16.1852 5 18.1875 5.77787 19.7462 7.07197Z"
-                                      fill="#F14336"
-                                    />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_887_4245">
-                                      <rect
-                                        width="18"
-                                        height="18"
-                                        fill="white"
-                                        transform="translate(5 5)"
-                                      />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
-                              </div>
-                              <div className={style.statistics__tablet__name}>
-                                Google
-                              </div>
-                              <div className={style.statistics_tablet__number}>
-                                {socials.google}
-                              </div>
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                            </div>
+                            <div className={style.statistics__tablet__name}>
+                              Google
+                            </div>
+                            <div className={style.statistics_tablet__number}>
+                              {socials.google}
                             </div>
                           </>
                         ) : (
@@ -743,7 +837,7 @@ function Statistics(props: any) {
                 </div>
               </div>
 
-              <div
+              {/*               <div
                 style={{ height: "50%" }}
                 className={style.statistics__tablet}
               >
@@ -764,9 +858,9 @@ function Statistics(props: any) {
                     <p>Женщины</p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className={style.statistics__tablet}>
+              {/*               <div className={style.statistics__tablet}>
                 <div className={style.statistics__tablet__title}>
                   <p>Возраст</p>
                 </div>
@@ -820,7 +914,7 @@ function Statistics(props: any) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
