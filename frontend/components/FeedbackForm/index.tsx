@@ -20,6 +20,7 @@ import CloseIcon from "@mui/icons-material/Close"
 import Confirm from "components/Confirm"
 import Link from "next/link"
 import Margin from "components/Margin"
+
 function FeedbackForm() {
   const {
     register,
@@ -123,11 +124,7 @@ function FeedbackForm() {
                         {...field}
                       >
                         {messageThemes.map((it) => (
-                          <MenuItem
-                            onClick={() => setMessage(it.value)}
-                            key={it.value}
-                            value={it.value}
-                          >
+                          <MenuItem key={it.value} value={it.value}>
                             {it.text}
                           </MenuItem>
                         ))}
