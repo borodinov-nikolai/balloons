@@ -5,7 +5,21 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register(/*{ strapi }*/) {
+    /*     strapi.config.set("plugin.email", {
+      provider: "nodemailer",
+      providerOptions: {
+        host: "smtp.yandex.ru",
+        port: 465,
+        secure: true,
+        auth: {
+          user: "a.platya",
+          pass: "fataiapnkuyrlvab",
+        },
+        // ... any custom nodemailer options
+      },
+    }) */
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
