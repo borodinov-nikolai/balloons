@@ -1,13 +1,14 @@
 const fs = require("fs")
+const axios = require("axios")
 export default {
   async afterCreate(event) {
-    // Connected to "Save" button in admin panel
     const { result } = event
-    const file = result.request.files.file
-    const filePath = file.path
-    const attachment = fs.readFileSync(filePath).toString("base64")
-
+    const filename = result.attachment.hash + result.attachment.ext
     try {
+      const res = await axios.get(`http://localhost:1337/uploads/${filename}`, {
+        responseType: "arraybuffer",
+      })
+      const b64 = Buffer.from(res.data, "binary").toString("base64")
       await strapi.plugins["email"].services.email.send({
         to: `link@linkmusic.ru`,
         from: "a.platya@yandex.ru", // e.g. single sender verification in SendGrid
@@ -21,8 +22,8 @@ export default {
 E-mail: ${result.email}`,
         attachments: [
           {
-            filename: "file.pdf",
-            content: attachment,
+            filename: filename,
+            content: b64,
           },
         ],
       })
