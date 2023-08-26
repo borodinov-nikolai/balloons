@@ -16,7 +16,8 @@
     "@strapi/provider-email-sendgrid": "^4.12.4",
     "@strapi/strapi": "4.10.1",
     "fs": "^0.0.1-security",
-    "pg": "8.10.0"
+    "pg": "8.10.0",
+    "strapi-utils": "^3.6.11"
   },
   "devDependencies": {
     "better-sqlite3": "8.3.0",

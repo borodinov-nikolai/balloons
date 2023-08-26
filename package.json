@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@types/sharp": "^0.31.1",
+    "fs": "^0.0.1-security",
     "sharp": "^0.32.1"
   }
 }
