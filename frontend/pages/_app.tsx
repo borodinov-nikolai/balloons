@@ -14,7 +14,6 @@ import "styles/globals.scss"
 import { useRouter } from "next/router"
 import { StyledEngineProvider } from "@mui/material"
 import { usePathname } from "next/navigation"
-import axios from "axios"
 
 declare const window: any
 

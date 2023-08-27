@@ -1,34 +1,38 @@
-const fs = require("fs")
-const axios = require("axios")
+const getAttachments = (file) => {
+  const attachments = []
+  if (file) {
+    const filename = file.name
+    const content = Buffer.from(file, "base64")
+    attachments.push({ filename, content })
+  }
+
+  return attachments
+}
 export default {
   async afterCreate(event) {
-    const { result } = event
-    const filename = result.attachment.hash + result.attachment.ext
+    const {
+      result: { messageSubject, message, name, phone, email },
+    } = event
+    const ctx = strapi.requestContext.get()
+    const file = ctx.request.files["files.attachment"] || null
+    const attachments = getAttachments(file)
+
     try {
-      const res = await axios.get(`http://localhost:1337/uploads/${filename}`, {
-        responseType: "arraybuffer",
-      })
-      const b64 = Buffer.from(res.data, "binary").toString("base64")
       await strapi.plugins["email"].services.email.send({
         to: `link@linkmusic.ru`,
         from: "a.platya@yandex.ru", // e.g. single sender verification in SendGrid
-        subject: `${result.messageSubject}`,
-        text: `${result.message}
+        subject: `${messageSubject}`,
+        text: `${message}
 
 Контактная информация:
 
-Имя: ${result.name}
-Телефон: ${result.phone}
-E-mail: ${result.email}`,
-        attachments: [
-          {
-            filename: filename,
-            content: b64,
-          },
-        ],
+Имя: ${name}
+Телефон: ${phone}
+E-mail: ${email}`,
+        attachments,
       })
     } catch (err) {
-      console.log(err)
+      console.error("afterCreate", err)
     }
   },
 }
