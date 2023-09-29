@@ -35,7 +35,6 @@ function FeedbackForm() {
   } = useForm<FeedbackFormType>()
 
   const phoneInputRef = useRef()
-  const [submitError, setSubmitError] = useState("")
   const [status, setStatus] = useState("")
   const files = watch("attachment")
   const submitHandler = async (form: FeedbackFormType) => {
@@ -53,13 +52,12 @@ function FeedbackForm() {
 
       if (status === 200) setStatus("success")
     } catch (e: any) {
-      setSubmitError(e.message)
+      console.error(e.message)
     }
   }
 
   const clearFileHandler = async (e: SyntheticEvent) => {
     e.preventDefault()
-
     setValue("attachment", undefined)
   }
 
@@ -162,7 +160,14 @@ function FeedbackForm() {
                   label="E-mail"
                   error={!!errors.email}
                   helperText={errors.email && "Обязательное поле"}
-                  {...register("email", { required: true })}
+                  {...register("email", {
+                    required: true,
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "Неправильный адрес",
+                    },
+                  })}
                 />
               </div>
 

@@ -76,6 +76,15 @@ export type FeedbackFormType = {
   captchaVerified: boolean
 }
 
+export type BookingFormType = {
+  artistName: string
+  userName: string
+  message: string
+  phone: string
+  email: string
+  date: string
+}
+
 export type NewsArticleType = {
   id: string
   title: string

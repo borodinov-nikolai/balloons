@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
@@ -120,7 +119,8 @@
     },
     "order": {
       "type": "integer",
-      "default": 0
+      "default": 0,
+      "required": true
     },
     "provider": {
       "type": "string"

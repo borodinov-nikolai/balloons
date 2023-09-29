@@ -8,7 +8,7 @@ import { getMediaUrl } from "lib/media"
 import getUserSocialLinks from "lib/getUserSocialLinks"
 
 import styles from "pages/artist/Artist.module.scss"
-import BookModal from "./BookModal"
+import BookingModal from "./BookingModal"
 import { useState } from "react"
 
 type ArtistHeaderProps = {
@@ -162,10 +162,11 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
           </Grid>
         </Grid>
       </Grid>
-      <BookModal
+
+      <BookingModal
         open={isOpenModal}
-        setState={setIsOpenModal}
-        username={user?.name}
+        onClose={() => setIsOpenModal(false)}
+        artistName={user?.name}
       />
     </Grid>
   )

@@ -20,7 +20,7 @@ export default {
     try {
       await strapi.plugins["email"].services.email.send({
         to: `link@linkmusic.ru`,
-        from: "a.platya@yandex.ru", // e.g. single sender verification in SendGrid
+        from: "hello@linkmusic.ru", // e.g. single sender verification in SendGrid
         subject: `${messageSubject}`,
         text: `${message}
 

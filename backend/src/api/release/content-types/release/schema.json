@@ -9,8 +9,7 @@
     "displayName": "Release"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -66,7 +65,8 @@
     },
     "order": {
       "type": "integer",
-      "default": 0
+      "default": 0,
+      "required": true
     }
   }
 }

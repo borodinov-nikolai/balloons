@@ -1,5 +1,4 @@
 import { PlatformLinkType } from "types/general"
-import Image from "next/image"
 import { Grid } from "@mui/material"
 
 type ReleaseLinkIconProps = {
@@ -53,7 +52,7 @@ const ReleaseLinkIcon = ({
         ...style,
       }}
     >
-      <Image
+      <img
         src={releaseIcons[type]}
         width={sizes[size]}
         height={sizes[size]}

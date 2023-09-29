@@ -6,8 +6,8 @@ export default ({ env }) => ({
         apiKey: env("SENDGRID_API_KEY"),
       },
       settings: {
-        defaultFrom: "a.platya@yandex.ru",
-        defaultReplyTo: "a.platya@yandex.ru",
+        defaultFrom: "hello@linkmusic.ru",
+        defaultReplyTo: "hello@linkmusic.ru",
       },
     },
   },
