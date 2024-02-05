@@ -11,7 +11,7 @@ import {
   Theme,
   useMediaQuery,
 } from "@mui/material"
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, MutableRefObject, useEffect, useRef, useState } from "react"
 
 import { Controller, useForm } from "react-hook-form"
 import { BookingFormType } from "types/general"
@@ -20,6 +20,8 @@ import { DatePicker } from "@mui/x-date-pickers"
 import IMask from "imask"
 import CloseIcon from "@mui/icons-material/Close"
 import { API } from "../../../lib/api"
+import emailjs from "@emailjs/browser"
+import { formatDate } from "utils/formatDate"
 
 type BookingModalProps = {
   open: boolean
@@ -45,7 +47,17 @@ const BookingModal: FC<BookingModalProps> = ({ open, onClose, artistName }) => {
   })
 
   const submitHandler = async (form: BookingFormType) => {
+    const formForEmail = {
+      ...form,
+      date: formatDate(form.date),
+    }
     try {
+      emailjs.send(
+        "service_dco6sue",
+        "template_9us7p9h",
+        formForEmail,
+        "HS5fnjFCpJeoNll7x"
+      )
       const { status } = await API.post("bookings", {
         data: form,
       })
@@ -118,7 +130,7 @@ const BookingModal: FC<BookingModalProps> = ({ open, onClose, artistName }) => {
           <TextField
             className={styles.inputGroup}
             fullWidth
-            label="Нормер телефона"
+            label="Номер телефона"
             error={!!errors.phone}
             helperText={errors.phone && "Обязательное поле"}
             inputRef={phoneInputRef}

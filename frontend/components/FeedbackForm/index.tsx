@@ -1,5 +1,5 @@
-import Captcha from "components/Captcha"
-import styles from "./Form.module.scss"
+import Captcha from "components/Captcha";
+import styles from "./Form.module.scss";
 import {
   Button,
   FormControl,
@@ -10,16 +10,23 @@ import {
   Select,
   TextField,
   Typography,
-} from "@mui/material"
-import { Controller, useForm } from "react-hook-form"
-import { FeedbackFormType } from "types/general"
-import { SyntheticEvent, useEffect, useRef, useState } from "react"
-import IMask from "imask"
-import { API } from "lib/api"
-import CloseIcon from "@mui/icons-material/Close"
-import Confirm from "components/Confirm"
-import Link from "next/link"
-import Margin from "components/Margin"
+} from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
+import { FeedbackFormType } from "types/general";
+import {
+  MutableRefObject,
+  SyntheticEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import IMask from "imask";
+import { API } from "lib/api";
+import CloseIcon from "@mui/icons-material/Close";
+import Confirm from "components/Confirm";
+import Link from "next/link";
+import Margin from "components/Margin";
+import emailjs from "@emailjs/browser";
 
 function FeedbackForm() {
   const {
@@ -32,13 +39,20 @@ function FeedbackForm() {
     clearErrors,
     watch,
     formState: { errors },
-  } = useForm<FeedbackFormType>()
+  } = useForm<FeedbackFormType>();
 
-  const phoneInputRef = useRef()
-  const [status, setStatus] = useState("")
-  const files = watch("attachment")
+  const phoneInputRef = useRef();
+  const formRef = useRef() as MutableRefObject<HTMLFormElement>;
+  const [status, setStatus] = useState("");
+  const files = watch("attachment");
   const submitHandler = async (form: FeedbackFormType) => {
     try {
+      emailjs.sendForm(
+        "service_dco6sue",
+        "template_rhyrlyt",
+        formRef.current,
+        "HS5fnjFCpJeoNll7x"
+      );
       const { status } = await API.post(
         "feedbacks",
         {
@@ -48,23 +62,23 @@ function FeedbackForm() {
         {
           headers: { "Content-type": "multipart/form-data" },
         }
-      )
+      );
 
-      if (status === 200) setStatus("success")
+      if (status === 200) setStatus("success");
     } catch (e: any) {
-      console.error(e.message)
+      console.error(e.message);
     }
-  }
+  };
 
   const clearFileHandler = async (e: SyntheticEvent) => {
-    e.preventDefault()
-    setValue("attachment", undefined)
-  }
+    e.preventDefault();
+    setValue("attachment", undefined);
+  };
 
   useEffect(() => {
     if (phoneInputRef.current)
-      IMask(phoneInputRef.current, { mask: "+{7} (000) 000-00-00" })
-  })
+      IMask(phoneInputRef.current, { mask: "+{7} (000) 000-00-00" });
+  });
 
   const messageThemes = [
     { value: "Создание страниц", text: "Создание страниц" },
@@ -73,7 +87,7 @@ function FeedbackForm() {
     { value: "Дистрибуция", text: "Дистрибуция" },
     { value: "Продвижение", text: "Продвижение" },
     { value: "Прочие вопросы", text: "Прочие вопросы" },
-  ]
+  ];
 
   return (
     <div className={`block ${styles.blockForm}`}>
@@ -97,7 +111,7 @@ function FeedbackForm() {
           </div>
 
           <div className={styles.column}>
-            <form className={styles.form}>
+            <form className={styles.form} ref={formRef}>
               <Typography variant="h5">Напишите нам</Typography>
               <Margin />
 
@@ -121,7 +135,7 @@ function FeedbackForm() {
                         error={!!errors.messageSubject}
                         {...field}
                       >
-                        {messageThemes.map((it) => (
+                        {messageThemes.map(it => (
                           <MenuItem key={it.value} value={it.value}>
                             {it.text}
                           </MenuItem>
@@ -181,10 +195,10 @@ function FeedbackForm() {
                 {...register("message", { required: true })}
                 required
                 multiline
-                rows={3}
+                rows={5}
               />
 
-              <div className={`${styles.inputRow} ${styles.inputRow_file}`}>
+              {/* <div className={`${styles.inputRow} ${styles.inputRow_file}`}>
                 <label
                   htmlFor="form-file"
                   className={`${styles.label} ${styles.label_file}`}
@@ -230,7 +244,7 @@ function FeedbackForm() {
                     {...register("attachment")}
                   />
                 </label>
-              </div>
+              </div> */}
 
               <Grid container style={{ margin: "1rem 0 0" }}>
                 <Captcha
@@ -265,8 +279,8 @@ function FeedbackForm() {
                 text="Вы успешно отправили сообщение"
                 open={status === "success"}
                 onSuccess={() => {
-                  setStatus("")
-                  reset()
+                  setStatus("");
+                  reset();
                 }}
               />
             </form>
@@ -338,7 +352,7 @@ function FeedbackForm() {
         </svg>
       </div>
     </div>
-  )
+  );
 }
 
-export default FeedbackForm
+export default FeedbackForm;
