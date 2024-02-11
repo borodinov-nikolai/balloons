@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "articles",
+  "collectionName": "videos",
   "info": {
-    "singularName": "article",
-    "pluralName": "articles",
-    "displayName": "Article",
+    "singularName": "video",
+    "pluralName": "videos",
+    "displayName": "Videos",
     "description": ""
   },
   "options": {
@@ -14,11 +14,9 @@
   "attributes": {
     "title": {
       "type": "string",
-      "required": true,
-      "minLength": 1,
-      "maxLength": 200
+      "required": true
     },
-    "img": {
+    "preview": {
       "type": "media",
       "multiple": false,
       "required": false,
@@ -26,19 +24,9 @@
         "images"
       ]
     },
-    "content": {
-      "type": "richtext",
-      "required": true,
-      "minLength": 20
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title",
+    "link": {
+      "type": "string",
       "required": true
-    },
-    "date": {
-      "type": "date",
-      "required": false
     },
     "isView": {
       "type": "boolean",

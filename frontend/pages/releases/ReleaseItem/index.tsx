@@ -8,7 +8,7 @@ type ReleaseItemType = {
 }
 
 function ReleaseItem({ release, styles }: ReleaseItemType) {
-  const { img, name, link, artistName } = release
+  const { img, name, link, artistName, user } = release
   const year = new Date(release.date).getFullYear()
   const releaseType = release.type === "single" ? "Сингл" : "Альбом"
 
@@ -20,6 +20,7 @@ function ReleaseItem({ release, styles }: ReleaseItemType) {
       description={`${year} ${releaseType}`}
       link={`/${link}`}
       style={styles}
+      user={user}
     />
   )
 }

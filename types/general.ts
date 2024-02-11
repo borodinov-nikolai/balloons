@@ -38,6 +38,32 @@ export type ReleaseType = {
   updatedAt: string
 }
 
+export type StreamingService = {
+  id: string
+  name: string
+  slug: string
+  icon: ImageType
+}
+
+export type ArticleType = {
+  id: string
+  title: string
+  slug: string
+  content: string
+  img: ImageType
+  date: number
+  createdAt: Date
+  isView: boolean
+}
+
+export type VideoType = {
+  id: string
+  title: string
+  link: string
+  preview: ImageType
+  isView: boolean
+}
+
 export type Pagination = {
   page: number
   pageCount: number
@@ -155,4 +181,5 @@ export type SliderType = {
   img: ImageType
   link?: string
   description?: string
+  buttonText?: string
 }

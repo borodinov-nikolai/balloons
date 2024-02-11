@@ -34,7 +34,7 @@
     p {
       &::before {
         position: absolute;
-        content: '';
+        content: "";
         width: 4px;
         height: 4px;
         background: #ffffff;
@@ -92,17 +92,17 @@
   &::before {
     position: relative;
     right: 2px;
-    content: '';
+    content: "";
     width: 30px;
     height: 40px;
-    background: #0000FF;
+    background: #0000ff;
     -webkit-mask: url(images/arrow.svg) center no-repeat;
     -webkit-mask-size: contain;
   }
 
   &:hover {
     &::before {
-      background: #D4AA00;
+      background: #d4aa00;
     }
   }
 
@@ -146,12 +146,12 @@
 }
 
 .paginationItem {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-style: normal;
   font-weight: 100;
   font-size: 40px;
   letter-spacing: -0.01em;
-  color: #FFFFFF;
+  color: #ffffff;
   opacity: 0.4;
   position: relative;
   cursor: pointer;
@@ -169,7 +169,6 @@
     font-size: 30px;
     line-height: 1;
   }
-
 }
 
 .vinylRecord__center {
@@ -184,7 +183,7 @@
   z-index: 2;
 
   text {
-    font-family: 'Gilroy', sans-serif;
+    font-family: "Gilroy", sans-serif;
     font-style: normal;
     font-weight: 600;
     font-size: 25px;
@@ -207,9 +206,9 @@
 
 .slide {
   width: 100vw;
-  padding-top: 112px;
+  padding-top: 124px;
   height: 685px;
-  background: url('#') center no-repeat;
+  background: url("#") center no-repeat;
   background-size: cover;
 
   @media (max-width: 1023px) {
@@ -229,7 +228,7 @@
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  color: #FFFFFF;
+  color: #ffffff;
 
   @media (max-width: 1023px) {
     max-width: 768px;
@@ -242,10 +241,9 @@
 .slideMain {
   z-index: 0;
   @media (max-width: 767px) {
-    background: #0000FF;
+    background: #0000ff;
   }
 }
-
 
 .slideHalfCircle {
   position: absolute;
@@ -255,7 +253,7 @@
   max-width: 1180px;
   width: 97%;
   height: 103%;
-  background: #0000FF;
+  background: #0000ff;
   border-radius: 590px 590px 0 0;
   overflow: hidden;
   z-index: 1;
@@ -297,7 +295,7 @@
 }
 
 .slideTitle {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-weight: bold;
   font-size: 160px;
   line-height: 140px;
@@ -316,10 +314,10 @@
 }
 
 .slideTitle_main {
-  color: #0C0B0B;
+  color: #0c0b0b;
 
   @media (max-width: 767px) {
-    color: #FFFFFF;
+    color: #ffffff;
     position: relative;
     z-index: 10;
   }
@@ -327,7 +325,7 @@
 
 .slideSubtitle {
   margin-top: 15px;
-  font-family: 'Gilroy', sans-serif;
+  font-family: "Gilroy", sans-serif;
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
@@ -352,14 +350,13 @@
     width: 280px;
     margin-bottom: 60px;
   }
-
 }
 
 .slideSubtitle_main {
   position: relative;
   z-index: 10;
   @media (max-width: 1023px) {
-    color: #0C0B0B;
+    color: #0c0b0b;
   }
   @media (max-width: 767px) {
     color: #ffffff;
@@ -454,7 +451,6 @@
     display: none;
   }
 }
-
 
 @keyframes rotate-vinyl {
   0% {

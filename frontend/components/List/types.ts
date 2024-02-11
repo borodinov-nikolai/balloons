@@ -1,5 +1,6 @@
 import { ImageType } from "types/general"
 import { CSSProperties } from "react"
+import { UserType } from "types/auth"
 
 export type ListItemType = {
   img?: ImageType
@@ -9,4 +10,5 @@ export type ListItemType = {
   description?: string
   placeholder?: string
   style?: CSSProperties
+  user?: UserType
 }

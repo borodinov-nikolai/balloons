@@ -16,6 +16,7 @@ function ListItem({
   description,
   placeholder,
   style,
+  user,
 }: ListItemType) {
   const placeholderUrl = placeholder ? placeholder : "/assets/placeholder.png"
   const size = useWindowSize()
@@ -57,9 +58,11 @@ function ListItem({
         )}
 
         {subTitle && (
-          <Typography title={subTitle} className={styles.sub_title}>
-            {subTitle}
-          </Typography>
+          <Link href={`/artist/${user?.slug}`}>
+            <Typography title={subTitle} className={styles.sub_title}>
+              {subTitle}
+            </Typography>
+          </Link>
         )}
 
         {description && (

@@ -34,7 +34,7 @@ const settings: Settings = {
   slidesToScroll: 1,
   infinite: true,
   variableWidth: true,
-  autoplay: false, //change it smak
+  autoplay: true,
   autoplaySpeed: 5000,
   prevArrow: <PrevArrow />, //ToDo сделать неактивными кнопки, если двигаться некуда
   nextArrow: <NextArrow />,
@@ -85,6 +85,7 @@ const ReleaseSlider = () => {
             textMain={slide.textMain}
             link={slide?.link}
             description={slide?.description}
+            buttonText={slide?.buttonText}
           />
         ))}
       </Slider>

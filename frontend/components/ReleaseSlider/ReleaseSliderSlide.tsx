@@ -9,10 +9,11 @@ type ReleaseSlideProps = {
   textMain: string
   link?: string
   description?: string
+  buttonText?: string
 }
 
 const ReleaseSliderSlide = (props: ReleaseSlideProps) => {
-  let { img, textMain, link, description } = props
+  let { img, textMain, link, description, buttonText } = props
   return (
     <div
       style={{ backgroundImage: `url(${getMediaUrl(img)})` }}
@@ -23,20 +24,20 @@ const ReleaseSliderSlide = (props: ReleaseSlideProps) => {
 
         <Grid container direction="column" className={styles.slideSubtitle}>
           {description && (
-            <Grid style={{ marginBottom: "2rem", marginTop: "2rem" }}>
+            <Grid style={{ marginBottom: "3rem", marginTop: "3rem" }}>
               {description}
             </Grid>
           )}
 
           {link && (
-            <Link href={link}>
+            <a href={link} target="_blank">
               <Button
                 sx={{ mt: "79px" }}
                 className={`${styles.slideButton} ${styles.slideButtonMain}`}
               >
-                Релиз
+                {buttonText || "Релиз"}
               </Button>
-            </Link>
+            </a>
           )}
         </Grid>
       </div>

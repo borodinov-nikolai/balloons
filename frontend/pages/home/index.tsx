@@ -4,6 +4,8 @@ import withStandardLayout from "hoc/withStandardLayout"
 import Suggestion from "components/Suggestion"
 import Catalog from "components/Catalog"
 import FeedbackForm from "components/FeedbackForm"
+import Articles from "components/Articles"
+import Videos from "components/Videos"
 
 const Home: NextPage = (pageProps: any) => {
   const {
@@ -20,6 +22,8 @@ const Home: NextPage = (pageProps: any) => {
         releaseCount={releaseCount}
         showCounter={showCounter}
       />
+      <Articles />
+      <Videos />
       <FeedbackForm />
     </>
   )
