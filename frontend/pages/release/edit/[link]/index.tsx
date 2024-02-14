@@ -30,7 +30,6 @@ import {
 import { SyntheticEvent, useEffect, useMemo, useState } from "react"
 import { API } from "lib/api"
 import { useRouter } from "next/router"
-import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import Link from "next/link"

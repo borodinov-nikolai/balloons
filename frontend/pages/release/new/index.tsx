@@ -28,7 +28,6 @@ import {
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
 import { SyntheticEvent, useEffect, useMemo, useState } from "react"
-import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import RotateLeftIcon from "@mui/icons-material/RotateLeft"
