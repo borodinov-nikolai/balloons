@@ -20,7 +20,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "eslint": "^8.50.0",
-    "eslint-config-next": "^13.5.3",
+    "eslint-config-next": "^13.5.6",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "npm-run-all": "^4.1.5",
@@ -30,6 +30,7 @@
   "dependencies": {
     "@types/sharp": "^0.31.1",
     "fs": "^0.0.1-security",
-    "sharp": "^0.32.6"
+    "sharp": "^0.32.6",
+    "typescript": "^5.2.2"
   }
 }

@@ -39,9 +39,9 @@ export type ReleaseType = {
 }
 
 export type StreamingService = {
-  id: string
-  name: string
-  slug: string
+  id?: string
+  title: string
+  type: string
   icon: ImageType
 }
 
@@ -121,27 +121,7 @@ export type NewsArticleType = {
 }
 
 export type PlatformLinkType = {
-  type:
-    | "appleMusic"
-    | "vkMusic"
-    | "youTubeMusic"
-    | "yandexMusic"
-    | "amazonMusic"
-    | "mtsMusic"
-    | "beelineMusic"
-    | "huaweiMusic"
-    | "iTunes"
-    | "zvuk"
-    | "spotify"
-    | "ok"
-    | "tikTok"
-    | "deezer"
-    | "soundCloud"
-    | "beatport"
-    | "tidal"
-    | "triller"
-    | "shazam"
-  title: string
+  type: string
   status?: boolean
   link?: string
 }

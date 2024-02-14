@@ -90,7 +90,12 @@ function SocialLinks({ color, links, sx }: SocialLinksProps) {
     )
 
   return (
-    <Grid container className={styles.links} sx={sx}>
+    <Grid
+      container
+      className={styles.links}
+      style={{ alignItems: "center" }}
+      sx={sx}
+    >
       {socialLinks}
     </Grid>
   )

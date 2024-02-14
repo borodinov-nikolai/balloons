@@ -1,3 +1,4 @@
+"use client"
 import styles from "../Release.module.scss"
 import withStandardLayout from "hoc/withStandardLayout"
 import withPrivateRoute from "hoc/withPrivateRoute"
@@ -19,20 +20,50 @@ import { Controller, useFieldArray, useForm } from "react-hook-form"
 import Margin from "components/Margin"
 import { DatePicker } from "@mui/x-date-pickers"
 import { useAuth } from "context/AuthProvider"
-import { CreateOrUpdateReleaseFormType, PlatformLinkType } from "types/general"
+import {
+  CreateOrUpdateReleaseFormType,
+  PlatformLinkType,
+  StreamingService,
+} from "types/general"
 import { useRouter } from "next/router"
 import useReleaseLink from "hooks/releaseLink.hooks"
-import { SyntheticEvent, useMemo, useState } from "react"
+import { SyntheticEvent, useEffect, useMemo, useState } from "react"
 import ReleaseLinkIcon from "components/ReleaseLinkIcon"
 import AddIcon from "@mui/icons-material/Add"
 import ClearIcon from "@mui/icons-material/Clear"
 import RotateLeftIcon from "@mui/icons-material/RotateLeft"
 import { API } from "lib/api"
 import LoadImage from "components/LoadImage"
+import Image from "next/image"
+import { getMediaUrl } from "lib/media"
 
 function NewRelease() {
   const { uniqueLink, fetchUniqueLink } = useReleaseLink()
+  const [streamingServices, setStreamingServices] = useState<
+    StreamingService[]
+  >([])
   const { user } = useAuth()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {
+          data: { data },
+        } = await API.get("/streaming-services", {
+          params: {
+            populate: "*",
+          },
+        })
+
+        setStreamingServices(data)
+        // setError("")
+      } catch (e) {
+        // setError("Что-то пошло не так, перезагрузите страницу")
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const {
     register,
@@ -48,11 +79,21 @@ function NewRelease() {
       link: useMemo(() => uniqueLink, [uniqueLink]),
       user: user?.id,
       platformLinks: [
-        { type: "appleMusic", title: "Apple Music" },
-        { type: "iTunes", title: "iTunes" },
-        { type: "vkMusic", title: "VK music" },
-        { type: "yandexMusic", title: "Яндекс.Музыка" },
-        { type: "youTubeMusic", title: "YouTube Music" },
+        {
+          type: "appleMusic",
+        },
+        {
+          type: "amazonMusic",
+        },
+        {
+          type: "vkMusic",
+        },
+        {
+          type: "yandexMusic",
+        },
+        {
+          type: "youTubeMusic",
+        },
       ],
     },
   })
@@ -71,34 +112,42 @@ function NewRelease() {
 
   const watchFieldArray = watch("platformLinks")
   const controlledFields = platformLinks.map((field, index) => {
-    return {
-      ...field,
-      ...watchFieldArray[index],
+    const matchingService = streamingServices.find(
+      (service) => service.type === field.type
+    )
+
+    if (matchingService) {
+      return {
+        ...field,
+        ...watchFieldArray[index],
+        icon: matchingService.icon,
+        title: matchingService.title,
+      }
     }
+
+    return null
   })
 
+  useEffect(() => {
+    const updatedPlatformLinks = platformLinks.map((platformLink) => {
+      const service = streamingServices.find(
+        (service) => service.type === platformLink.type
+      )
+      if (service) {
+        return {
+          ...platformLink,
+          title: service.title,
+          icon: service.icon,
+        }
+      }
+      return platformLink
+    })
+
+    setValue("platformLinks", updatedPlatformLinks)
+  }, [streamingServices])
+
   const linksOptions = useMemo(() => {
-    const defaultLinkOptions: PlatformLinkType[] = [
-      { type: "appleMusic", title: "Apple Music" },
-      { type: "vkMusic", title: "VK Музыка" },
-      { type: "iTunes", title: "iTunes" },
-      { type: "yandexMusic", title: "Яндекс Музыка" },
-      { type: "zvuk", title: "Звук" },
-      { type: "spotify", title: "Spotify" },
-      { type: "youTubeMusic", title: "YouTube.Music" },
-      { type: "ok", title: "Одноклассники" },
-      { type: "tikTok", title: "TikTok" },
-      { type: "amazonMusic", title: "Amazon Music" },
-      { type: "mtsMusic", title: "MTS Music" },
-      { type: "deezer", title: "Deezer" },
-      { type: "soundCloud", title: "SoundCloud" },
-      { type: "beatport", title: "Beatport" },
-      { type: "beelineMusic", title: "Beeline Music" },
-      { type: "tidal", title: "Tidal" },
-      { type: "triller", title: "Triller" },
-      { type: "huaweiMusic", title: "Huawei Music" },
-      { type: "shazam", title: "Shazam" },
-    ]
+    const defaultLinkOptions = streamingServices
     const selectedPlatformType = platformLinks.map((it) => it.type)
     return defaultLinkOptions.filter(
       (it) => !selectedPlatformType.includes(it.type)
@@ -129,8 +178,8 @@ function NewRelease() {
     e: SyntheticEvent,
     value: PlatformLinkType
   ) => {
-    const { type, title } = value
-    appendPlatformLink({ type, title, link: "" })
+    const { type } = value
+    appendPlatformLink({ type, link: "" })
   }
 
   return (
@@ -244,36 +293,43 @@ function NewRelease() {
 
                   {controlledFields.map((link, index) => {
                     return (
-                      <Fade key={link.id} in={!!link.id}>
-                        <Grid
-                          container
-                          wrap="nowrap"
-                          style={{
-                            margin: ".5rem 0",
-                          }}
-                        >
-                          <ReleaseLinkIcon
-                            type={link.type}
-                            style={{ marginRight: ".5rem" }}
-                          />
-                          <TextField
-                            {...register(`platformLinks.${index}.link`)}
-                            placeholder={link.title}
-                            fullWidth
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment
-                                  position="end"
-                                  sx={{ cursor: "pointer" }}
-                                  onClick={() => removePlatformLink(index)}
-                                >
-                                  <ClearIcon />
-                                </InputAdornment>
-                              ),
+                      link && (
+                        <Fade key={link.id} in={!!link.id}>
+                          <Grid
+                            container
+                            wrap="nowrap"
+                            style={{
+                              margin: ".5rem 0",
                             }}
-                          />
-                        </Grid>
-                      </Fade>
+                          >
+                            {link.icon && (
+                              <Image
+                                src={getMediaUrl(link.icon)}
+                                width={32}
+                                height={32}
+                                alt={link.title || ""}
+                                style={{ marginRight: ".5rem" }}
+                              />
+                            )}
+                            <TextField
+                              {...register(`platformLinks.${index}.link`)}
+                              placeholder={link.title || ""}
+                              fullWidth
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment
+                                    position="end"
+                                    sx={{ cursor: "pointer" }}
+                                    onClick={() => removePlatformLink(index)}
+                                  >
+                                    <ClearIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </Grid>
+                        </Fade>
+                      )
                     )
                   })}
 

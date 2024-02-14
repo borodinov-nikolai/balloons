@@ -25,6 +25,7 @@ import {
   CreateOrUpdateReleaseFormType,
   PlatformLinkType,
   ReleaseType,
+  StreamingService,
 } from "types/general"
 import { SyntheticEvent, useEffect, useMemo, useState } from "react"
 import { API } from "lib/api"
@@ -35,10 +36,15 @@ import ClearIcon from "@mui/icons-material/Clear"
 import Link from "next/link"
 import Loader from "components/Loader"
 import LoadImage from "components/LoadImage"
+import Image from "next/image"
 import Margin from "components/Margin"
+import { getMediaUrl } from "lib/media"
 
 function UpdateRelease() {
   const [release, setRelease] = useState<ReleaseType | null>(null)
+  const [streamingServices, setStreamingServices] = useState<
+    StreamingService[]
+  >([])
   const {
     register,
     control,
@@ -56,6 +62,27 @@ function UpdateRelease() {
   const { link: queryLink } = router.query
   const [deleteConfirm, setDeleteConfirm] = useState(false)
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {
+          data: { data },
+        } = await API.get("/streaming-services", {
+          params: {
+            populate: "*",
+          },
+        })
+
+        setStreamingServices(data)
+        // setError("")
+      } catch (e) {
+        // setError("Что-то пошло не так, перезагрузите страницу")
+      }
+    }
+
+    fetchData()
+  }, [])
+
   const {
     fields: platformLinks,
     append: appendPlatformLink,
@@ -67,34 +94,24 @@ function UpdateRelease() {
 
   const watchFieldArray = watch("platformLinks")
   const controlledFields = platformLinks.map((field, index) => {
-    return {
-      ...field,
-      ...watchFieldArray[index],
+    const matchingService = streamingServices.find(
+      (service) => service.type === field.type
+    )
+
+    if (matchingService) {
+      return {
+        ...field,
+        ...watchFieldArray[index],
+        icon: matchingService.icon,
+        title: matchingService.title,
+      }
     }
+
+    return null
   })
 
   const linksOptions = useMemo(() => {
-    const defaultLinkOptions: PlatformLinkType[] = [
-      { type: "appleMusic", title: "Apple Music" },
-      { type: "vkMusic", title: "VK Музыка" },
-      { type: "iTunes", title: "iTunes" },
-      { type: "yandexMusic", title: "Яндекс Музыка" },
-      { type: "zvuk", title: "Zvuk" },
-      { type: "spotify", title: "Spotify" },
-      { type: "youTubeMusic", title: "YouTube.Music" },
-      { type: "ok", title: "ok.ru" },
-      { type: "tikTok", title: "TikTok" },
-      { type: "amazonMusic", title: "Amazon Music" },
-      { type: "mtsMusic", title: "MTS Music" },
-      { type: "deezer", title: "Deezer" },
-      { type: "soundCloud", title: "SoundCloud" },
-      { type: "beatport", title: "Beatport" },
-      { type: "beelineMusic", title: "Beeline Music" },
-      { type: "tidal", title: "Tidal" },
-      { type: "triller", title: "Triller" },
-      { type: "huaweiMusic", title: "Huawei Music" },
-      { type: "shazam", title: "Shazam" },
-    ]
+    const defaultLinkOptions = streamingServices
     const selectedPlatformType = platformLinks.map((it) => it.type)
     return defaultLinkOptions.filter(
       (it) => !selectedPlatformType.includes(it.type)
@@ -105,8 +122,8 @@ function UpdateRelease() {
     e: SyntheticEvent,
     value: PlatformLinkType
   ) => {
-    const { type, title } = value
-    appendPlatformLink({ type, title, link: "" })
+    const { type } = value
+    appendPlatformLink({ type, link: "" })
   }
 
   const deletePlatformLinkHandler = (index: number) => {
@@ -273,6 +290,7 @@ function UpdateRelease() {
 
                   <TextField
                     label="Имя артиста для этого релиза"
+                    focused
                     {...register("artistName")}
                   />
 
@@ -280,6 +298,7 @@ function UpdateRelease() {
                   <TextField
                     label="Название релиза"
                     error={!!errors.name}
+                    focused
                     helperText={errors.name?.message}
                     {...register("name", { required: "Обязательное поле" })}
                   />
@@ -295,36 +314,43 @@ function UpdateRelease() {
 
                   {controlledFields.map((link, index) => {
                     return (
-                      <Fade key={link.id} in={!!link.id}>
-                        <Grid
-                          container
-                          wrap="nowrap"
-                          style={{ margin: ".5rem 0" }}
-                        >
-                          <ReleaseLinkIcon
-                            type={link.type}
-                            style={{ marginRight: ".5rem" }}
-                          />
-                          <TextField
-                            {...register(`platformLinks.${index}.link`)}
-                            placeholder={link.title}
-                            fullWidth
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment
-                                  position="end"
-                                  sx={{ cursor: "pointer" }}
-                                  onClick={() =>
-                                    deletePlatformLinkHandler(index)
-                                  }
-                                >
-                                  <ClearIcon />
-                                </InputAdornment>
-                              ),
-                            }}
-                          />
-                        </Grid>
-                      </Fade>
+                      link && (
+                        <Fade key={link.id} in={!!link.id}>
+                          <Grid
+                            container
+                            wrap="nowrap"
+                            style={{ margin: ".5rem 0" }}
+                          >
+                            {link.icon && (
+                              <Image
+                                src={getMediaUrl(link.icon)}
+                                width={32}
+                                height={32}
+                                alt={link.title || ""}
+                                style={{ marginRight: ".5rem" }}
+                              />
+                            )}
+                            <TextField
+                              {...register(`platformLinks.${index}.link`)}
+                              placeholder={link.title || ""}
+                              fullWidth
+                              InputProps={{
+                                endAdornment: (
+                                  <InputAdornment
+                                    position="end"
+                                    sx={{ cursor: "pointer" }}
+                                    onClick={() =>
+                                      deletePlatformLinkHandler(index)
+                                    }
+                                  >
+                                    <ClearIcon />
+                                  </InputAdornment>
+                                ),
+                              }}
+                            />
+                          </Grid>
+                        </Fade>
+                      )
                     )
                   })}
 

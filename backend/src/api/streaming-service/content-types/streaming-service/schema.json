@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "name": {
+    "title": {
       "type": "string",
       "required": true,
       "unique": true
@@ -28,7 +28,7 @@
         "audios"
       ]
     },
-    "slug": {
+    "type": {
       "type": "uid",
       "required": true
     }

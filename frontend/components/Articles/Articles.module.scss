@@ -18,8 +18,13 @@
 
 .articles {
   display: flex;
+  margin-top: 260px;
   gap: 20px;
   padding-bottom: 150px;
+
+  @media (max-width: 1023px) {
+    margin-top: 70px;
+  }
 }
 
 .article {

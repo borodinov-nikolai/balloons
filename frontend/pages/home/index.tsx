@@ -15,14 +15,13 @@ const Home: NextPage = (pageProps: any) => {
   return (
     <>
       <ReleaseSlider />
-      {/*<NewsBlock />*/}
+      <Articles />
       <Suggestion />
       <Catalog
         artistCount={artistCount}
         releaseCount={releaseCount}
         showCounter={showCounter}
       />
-      <Articles />
       <Videos />
       <FeedbackForm />
     </>

@@ -69,8 +69,6 @@ function ReleasePage() {
     fetchData()
   }, [])
 
-  console.log(streamingServices)
-
   return !release ? (
     <Loader />
   ) : (
@@ -133,7 +131,7 @@ function ReleasePage() {
                       streamingServices &&
                       streamingServices.length > 0 &&
                       streamingServices?.find(
-                        (service) => service.slug === it.type
+                        (service) => service.type === it.type
                       )
 
                     if (streamingService) {
@@ -147,12 +145,12 @@ function ReleasePage() {
                               src={getMediaUrl(streamingService.icon)}
                               width={48}
                               height={48}
-                              alt={streamingService.name}
+                              alt={streamingService.title}
                               style={{ marginRight: "1rem" }}
                             />
 
                             <div className={styles.release_column_track_name}>
-                              {streamingService.name}
+                              {streamingService.title}
                             </div>
                           </Grid>
                           <Button href={it.link}>Слушать</Button>

@@ -43,7 +43,6 @@ function Articles() {
     articles &&
     articles.length !== 0 && (
       <div className="content">
-        <h2 className={styles.title}>Новости</h2>
         <div className={styles.articles}>
           {visibleArticles.slice(0, 2).map((art: ArticleType) => (
             <article className={styles.article} key={art.id}>
