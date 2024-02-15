@@ -159,6 +159,8 @@ export type SliderType = {
   id: string
   textMain: string
   img: ImageType
+  imgTablet?: ImageType
+  imgMobile?: ImageType
   link?: string
   description?: string
   buttonText?: string

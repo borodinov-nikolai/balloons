@@ -42,7 +42,6 @@ function Videos() {
     videos &&
     videos.length !== 0 && (
       <div className="content">
-        <h2 className={styles.title}>Видео</h2>
         <div className={styles.videos}>
           {videos.slice(0, numberVideo).map(
             (vid: VideoType) =>

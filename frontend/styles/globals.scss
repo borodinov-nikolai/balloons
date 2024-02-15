@@ -445,6 +445,8 @@ a {
   width: 685px;
   height: 708px;
   bottom: -50%;
+  transform: rotate(25deg);
+  left: -210px;
 
   z-index: -1;
   @media (max-width: 1023px) {

@@ -42,7 +42,9 @@ function ListItem({
               )
         }
       >
-        <Grid className={`${styles.item_img_container} square_img_container`}>
+        <Grid
+          className={`${styles.item_img_container} ${styles.item_img_container__artist} square_img_container`}
+        >
           <Image
             src={img?.url ? getMediaUrl(img) : placeholderUrl}
             alt="list img"

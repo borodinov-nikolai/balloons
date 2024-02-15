@@ -34,7 +34,7 @@ const settings: Settings = {
   slidesToScroll: 1,
   infinite: true,
   variableWidth: true,
-  autoplay: true,
+  autoplay: false,
   autoplaySpeed: 5000,
   prevArrow: <PrevArrow />, //ToDo сделать неактивными кнопки, если двигаться некуда
   nextArrow: <NextArrow />,
@@ -57,7 +57,7 @@ const ReleaseSlider = () => {
           data: { data, meta },
         } = await API.get("/sliders", {
           params: {
-            populate: { img: "*" },
+            populate: "*",
             "sort[order]": "desc",
             "sort[createdAt]": "desc",
           },
@@ -82,6 +82,8 @@ const ReleaseSlider = () => {
           <ReleaseSliderSlide
             key={slide.id}
             img={slide.img}
+            imgTablet={slide.imgTablet}
+            imgMobile={slide.imgMobile}
             textMain={slide.textMain}
             link={slide?.link}
             description={slide?.description}

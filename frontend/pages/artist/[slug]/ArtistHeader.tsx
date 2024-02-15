@@ -113,14 +113,16 @@ function ArtistHeader({ user, isCurrentUser }: ArtistHeaderProps) {
               {user?.name}
             </Typography>
 
-            <Typography style={{ width: "70%" }}>
+            <Typography
+              style={{ width: "100%", overflow: "hidden", lineClamp: "3" }}
+            >
               {user?.description}
             </Typography>
 
             {user?.site && (
               <MuiLink
                 href={`http://${user.site}`}
-                style={{ width: "70%" }}
+                style={{ width: "100%", overflow: "hidden", lineClamp: "3" }}
                 target="_blank"
                 rel="noreferrer"
               >

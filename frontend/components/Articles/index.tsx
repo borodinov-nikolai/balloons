@@ -41,7 +41,8 @@ function Articles() {
 
   return (
     articles &&
-    articles.length !== 0 && (
+    articles.length !== 0 &&
+    articles.some((article) => article.isView === true) && (
       <div className="content">
         <div className={styles.articles}>
           {visibleArticles.slice(0, 2).map((art: ArticleType) => (
