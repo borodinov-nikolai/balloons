@@ -11,4 +11,5 @@ export type ListItemType = {
   placeholder?: string
   style?: CSSProperties
   user?: UserType
+  isSlider?: boolean
 }

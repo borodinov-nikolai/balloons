@@ -77,9 +77,15 @@ type CatalogProps = {
   artistCount: number
   releaseCount: number
   showCounter: boolean
+  isSlider?: boolean
 }
 
-function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
+function Catalog({
+  artistCount,
+  releaseCount,
+  showCounter,
+  isSlider,
+}: CatalogProps) {
   const [releases, setReleases] = useState<ReleaseType[]>([])
   const [artists, setArtists] = useState<UserType[]>([])
   const [loading, setLoading] = useState(false)
@@ -164,7 +170,12 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
         <Slider {...settings} className={`${styles.row} ${styles.row_main}`}>
           {artists.map((it: UserType) => (
             <>
-              <ArtistItem artist={it} key={it.id} styles={sliderItemStyle} />
+              <ArtistItem
+                artist={it}
+                key={it.id}
+                styles={sliderItemStyle}
+                isSlider={isSlider}
+              />
             </>
           ))}
         </Slider>
@@ -174,7 +185,12 @@ function Catalog({ artistCount, releaseCount, showCounter }: CatalogProps) {
         <Slider {...settings} className={`${styles.row} ${styles.row_main}`}>
           {releases.map((it: ReleaseType) => (
             <>
-              <ReleaseItem key={it.id} release={it} styles={sliderItemStyle} />
+              <ReleaseItem
+                key={it.id}
+                release={it}
+                styles={sliderItemStyle}
+                isSlider={isSlider}
+              />
             </>
           ))}
         </Slider>

@@ -21,6 +21,7 @@ const Home: NextPage = (pageProps: any) => {
         artistCount={artistCount}
         releaseCount={releaseCount}
         showCounter={showCounter}
+        isSlider={true}
       />
       <Videos />
       <FeedbackForm />

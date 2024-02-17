@@ -6,12 +6,14 @@ import ListItemArtist from "components/List/ListItemArtist"
 type ArtistsItemType = {
   artist: UserType
   styles?: CSSProperties
+  isSlider?: boolean
 }
 
 function ArtistItem(props: ArtistsItemType) {
   const {
     artist: { avatar, name, slug },
     styles,
+    isSlider,
   } = props
 
   return (
@@ -20,6 +22,7 @@ function ArtistItem(props: ArtistsItemType) {
       title={name}
       link={`/artist/${slug}`}
       style={styles}
+      isSlider={isSlider}
     />
   )
 }

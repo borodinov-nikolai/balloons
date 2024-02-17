@@ -17,7 +17,7 @@
     z-index: 5;
 
     @media (max-width: 1023px) {
-      bottom: 4.8vh;
+      bottom: 9.6vh;
       left: calc((100% - 220px) / 2 - 145px);
     }
 
@@ -360,6 +360,10 @@
 
 .slideTitleCustom {
   margin-left: 0;
+  @media (min-width: 1023px) {
+    font-size: 110px;
+    line-height: 100px;
+  }
 }
 
 .slideButtonCustom {
@@ -390,6 +394,7 @@
 
   @media (max-width: 374px) {
     padding-left: 24px;
+    max-width: 100%;
   }
 }
 
@@ -399,6 +404,15 @@
 
   @media (max-width: 767px) {
     margin-bottom: 0;
+  }
+
+  @media (max-width: 374px) {
+    width: 100%;
+
+    a {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
 

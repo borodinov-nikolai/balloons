@@ -17,6 +17,7 @@ function ListItem({
   placeholder,
   style,
   user,
+  isSlider,
 }: ListItemType) {
   const placeholderUrl = placeholder ? placeholder : "/assets/placeholder.png"
   const size = useWindowSize()
@@ -43,7 +44,7 @@ function ListItem({
         }
       >
         <Grid
-          className={`${styles.item_img_container} ${styles.item_img_container__artist} square_img_container`}
+          className={`${styles.item_img_container} ${isSlider ? styles.item_img_container__slider_artist : styles.item_img_container__artist} square_img_container`}
         >
           <Image
             src={img?.url ? getMediaUrl(img) : placeholderUrl}

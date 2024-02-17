@@ -5,9 +5,10 @@ import { CSSProperties } from "react"
 type ReleaseItemType = {
   release: ReleaseType
   styles?: CSSProperties
+  isSlider?: boolean
 }
 
-function ReleaseItem({ release, styles }: ReleaseItemType) {
+function ReleaseItem({ release, styles, isSlider }: ReleaseItemType) {
   const { img, name, link, artistName, user } = release
   const year = new Date(release.date).getFullYear()
   const releaseType = release.type === "single" ? "Сингл" : "Альбом"
@@ -21,6 +22,7 @@ function ReleaseItem({ release, styles }: ReleaseItemType) {
       link={`/${link}`}
       style={styles}
       user={user}
+      isSlider={isSlider}
     />
   )
 }

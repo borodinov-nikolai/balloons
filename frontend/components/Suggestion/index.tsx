@@ -340,7 +340,12 @@ function Suggestion() {
                     className={classes}
                     style={{ background: bgColor }}
                     onChange={() => {
-                      changeTab(id)
+                      if (id === openTabIndex) {
+                        // @ts-ignore
+                        changeTab(null)
+                      } else {
+                        changeTab(id)
+                      }
                     }}
                   >
                     <AccordionSummary

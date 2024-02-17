@@ -60,6 +60,17 @@
   }
 }
 
+.item_img_container__slider_artist {
+  img {
+    height: 218px !important;
+    object-fit: cover;
+
+    @media (max-width: 767px) {
+      height: 234px !important;
+    }
+  }
+}
+
 .title {
   max-width: 220px;
   margin-top: 20px;
