@@ -7,6 +7,7 @@ import {
 } from "react"
 import {
   AuthContextType,
+  forgotPasswordType,
   loginFormType,
   signUpFormType,
   UserType,
@@ -22,6 +23,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: false,
   error: "",
   login: () => {},
+  forgotPassword: () => {},
   logout: () => {},
   signUp: () => {},
   updateProfile: () => {},
@@ -154,6 +156,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
+  const forgotPassword = async (form: forgotPasswordType) => {
+    setLoading(true)
+    Cookies.remove("token")
+    API.defaults.headers.common.Authorization = ""
+
+    try {
+      await API.post("/auth/forgot-password", {
+        email: form.identifier,
+      })
+    } catch (e) {
+      console.error(e)
+
+      setError("Ошибка восстановления пароля")
+    }
+
+    setLoading(false)
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -162,6 +182,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         loading,
         error,
         login,
+        forgotPassword,
         logout,
         signUp,
         updateProfile,

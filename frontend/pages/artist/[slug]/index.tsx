@@ -83,7 +83,10 @@ function ArtistPage() {
         <>
           <ArtistHeader user={user} isCurrentUser={isCurrentUser} />
 
-          <Grid className="content" style={{ marginTop: "12rem" }}>
+          <Grid
+            className="content"
+            style={{ marginTop: `${size.width > 375 ? "100px" : "50px"}` }}
+          >
             <Grid container justifyContent="space-between" alignItems="center">
               <Typography variant="h2">
                 {isCurrentUser ? "МОИ РЕЛИЗЫ" : "РЕЛИЗЫ"}

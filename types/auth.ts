@@ -33,6 +33,7 @@ export type AuthContextType = {
   loading: boolean
   error: string
   login: Function
+  forgotPassword: Function
   logout: Function
   signUp: Function
   updateProfile: Function
@@ -41,6 +42,11 @@ export type AuthContextType = {
 export type loginFormType = {
   identifier: string
   password: string
+  captcha: string
+}
+
+export type forgotPasswordType = {
+  identifier: string
   captcha: string
 }
 

@@ -4,6 +4,7 @@ import Image from "next/image"
 import styles from "./Header.module.scss"
 import login from "./images/login.svg"
 import burger from "./images/burger.svg"
+import cross from "./images/cross.svg"
 import Logo from "components/Logo"
 import { Fade, Grid, Popper } from "@mui/material"
 import AssignmentIndRoundedIcon from "@mui/icons-material/AssignmentIndRounded"
@@ -218,7 +219,11 @@ function Header() {
             className={burgerClasses}
             onClick={() => setOpenMenu(!openMenu)}
           >
-            <Image src={burger} width={18} height={18} alt="" />
+            {openMenu ? (
+              <Image src={cross} width={18} height={18} alt="" />
+            ) : (
+              <Image src={burger} width={18} height={18} alt="" />
+            )}
           </button>
 
           {isAuthenticated ? (
