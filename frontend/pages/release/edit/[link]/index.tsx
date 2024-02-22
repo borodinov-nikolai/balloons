@@ -129,8 +129,13 @@ function UpdateRelease() {
     removePlatformLink(index)
   }
 
-  const deleteReleaseHandler = () => {
-    alert("Release not deleted")
+  const deleteReleaseHandler = async () => {
+    try {
+      await API.delete(`/releases/${release?.id}`)
+      window.location.replace("/artist/new")
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   useEffect(() => {

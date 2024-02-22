@@ -22,6 +22,7 @@ import Margin from "components/Margin"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import LoadImage from "components/LoadImage"
+import { API } from "lib/api"
 
 function UpdateProfile() {
   const { updateProfile, user } = useAuth()
@@ -41,8 +42,13 @@ function UpdateProfile() {
     updateProfile(data)
   }
 
-  const deleteUserHandler = () => {
-    alert("user deleted")
+  const deleteUserHandler = async () => {
+    try {
+      await API.delete(`/users/${user?.id}`)
+      window.location.replace("/")
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   useEffect(() => {

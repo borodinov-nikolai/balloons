@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import Loader from "components/Loader"
 interface NameCount {
   name: string
-  count: number
+  count: string[] | number
 }
 function Statistics(props: any) {
   const [locations, setLocations] = useState<string>("countries")
@@ -24,6 +24,7 @@ function Statistics(props: any) {
   const path = pathname.slice(pathname.lastIndexOf("/"))
   const CounterID = 94315322
   /* const CounterID = 29761725 */
+  const currentUrl = "https://linkmusic.ru"
 
   const setAlltime = () => {
     setDate1("2023-07-20")
@@ -34,8 +35,8 @@ function Statistics(props: any) {
       monthNum < 10
         ? `0${monthNum}`
         : monthNum == 0
-        ? "12"
-        : monthNum.toString()
+          ? "12"
+          : monthNum.toString()
     const date = month + date2.slice(7)
     const dateString = date2.slice(0, 5).toString() + date.toString()
     setDate1(dateString)
@@ -56,7 +57,7 @@ function Statistics(props: any) {
       }
       const getCountries = async () => {
         const res = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCountry&limit=6${
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='${currentUrl}${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCountry&limit=6${
             timeSorting == "year" || timeSorting == "month"
               ? `&date1=${date1}`
               : ""
@@ -72,12 +73,12 @@ function Statistics(props: any) {
         const allCountries = res.data.data
         const formatCountries = async () => {
           allCountries.forEach(async (e: any) => {
-            const transtaleCountry = async (e: any) => {
+            const translateCountry = async (e: any) => {
               const country = await translate(e.dimensions[0].name, "ru")
               return country
             }
             const setData = async (e: any) => {
-              const translatedCountry = await transtaleCountry(e)
+              const translatedCountry = await translateCountry(e)
 
               countriesArray.push({
                 name: translatedCountry,
@@ -85,10 +86,10 @@ function Statistics(props: any) {
                   timeSorting == "week"
                     ? e.metrics[0][1]
                     : timeSorting == "day"
-                    ? e.metrics[0][6]
-                    : timeSorting == "week&" || timeSorting == "month"
-                    ? e.metrics[0][0] + e.metrics[0][1]
-                    : e.metrics[0],
+                      ? e.metrics[0][6]
+                      : timeSorting == "week&" || timeSorting == "month"
+                        ? e.metrics[0][0] + e.metrics[0][1]
+                        : e.metrics[0],
               })
             }
             await setData(e)
@@ -97,14 +98,14 @@ function Statistics(props: any) {
         setCountries([])
         await formatCountries()
         const sorted = countriesArray.sort(
-          (a: NameCount, b: NameCount) => a.count - b.count
+          (a: NameCount, b: NameCount) => +a.count - +b.count
         )
         setCountries(sorted)
       }
       const getCities = async () => {
         const res = await axios
           .get(
-            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCity&limit=6${
+            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='${currentUrl}${path}'&id=${CounterID}&metrics=ym:s:visits&dimensions=ym:s:regionCity&limit=6${
               timeSorting == "year" || timeSorting == "month"
                 ? `&date1=${date1}`
                 : ""
@@ -123,22 +124,22 @@ function Statistics(props: any) {
         const allCities = res?.data.data
         const formatCities = async () => {
           allCities.map((e: any) => {
-            const transtaleCity = async (e: any) => {
+            const translateCity = async (e: any) => {
               const country = await translate(e.dimensions[0].name, "ru")
               return country
             }
             const setData = async (e: any) => {
-              const translatedCity = await transtaleCity(e)
+              const translatedCity = await translateCity(e)
               citiesArray.push({
                 name: translatedCity,
                 count:
                   timeSorting == "week"
                     ? e.metrics[0][1]
                     : timeSorting == "day"
-                    ? e.metrics[0][6]
-                    : timeSorting == "week&" || timeSorting == "month"
-                    ? e.metrics[0][0] + e.metrics[0][1]
-                    : e.metrics[0],
+                      ? e.metrics[0][6]
+                      : timeSorting == "week&" || timeSorting == "month"
+                        ? e.metrics[0][0] + e.metrics[0][1]
+                        : e.metrics[0],
               })
             }
             setData(e)
@@ -153,7 +154,7 @@ function Statistics(props: any) {
       const getGenders = async () => {
         const res = await axios
           .get(
-            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:gender&id=${CounterID}${
+            `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='${currentUrl}${path}'&metrics=ym:s:visits&dimensions=ym:s:gender&id=${CounterID}${
               timeSorting == "year" || timeSorting == "month"
                 ? `&date1=${date1}`
                 : ""
@@ -171,22 +172,22 @@ function Statistics(props: any) {
           male: !res?.data.data[0]
             ? 0
             : timeSorting == "week"
-            ? res.data.data[0].metrics[0][1]
-            : timeSorting == "day"
-            ? res.data.data[0].metrics[0][6]
-            : res.data.data[0].metrics[0],
+              ? res.data.data[0].metrics[0][1]
+              : timeSorting == "day"
+                ? res.data.data[0].metrics[0][6]
+                : res.data.data[0].metrics[0],
           female: !res?.data.data[1]
             ? 0
             : timeSorting == "week"
-            ? res.data.data[1].metrics[0][1]
-            : timeSorting == "day"
-            ? res.data.data[1].metrics[0][6]
-            : res.data.data[1].metrics[0],
+              ? res.data.data[1].metrics[0][1]
+              : timeSorting == "day"
+                ? res.data.data[1].metrics[0][6]
+                : res.data.data[1].metrics[0],
         })
       }
       const getAges = async () => {
         const res = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:ageInterval&id=${CounterID}${
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='${currentUrl}${path}'&metrics=ym:s:visits&dimensions=ym:s:ageInterval&id=${CounterID}${
             timeSorting == "year" || timeSorting == "month"
               ? `&date1=${date1}`
               : ""
@@ -212,55 +213,55 @@ function Statistics(props: any) {
                 timeSorting == "week"
                   ? e.metrics[0][1]
                   : timeSorting == "day"
-                  ? e.metrics[0][6]
-                  : timeSorting == "week&" || timeSorting == "month"
-                  ? e.metrics[0][0] + e.metrics[0][1]
-                  : e.metrics[0]
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                      ? e.metrics[0][0] + e.metrics[0][1]
+                      : e.metrics[0]
             } else if (e.dimensions[0].id == 18) {
               age18 =
                 timeSorting == "week"
                   ? e.metrics[0][1]
                   : timeSorting == "day"
-                  ? e.metrics[0][6]
-                  : timeSorting == "week&" || timeSorting == "month"
-                  ? e.metrics[0][0] + e.metrics[0][1]
-                  : e.metrics[0]
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                      ? e.metrics[0][0] + e.metrics[0][1]
+                      : e.metrics[0]
             } else if (e.dimensions[0].id == 25) {
               age25 =
                 timeSorting == "week"
                   ? e.metrics[0][1]
                   : timeSorting == "day"
-                  ? e.metrics[0][6]
-                  : timeSorting == "week&" || timeSorting == "month"
-                  ? e.metrics[0][0] + e.metrics[0][1]
-                  : e.metrics[0]
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                      ? e.metrics[0][0] + e.metrics[0][1]
+                      : e.metrics[0]
             } else if (e.dimensions[0].id == 35) {
               age35 =
                 timeSorting == "week"
                   ? e.metrics[0][1]
                   : timeSorting == "day"
-                  ? e.metrics[0][6]
-                  : timeSorting == "week&" || timeSorting == "month"
-                  ? e.metrics[0][0] + e.metrics[0][1]
-                  : e.metrics[0]
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                      ? e.metrics[0][0] + e.metrics[0][1]
+                      : e.metrics[0]
             } else if (e.dimensions[0].id == 45) {
               age45 =
                 timeSorting == "week"
                   ? e.metrics[0][1]
                   : timeSorting == "day"
-                  ? e.metrics[0][6]
-                  : timeSorting == "week&" || timeSorting == "month"
-                  ? e.metrics[0][0] + e.metrics[0][1]
-                  : e.metrics[0]
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                      ? e.metrics[0][0] + e.metrics[0][1]
+                      : e.metrics[0]
             } else if (e.dimensions[0].id == 55) {
               age55 =
                 timeSorting == "week"
                   ? e.metrics[0][1]
                   : timeSorting == "day"
-                  ? e.metrics[0][6]
-                  : timeSorting == "week&" || timeSorting == "month"
-                  ? e.metrics[0][0] + e.metrics[0][1]
-                  : e.metrics[0]
+                    ? e.metrics[0][6]
+                    : timeSorting == "week&" || timeSorting == "month"
+                      ? e.metrics[0][0] + e.metrics[0][1]
+                      : e.metrics[0]
             }
           })
           return {
@@ -276,7 +277,7 @@ function Statistics(props: any) {
       }
       const getSocials = async () => {
         const res = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SocialNetwork&id=${CounterID}${
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='${currentUrl}${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SocialNetwork&id=${CounterID}${
             timeSorting == "year" || timeSorting == "month"
               ? `&date1=${date1}`
               : ""
@@ -302,43 +303,43 @@ function Statistics(props: any) {
                   timeSorting == "week"
                     ? e.metrics[0][1]
                     : timeSorting == "day"
-                    ? e.metrics[0][6]
-                    : timeSorting == "week&" || timeSorting == "month"
-                    ? e.metrics[0][0] + e.metrics[0][1]
-                    : e.metrics[0]
+                      ? e.metrics[0][6]
+                      : timeSorting == "week&" || timeSorting == "month"
+                        ? e.metrics[0][0] + e.metrics[0][1]
+                        : e.metrics[0]
               } else if (e.dimensions[0].id == "instagram") {
                 inst =
                   timeSorting == "week"
                     ? e.metrics[0][1]
                     : timeSorting == "day"
-                    ? e.metrics[0][6]
-                    : timeSorting == "week&" || timeSorting == "month"
-                    ? e.metrics[0][0] + e.metrics[0][1]
-                    : e.metrics[0]
+                      ? e.metrics[0][6]
+                      : timeSorting == "week&" || timeSorting == "month"
+                        ? e.metrics[0][0] + e.metrics[0][1]
+                        : e.metrics[0]
               } else if (e.dimensions[0].id == "facebook") {
                 fb =
                   timeSorting == "week"
                     ? e.metrics[0][1]
                     : timeSorting == "day"
-                    ? e.metrics[0][6]
-                    : timeSorting == "week&" || timeSorting == "month"
-                    ? e.metrics[0][0] + e.metrics[0][1]
-                    : e.metrics[0]
+                      ? e.metrics[0][6]
+                      : timeSorting == "week&" || timeSorting == "month"
+                        ? e.metrics[0][0] + e.metrics[0][1]
+                        : e.metrics[0]
               } else if (e.dimensions[0].id == "youtube") {
                 yt =
                   timeSorting == "week"
                     ? e.metrics[0][1]
                     : timeSorting == "day"
-                    ? e.metrics[0][6]
-                    : timeSorting == "week&" || timeSorting == "month"
-                    ? e.metrics[0][0] + e.metrics[0][1]
-                    : e.metrics[0]
+                      ? e.metrics[0][6]
+                      : timeSorting == "week&" || timeSorting == "month"
+                        ? e.metrics[0][0] + e.metrics[0][1]
+                        : e.metrics[0]
               }
             }
           )
         }
         const res1 = await axios.get(
-          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='https://linkmusic.ru${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SearchEngineRoot&id=${CounterID}${
+          `https://api-metrika.yandex.net/stat/v1/data/bytime?filters=ym:pv:URL=='${currentUrl}${path}'&metrics=ym:s:visits&dimensions=ym:s:<attribution>SearchEngineRoot&id=${CounterID}${
             timeSorting == "year" || timeSorting == "month"
               ? `&date1=${date1}`
               : ""
@@ -756,7 +757,9 @@ function Statistics(props: any) {
                         )}
 
                         <div className={style.statistics_tablet__number}>
-                          {e.count}
+                          {typeof e.count === "number"
+                            ? e.count
+                            : e.count[1] || e.count[0]}
                         </div>
                       </div>
                     )
@@ -809,7 +812,9 @@ function Statistics(props: any) {
                               {e.name}
                             </div>
                             <div className={style.statistics_tablet__number}>
-                              {e.count}
+                              {typeof e.count === "number"
+                                ? e.count
+                                : e.count[1] || e.count[0]}
                             </div>
                           </div>
                         )
@@ -827,7 +832,9 @@ function Statistics(props: any) {
                               {e.name}
                             </div>
                             <div className={style.statistics_tablet__number}>
-                              {e.count}
+                              {typeof e.count === "number"
+                                ? e.count
+                                : e.count[1] || e.count[0]}
                             </div>
                           </div>
                         )
