@@ -29,6 +29,10 @@
       left: 50%;
       transform: translate(-50%);
     }
+
+    @media (max-width: 480px) {
+      bottom: 20px;
+    }
   }
 }
 
@@ -102,6 +106,10 @@
       height: 20px;
     }
   }
+
+  @media (max-width: 480px) {
+    bottom: 20px;
+  }
 }
 
 .button_next {
@@ -118,6 +126,10 @@
   @media (max-width: 767px) {
     left: unset;
     right: 20px;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 20px;
   }
 }
 
