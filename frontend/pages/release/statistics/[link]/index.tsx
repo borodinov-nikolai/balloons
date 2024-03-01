@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import Loader from "components/Loader"
 interface NameCount {
   name: string
-  count: string[] | number
+  count: number
 }
 function Statistics(props: any) {
   const [locations, setLocations] = useState<string>("countries")

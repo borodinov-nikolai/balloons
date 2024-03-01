@@ -7,16 +7,7 @@ import { factories } from "@strapi/strapi"
 const { createCoreController } = require("@strapi/strapi").factories
 
 module.exports = createCoreController("api::release.release", ({ strapi }) => ({
-  async findMy(ctx) {
-    const entity = await strapi.db.query("api::release.release").findOne({
-      where: { user: { id: ctx.state.user.id } },
-      populate: "*",
-    })
-
-    ctx.body = entity
-  },
-
-  async delete(ctx) {
+  async deleteMy(ctx) {
     const { id } = ctx.params
 
     const release = await strapi.query("api::release.release").findOne({
