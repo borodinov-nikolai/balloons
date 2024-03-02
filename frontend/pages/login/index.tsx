@@ -71,7 +71,7 @@ const Login: FunctionComponent = () => {
         Забыли пароль?
       </Link>
 
-      {/* <Grid container style={{ margin: "1rem 0 0" }}>
+      <Grid container style={{ margin: "1rem 0 0" }}>
         <Captcha
           register={register}
           errors={errors}
@@ -80,7 +80,7 @@ const Login: FunctionComponent = () => {
           clearErrors={clearErrors}
           watch={watch}
         />
-      </Grid> */}
+      </Grid>
 
       <div className={styles.formPage__text}>
         Нет аккаунта?{" "}
