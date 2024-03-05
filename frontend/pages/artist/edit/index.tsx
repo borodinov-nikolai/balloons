@@ -225,14 +225,14 @@ function UpdateProfile() {
                         Вы действительно хотите удалить пользователя?
                       </DialogTitle>
                       <DialogActions>
-                        <Button
+                        {/* <Button
                           className={styles.btn}
                           variant="contained"
                           color="warning"
                           onClick={deleteUserHandler}
                         >
                           Удалить
-                        </Button>
+                        </Button> */}
                         <Button
                           className={styles.btn}
                           variant="outlined"
