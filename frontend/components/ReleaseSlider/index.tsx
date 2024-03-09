@@ -82,6 +82,7 @@ const ReleaseSlider = () => {
           <ReleaseSliderSlide
             key={slide.id}
             img={slide.img}
+            imgLaptop={slide.imgLaptop}
             imgTablet={slide.imgTablet}
             imgMobile={slide.imgMobile}
             textMain={slide.textMain}

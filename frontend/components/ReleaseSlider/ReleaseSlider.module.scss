@@ -11,7 +11,8 @@
 
     position: absolute;
     width: 220px;
-    justify-content: space-between;
+    // justify-content: space-between;
+    gap: 30px;
     left: calc((100% - 220px) / 2 - 19%); //ToDo Сделать адаптивную ширину
     bottom: 49px;
     z-index: 5;
@@ -198,11 +199,12 @@
   height: 685px;
   background: url("#") center no-repeat;
   background-size: cover;
+  z-index: 1;
 
   @media (max-width: 1023px) {
     padding-top: 400px;
     padding-bottom: 165px;
-    height: auto;
+    height: 954px;
   }
   @media (max-width: 767px) {
     padding: 200px 0 0;

@@ -1,5 +1,4 @@
 import styles from "./ReleaseSlider.module.scss"
-import Link from "next/link"
 import { Button, Grid, Typography } from "@mui/material"
 import { getMediaUrl } from "lib/media"
 import { ImageType } from "types/general"
@@ -7,6 +6,7 @@ import useWindowSize from "hooks/size.hooks"
 
 type ReleaseSlideProps = {
   img: ImageType
+  imgLaptop?: ImageType
   imgTablet?: ImageType
   imgMobile?: ImageType
   textMain: string
@@ -16,8 +16,16 @@ type ReleaseSlideProps = {
 }
 
 const ReleaseSliderSlide = (props: ReleaseSlideProps) => {
-  let { img, textMain, link, description, buttonText, imgTablet, imgMobile } =
-    props
+  let {
+    img,
+    textMain,
+    link,
+    description,
+    buttonText,
+    imgLaptop,
+    imgTablet,
+    imgMobile,
+  } = props
 
   const size = useWindowSize()
 
@@ -29,9 +37,12 @@ const ReleaseSliderSlide = (props: ReleaseSlideProps) => {
           size.width < 376 && imgMobile?.data !== null
             ? `url(${getMediaUrl(imgMobile)})`
             : // @ts-ignore
-              size.width < 769 && imgTablet?.data !== null
+              size.width < 768 && imgTablet?.data !== null
               ? `url(${getMediaUrl(imgTablet)})`
-              : `url(${getMediaUrl(img)})`,
+              : // @ts-ignore
+                size.width < 1024 && imgLaptop?.data !== null
+                ? `url(${getMediaUrl(imgLaptop)})`
+                : `url(${getMediaUrl(img)})`,
       }}
       className={`block ${styles.slide}`}
     >
