@@ -3,7 +3,7 @@ import Image from "next/image"
 import CloseIcon from "@mui/icons-material/Close"
 import styles from "components/LoadImage/LoadImage.module.scss"
 import { ImageType } from "types/general"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { getMediaUrl } from "lib/media"
 
 type LoadImageProps = {
@@ -26,9 +26,10 @@ function LoadImage({
   required = false,
 }: LoadImageProps) {
   const files = watch(formFieldName)
+  const dropAreaRef = useRef<HTMLDivElement>(null)
 
   const onChange = (e: any) => {
-    const file = e.target?.files.item(0)
+    const file = e.target?.files[0]
 
     if (file.type && !file.type.startsWith("image/")) {
       console.error("File is not an image.", file.type, file)
@@ -55,13 +56,32 @@ function LoadImage({
     if (defaultValue) createFile()
   }, [defaultValue, formFieldName, setValue])
 
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    const file = e.dataTransfer.files[0]
+    if (file.type && !file.type.startsWith("image/")) {
+      console.error("File is not an image.", file.type, file)
+      return
+    }
+    setValue(formFieldName, [file])
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+  }
+
   return (
     <Grid>
-      <Grid className={styles.load_img}>
+      <Grid
+        className={styles.load_img}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        ref={dropAreaRef}
+      >
         {!!files?.length && (
           <Grid className="square_img_container">
             <CloseIcon className={styles.remove_btn} onClick={onClearHandler} />
-            <Image src={URL.createObjectURL(files.item(0))} fill alt="img" />
+            <Image src={URL.createObjectURL(files[0])} fill alt="img" />
           </Grid>
         )}
 

@@ -137,7 +137,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         "users/me",
         {
           ...form,
-          avatar: form.avatar?.item(0),
+          avatar: form.avatar?.[0],
         },
         {
           headers: { "Content-type": "multipart/form-data" },
@@ -152,6 +152,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (!data) setError("User not found")
     } catch (e: any) {
       setError(e.message)
+      console.log(e.message)
       setUser(undefined)
     }
   }
