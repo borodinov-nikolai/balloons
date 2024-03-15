@@ -152,7 +152,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (!data) setError("User not found")
     } catch (e: any) {
       setError(e.message)
-      console.log(e.message)
       setUser(undefined)
     }
   }
