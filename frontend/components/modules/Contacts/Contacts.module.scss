@@ -1,0 +1,26 @@
+.ContactList {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+
+  // @apply flex items-center gap-[55px];
+}
+
+.ContactListItem {
+  a {
+    svg {
+      height: 46px;
+      width: 46px;
+
+      // @apply h-[46px] w-[46px];
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .ContactList {
+    gap: 45px;
+
+    // @apply gap-[45px];
+  }
+}

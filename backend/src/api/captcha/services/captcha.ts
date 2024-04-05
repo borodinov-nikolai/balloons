@@ -1,5 +1,0 @@
-/**
- * captcha service.
- */
-
-export default () => ({})

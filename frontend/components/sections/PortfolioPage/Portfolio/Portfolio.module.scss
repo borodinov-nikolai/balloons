@@ -1,0 +1,112 @@
+.Portfolio {
+  margin-top: 20px;
+
+  // @apply mt-[20px];
+
+  hr {
+    height: 2px;
+    background-color: black;
+
+    // @apply h-[2px] bg-black;
+  }
+}
+
+.Sort {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  // @apply mt-[22px] flex flex-wrap items-center justify-center gap-[10px];
+}
+
+.Title {
+  font-size: 45px;
+  font-style: italic;
+  color: black;
+
+  // @apply text-[45px] italic text-black;
+}
+
+.Grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  justify-items: center;
+  gap: 20px;
+
+  // @apply mt-[25px] grid grid-cols-4 justify-items-center gap-[20px];
+}
+
+.PortfolioItem {
+  img {
+    height: 400px;
+    width: 300px;
+
+    // @apply h-[400px] w-[300px];
+  }
+}
+
+@media (max-width: 960px) {
+  .Grid {
+    margin-top: 20px;
+
+    // @apply mt-[20px];
+  }
+
+  .PortfolioItem {
+    img {
+      height: 320px;
+      width: 250px;
+
+      // @apply h-[320px] w-[250px];
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .Portfolio {
+    margin-top: 30px;
+
+    // @apply mt-[30px];
+  }
+
+  .Title {
+    font-size: 32px;
+
+    // @apply text-[32px];
+  }
+
+  .Grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    // @apply grid-cols-3;
+  }
+}
+
+@media (max-width: 600px) {
+  .PortfolioItem {
+    img {
+      height: 250px;
+      width: 150px;
+
+      // @apply h-[250px] w-[150px];
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .Title {
+    font-size: 24px;
+
+    // @apply text-[24px];
+  }
+
+  .Grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    // @apply grid-cols-2;
+  }
+}
