@@ -1,6 +1,6 @@
-import styles from './Contacts.module.scss';
-import InstagramIcon from './icons/InstagramIcon';
-import WhatsAppIcon from './icons/WhatsAppIcon';
+import styles from "./Contacts.module.scss"
+import InstagramIcon from "./icons/InstagramIcon"
+import WhatsAppIcon from "./icons/WhatsAppIcon"
 
 export default function Contacts() {
   return (
@@ -24,5 +24,5 @@ export default function Contacts() {
         </a>
       </li>
     </ul>
-  );
+  )
 }

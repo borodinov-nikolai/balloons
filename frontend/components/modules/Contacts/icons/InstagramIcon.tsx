@@ -40,5 +40,5 @@ export default function InstagramIcon() {
         data-name="Path 15"
       ></path>
     </svg>
-  );
+  )
 }

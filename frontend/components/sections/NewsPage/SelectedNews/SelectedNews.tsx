@@ -12,7 +12,7 @@ export default function SelectedNews({ selectedId }: { selectedId: string }) {
     const fetchData = async () => {
       try {
         const { data } = await getNews({
-          url: `/api/news/${String(selectedId)}?populate=*`,
+          url: `/api/news/${selectedId}?populate=*`,
         })
 
         setSelectedNews(data.data)

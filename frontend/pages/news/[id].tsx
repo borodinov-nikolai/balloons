@@ -7,7 +7,7 @@ export default function SelectedNewsPage() {
   console.log(typeof router.query.id)
   return (
     <RootLayout>
-      <SelectedNews selectedId={router.query.id} />
+      <SelectedNews selectedId={String(router.query.id)} />
     </RootLayout>
   )
 }
