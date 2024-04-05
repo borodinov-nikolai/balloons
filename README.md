@@ -1,4 +1,4 @@
-[linkmusic.ru](https://linkmusic.ru)
+[airballoonsufa.ru](https://airballoonsufa.ru)
 
 Для локального запуска проекта. Скопируйте содержимое файла .env.example > .env.local
 

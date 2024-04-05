@@ -8,8 +8,8 @@ export default [
       origin: [
         "http://localhost:3000",
         "http://localhost:1337",
-        "https://linkmusic.ru",
-        "https://www.linkmusic.ru",
+        "https://airballoonsufa.ru",
+        "https://www.airballoonsufa.ru",
       ],
     },
   },

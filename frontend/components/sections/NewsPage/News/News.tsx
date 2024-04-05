@@ -46,6 +46,7 @@ export default function News() {
                   {news.image && (
                     <Image
                       className={styles.NewsImage}
+                      //@ts-ignore
                       src={`${process.env.NEXT_PUBLIC_SERVER_URL}${news.image.url}`}
                       alt={news.title}
                       width={300}

@@ -1,13 +1,11 @@
 "use client"
 import { useMediaQuery } from "hooks/useMediaQuery"
 import styles from "./Categories.module.scss"
-import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { getAllCategories } from "api/categories"
 import Contacts from "components/modules/Contacts/Contacts"
-import { getMediaUrl } from "utils/getMediaUrl"
-import { ICategory } from "types/categories"
+import type { ICategory } from "types/categories"
 
 export default function Categories() {
   const isMedia420 = useMediaQuery(420)
@@ -54,6 +52,7 @@ export default function Categories() {
                   return (
                     <li className={styles.ListItem} key={category.slug}>
                       {category.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={`${process.env.NEXT_PUBLIC_SERVER_URL}${category.image.url}`}
                           alt={category.name}

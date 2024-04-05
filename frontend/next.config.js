@@ -1,7 +1,7 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  images: { domains: ["localhost", "linkmusic.ru"] },
+  images: { domains: ["localhost", "airballoonsufa.ru"] },
   swcMinify: true,
   publicRuntimeConfig: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
