@@ -3,7 +3,7 @@ import { ImageType } from "./common"
 
 export interface INews {
   id: number
-  image?: ImageType
+  image?: StaticImageData
   title: string
   content: string
 }

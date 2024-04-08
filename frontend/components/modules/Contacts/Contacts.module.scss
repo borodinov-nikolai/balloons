@@ -7,6 +7,12 @@
 }
 
 .ContactListItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  // @apply flex items-center gap-[10px];
+
   a {
     svg {
       height: 46px;
@@ -15,6 +21,14 @@
       // @apply h-[46px] w-[46px];
     }
   }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    color: green;
+
+    // @apply flex flex-col text-green;
+  }
 }
 
 @media (max-width: 600px) {
@@ -22,5 +36,13 @@
     gap: 45px;
 
     // @apply gap-[45px];
+  }
+
+  .ContactListItem {
+    div {
+      display: none;
+
+      // @apply hidden;
+    }
   }
 }

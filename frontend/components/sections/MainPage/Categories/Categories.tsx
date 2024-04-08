@@ -1,32 +1,13 @@
 "use client"
-import { useMediaQuery } from "hooks/useMediaQuery"
+import { categories } from "data/categories/categories"
 import styles from "./Categories.module.scss"
+import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { getAllCategories } from "api/categories"
+import { useMediaQuery } from "hooks/useMediaQuery"
 import Contacts from "components/modules/Contacts/Contacts"
-import type { ICategory } from "types/categories"
 
 export default function Categories() {
   const isMedia420 = useMediaQuery(420)
-  const [categories, setCategories] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await getAllCategories({
-          url: `/api/categories?populate=*`,
-        })
-
-        setCategories(data.data)
-        console.log(data.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   return (
     <section className={styles.Categories}>
@@ -44,51 +25,32 @@ export default function Categories() {
             сделать ваше планирование еще более удобным.
           </p>
           <ul className={styles.List}>
-            {categories ? (
-              categories
-                //@ts-ignore
-                ?.sort((a, b) => a.id - b.id)
-                .map((category: ICategory) => {
-                  return (
-                    <li className={styles.ListItem} key={category.slug}>
-                      {category.image ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${category.image.url}`}
-                          alt={category.name}
-                          // width={157}
-                          // height={236}
-                        />
-                      ) : (
-                        <></>
-                      )}
-
-                      <Link
-                        href={`/balloons#${category.slug}`}
-                        className="category-button button"
-                      >
-                        {category.name}
-                      </Link>
-                    </li>
-                  )
-                })
-            ) : (
-              <></>
-            )}
+            {categories.map((item) => {
+              return (
+                <li className={styles.ListItem} key={item.slug}>
+                  <Image
+                    //@ts-ignore
+                    src={item.image}
+                    alt={item.name}
+                    width={157}
+                    height={236}
+                  />
+                  <Link
+                    href={`/balloons#${item.slug}`}
+                    className="category-button button"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
           <div className={styles.Contacts} id="contacts">
             {!isMedia420 ? (
               <>
                 <span>
                   Напишите нам в WhatsApp:
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "end",
-                      marginLeft: "3px",
-                    }}
-                  >
+                  <div className="ml-[3px] flex flex-col items-end">
                     <a
                       href="https://wa.me/79659338808"
                       target="_blank"

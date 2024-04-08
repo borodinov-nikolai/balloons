@@ -7,50 +7,52 @@ import { getAllCategories } from "api/categories"
 import { ICategory } from "types/categories"
 import { IWork } from "types/portfolio"
 import { getMediaUrl } from "utils/getMediaUrl"
+import { categories } from "data/categories/categories"
+import { works } from "data/works/works"
 
 export default function Portfolio() {
-  const [works, setWorks] = useState([])
-  const [categories, setCategories] = useState([])
+  // const [works, setWorks] = useState([])
+  // const [d, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState<string | null>()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await getAllCategories({
-          url: `/api/categories?populate=*`,
-        })
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data } = await getAllCategories({
+  //         url: `/api/categories?populate=*`,
+  //       })
 
-        setCategories(data.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  //       setCategories(data.data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
 
-    fetchData()
-  }, [])
+  //   fetchData()
+  // }, [])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await getAllWorks({
-          url: `/api/works?populate=*`,
-        })
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const { data } = await getAllWorks({
+  //         url: `/api/works?populate=*`,
+  //       })
 
-        setWorks(data.data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
+  //       setWorks(data.data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
 
-    fetchData()
-  }, [])
+  //   fetchData()
+  // }, [])
 
   useEffect(() => {
     const hash = window.location.hash
     const hashValue = hash.substring(1)
 
     setSelectedCategory(hashValue)
-  }, [categories])
+  }, [])
 
   const handleSelectCategory = (slug: string) => {
     setSelectedCategory(slug)
@@ -65,7 +67,7 @@ export default function Portfolio() {
           <hr />
           <div className={styles.Main}>
             <ul className={styles.Sort}>
-              {categories?.map((category: ICategory) => {
+              {categories?.map((category: ICategory | any) => {
                 return (
                   <li key={category.id}>
                     <button
@@ -82,14 +84,14 @@ export default function Portfolio() {
             <div className={styles.Grid}>
               {works ? (
                 works
-                  .filter((work: any) => {
-                    return work.category.slug === selectedCategory
+                  .filter((work: IWork) => {
+                    return work.category === selectedCategory
                   })
                   .map((work: IWork) => {
                     return (
                       <div className={styles.PortfolioItem} key={work.id}>
                         <Image
-                          src={`${process.env.NEXT_PUBLIC_SERVER_URL}${work.image.url}`}
+                          src={work.image}
                           alt="Balloon"
                           width={300}
                           height={400}

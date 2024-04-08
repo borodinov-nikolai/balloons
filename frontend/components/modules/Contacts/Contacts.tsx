@@ -22,6 +22,22 @@ export default function Contacts() {
         >
           <WhatsAppIcon />
         </a>
+        <div>
+          <a
+            href="https://wa.me/79659338808"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            +7 965 933 88 08
+          </a>
+          <a
+            href="https://wa.me/79378441600"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            +7 937 844 16 00
+          </a>
+        </div>
       </li>
     </ul>
   )

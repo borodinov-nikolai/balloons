@@ -1,8 +1,8 @@
-import { ImageType } from "./common"
+import { StaticImageData } from "next/image"
 
 export interface ICategory {
   id: number
-  image?: ImageType
+  image?: StaticImageData
   name: string
   slug: string
 }
