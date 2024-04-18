@@ -1,15 +1,23 @@
-"use client"
-
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 import styles from "./Categories.module.scss"
 import Image from "next/image"
 import Link from "next/link"
-import { categories } from "@/data/categories/categories"
+// import { categories } from "@/data/categories/categories"
 import Contacts from "@/components/modules/Contacts/Contacts"
+import { ICategory } from "@/types/category"
+import { FC, useEffect, useState } from "react"
+import { getAllCategories } from "@/api/queries"
+import { staticUrl } from "@/constants/imageUrl"
 
 
-export default function Categories() {
+interface IProps {
+  categories?: ICategory
+}
+
+ const Categories: FC<IProps> = ({categories})=> {
   const isMedia420 = useMediaQuery(420)
+ 
+
 
   return (
     <section className={styles.Categories}>
@@ -27,21 +35,22 @@ export default function Categories() {
             сделать ваше планирование еще более удобным.
           </p>
           <ul className={styles.List}>
-            {categories.map((item) => {
+            <div>{}</div>
+            {categories?.data.map(({attributes, id}) => {
+              const {name, slug, image} = attributes
               return (
-                <li className={styles.ListItem} key={item.slug}>
+                <li className={styles.ListItem} key={id}>
                   <Image
-                    //@ts-ignore
-                    src={item.image}
-                    alt={item.name}
+                    src={staticUrl + image.data.attributes.url}
+                    alt={image.data.attributes.name}
                     width={157}
                     height={236}
                   />
                   <Link
-                    href={`/balloons#${item.slug}`}
+                    href={`/balloons?category=${slug}`}
                     className="category-button button"
                   >
-                    {item.name}
+                    {name}
                   </Link>
                 </li>
               )
@@ -90,3 +99,6 @@ export default function Categories() {
     </section>
   )
 }
+
+
+export default Categories

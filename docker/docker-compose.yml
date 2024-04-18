@@ -1,0 +1,31 @@
+version: '3.9'
+
+
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - '5555:5432'
+
+  back: 
+   build:
+    context: ../back
+    dockerfile: Dockerfile
+   restart: always
+   ports: 
+     - '1337:1337'
+ 
+
+  front: 
+   build:
+    context: ../front
+    dockerfile: Dockerfile
+   restart: always
+   ports: 
+    - '3000:3000'
+ 

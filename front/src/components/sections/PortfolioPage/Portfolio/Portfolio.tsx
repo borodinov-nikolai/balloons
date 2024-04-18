@@ -1,28 +1,28 @@
-"use client"
-import { categories } from "@/data/categories/categories"
 import styles from "./Portfolio.module.scss"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { ICategory } from "@/types/categories"
-import { works } from "@/data/works/works"
-import { IWork } from "@/types/portfolio"
+import { FC} from "react"
+import { ICategory } from "@/types/category"
+import { useRouter } from "next/router"
+import { IGallery } from "@/types/gallery"
+import { staticUrl } from "@/constants/imageUrl"
+import { Image } from "antd"
 
 
-export default function Portfolio() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>()
 
 
-  useEffect(() => {
-    const hash = window.location.hash
-    const hashValue = hash.substring(1)
+interface IProps {
+  categories: ICategory
+  gallery: IGallery
+}
 
-    setSelectedCategory(hashValue)
-  }, [])
 
+const Portfolio: FC<IProps> = ({categories, gallery})=>  {
+  const router = useRouter()
+
+  
   const handleSelectCategory = (slug: string) => {
-    setSelectedCategory(slug)
-    window.history.pushState(null, "", `#${slug}`)
+    router.push(`?category=${slug}`)
   }
+
 
   return (
     <section className={styles.Portfolio}>
@@ -32,31 +32,28 @@ export default function Portfolio() {
           <hr />
           <div className={styles.Main}>
             <ul className={styles.Sort}>
-              {categories?.map((category: ICategory | any) => {
+              {categories?.data.map(({attributes, id}) => {
+                const {name, slug} = attributes
                 return (
-                  <li key={category.id}>
+                  <li key={id}>
                     <button
-                      onClick={() => handleSelectCategory(category.slug)}
-                      className={`category-button button ${selectedCategory === category.slug ? "category-button--active" : ""}`}
+                      onClick={() => handleSelectCategory(slug)}
+                      className={`category-button button ${router.query.category === slug ? "category-button--active" : ""}`}
                       style={{ margin: 0 }}
                     >
-                      {category.name}
+                      {name}
                     </button>
                   </li>
                 )
               })}
             </ul>
             <div className={styles.Grid}>
-              {works ? (
-                works
-                  .filter((work: IWork) => {
-                    return work.category === selectedCategory
-                  })
-                  .map((work: IWork) => {
+              {gallery?.data[0]?.attributes?.Images?.data?.map(({attributes, id}) => {
+                const {url} = attributes
                     return (
-                      <div className={styles.PortfolioItem} key={work.id}>
+                      <div className={styles.PortfolioItem} key={id}>
                         <Image
-                          src={work.image}
+                          src={staticUrl+url}
                           alt="Balloon"
                           width={300}
                           height={400}
@@ -64,9 +61,7 @@ export default function Portfolio() {
                       </div>
                     )
                   })
-              ) : (
-                <>Работ пока нет</>
-              )}
+              }
             </div>
           </div>
         </div>
@@ -74,3 +69,6 @@ export default function Portfolio() {
     </section>
   )
 }
+
+
+export default Portfolio

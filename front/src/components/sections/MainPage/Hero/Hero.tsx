@@ -12,7 +12,7 @@ export default function Hero() {
           </div>
           <nav className={styles.Navigation}>
             <Link
-              href="/balloons"
+              href="/balloons?category=birthdays"
               className={`${styles.NavigationButton} button`}
             >
               Идеи для вдохновения

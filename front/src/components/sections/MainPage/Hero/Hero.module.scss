@@ -149,6 +149,11 @@
 }
 
 @media (max-width: 480px) {
+
+   .Hero {
+    min-height: 100vh;
+   }
+
   .Title {
     font-size: 40px;
 

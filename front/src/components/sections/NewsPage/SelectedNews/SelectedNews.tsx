@@ -1,32 +1,37 @@
-
 import Image from "next/image"
 import styles from "./SelectedNews.module.scss"
-import { news } from "@/data/news/news"
+import { IOneNews } from "@/types/news"
+import { FC } from "react"
+import { staticUrl } from "@/constants/imageUrl"
 
-export default function SelectedNews({ selectedId }: { selectedId: string }) {
-  const selectedNews = news.find((item) => item.id === +selectedId)
 
-  if (!selectedNews) {
-    return <span>Новость не найдена</span>
-  }
+interface IProps {
+  selectedNews: IOneNews
+}
+
+const SelectedNews:FC<IProps> = ({selectedNews})=> {
+  const {image, title, content} = selectedNews.data.attributes
+
 
   return (
     <div className={styles.SelectedNews}>
       <div className="container">
-        <div className={styles.Inner}>
-          {selectedNews.image && (
+       {selectedNews.data && <div className={styles.Inner}>
+
             <Image
-              src={selectedNews.image}
-              alt={selectedNews.title}
-              width={0}
-              height={0}
+              src={staticUrl + image.data.attributes.url}
+              alt={title}
+              width={800}
+              height={800}
               className={styles.Image}
             />
-          )}
-          <h2 className={styles.Title}>{selectedNews.title}</h2>
-          <p className={styles.Content}>{selectedNews.content}</p>
-        </div>
+      
+          <h2 className={styles.Title}>{title}</h2>
+          <p className={styles.Content}>{content}</p>
+        </div>}
       </div>
     </div>
   )
 }
+
+export default SelectedNews

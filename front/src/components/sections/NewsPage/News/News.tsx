@@ -1,33 +1,39 @@
-
 import { INews } from "@/types/news"
 import styles from "./News.module.scss"
 import Image from "next/image"
 import Link from "next/link"
-import { news } from "@/data/news/news"
+import { FC } from "react"
+import { staticUrl } from "@/constants/imageUrl"
 
 
-export default function News() {
+
+interface IProps {
+  news: INews
+}
+
+const News: FC<IProps> = ({news})=>  {
   return (
     <div className={styles.News}>
       <div className="container">
         <div className={styles.Inner}>
-          {news.map((item: INews) => {
+          {news?.data.map(({attributes, id}) => {
+            const {image, title} = attributes
             return (
               <Link
-                href={`/news/${item.id}`}
+                href={`/news/${id}`}
                 className={styles.NewsItem}
-                key={item.id}
+                key={id}
               >
-                {item.image && (
+                {image && (
                   <Image
                     className={styles.NewsImage}
-                    src={item.image}
-                    alt={item.title}
-                    width={0}
-                    height={0}
+                    src={staticUrl + image.data.attributes.url}
+                    alt={title}
+                    width={400}
+                    height={400}
                   />
                 )}
-                <h4 className={styles.NewsTitle}>{item.title}</h4>
+                <h4 className={styles.NewsTitle}>{title}</h4>
               </Link>
             )
           })}
@@ -36,3 +42,6 @@ export default function News() {
     </div>
   )
 }
+
+
+export default News
