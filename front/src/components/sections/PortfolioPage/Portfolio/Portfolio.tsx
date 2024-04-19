@@ -1,5 +1,5 @@
 import styles from "./Portfolio.module.scss"
-import { FC, useEffect} from "react"
+import { FC, useEffect, useState} from "react"
 import { ICategory } from "@/types/category"
 import { useRouter } from "next/router"
 import { IGallery } from "@/types/gallery"
@@ -17,17 +17,19 @@ interface IProps {
 
 const Portfolio: FC<IProps> = ({categories, gallery})=>  {
   const router = useRouter()
-
+  const [categoriesLoaded, setCategoriesLoaded] = useState<boolean>(false)
+router.query
 
 
 
   useEffect(()=> {
-    categories?.data[0]?.attributes?.slug && router.push(`?category=${categories?.data[0]?.attributes?.slug}`)
-  }, [])
+    Object.keys(router.query).length === 0 && categories?.data[0]?.attributes?.slug && router.replace(`?category=${categories?.data[0]?.attributes?.slug}`);
+    Object.keys(router.query).length !== 0 && setCategoriesLoaded(true)
+  }, [router.query])
 
   
   const handleSelectCategory = (slug: string) => {
-    router.push(`?category=${slug}`)
+    router.replace(`?category=${slug}`)
   }
 
 
@@ -39,7 +41,7 @@ const Portfolio: FC<IProps> = ({categories, gallery})=>  {
           <hr />
           <div className={styles.Main}>
             <ul className={styles.Sort}>
-              {categories?.data?.map(({attributes, id}) => {
+              {categoriesLoaded && categories?.data?.map(({attributes, id}) => {
                 const {name, slug} = attributes
                 return (
                   <li key={id}>
