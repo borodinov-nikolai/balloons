@@ -36,16 +36,16 @@ interface IProps {
           </p>
           <ul className={styles.List}>
             <div>{}</div>
-            {categories?.data.map(({attributes, id}) => {
+            {categories?.data?.map(({attributes, id}) => {
               const {name, slug, image} = attributes
               return (
                 <li className={styles.ListItem} key={id}>
-                  <Image
-                    src={staticUrl + image.data.attributes.url}
-                    alt={image.data.attributes.name}
+                 {image && <Image
+                    src={staticUrl + image?.data?.attributes?.url}
+                    alt={image?.data?.attributes?.name}
                     width={157}
                     height={236}
-                  />
+                  />}
                   <Link
                     href={`/balloons?category=${slug}`}
                     className="category-button button"

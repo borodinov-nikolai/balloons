@@ -27,7 +27,7 @@ const News: FC<IProps> = ({news})=>  {
                 {image && (
                   <Image
                     className={styles.NewsImage}
-                    src={staticUrl + image.data.attributes.url}
+                    src={staticUrl + image?.data?.attributes?.url}
                     alt={title}
                     width={400}
                     height={400}

@@ -39,7 +39,7 @@ const Portfolio: FC<IProps> = ({categories, gallery})=>  {
           <hr />
           <div className={styles.Main}>
             <ul className={styles.Sort}>
-              {categories?.data.map(({attributes, id}) => {
+              {categories?.data?.map(({attributes, id}) => {
                 const {name, slug} = attributes
                 return (
                   <li key={id}>
