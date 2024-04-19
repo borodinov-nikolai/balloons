@@ -58,9 +58,11 @@ interface IProps {
           </ul>
           <div className={styles.Contacts} id="contacts">
             {!isMedia420 ? (
+
               <>
+              <div className={styles.footerText} >Готовы порадовать себя или своих близких невероятно красивыми воздушными шарами? Напишите нам по указанному номеру телефона, и наши эксперты помогут вам сделать ваше мероприятие незабываемым!</div>
                 <span>
-                  Напишите нам в WhatsApp:
+                  WhatsApp:
                   <div className="ml-[3px] flex flex-col items-end">
                     <a
                       href="https://wa.me/79659338808"
@@ -69,24 +71,18 @@ interface IProps {
                     >
                       +7 965 933 88 08
                     </a>
-                    <a
-                      href="https://wa.me/79378441600"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      +7 937 844 16 00
-                    </a>
+             
                   </div>
                 </span>
                 <span>
-                  Следите за обновлениями в Instagram
+                  {"Следите за обновлениями в Instagram "} 
                   <a
                     href="http://instagram.com/AirBalloonUfa"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="ml-[2px]"
                   >
-                    @AirBalloonUfa
+                 AirBalloonUfa
                   </a>
                 </span>
               </>

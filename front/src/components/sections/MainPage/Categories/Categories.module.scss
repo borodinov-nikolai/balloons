@@ -53,9 +53,18 @@
 
   span {
     display: flex;
-
+    gap: 5px;
+    width: max-content;
     // @apply flex;
   }
+}
+
+.footerText {
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 10px;
 }
 
 @media (max-width: 1080px) {

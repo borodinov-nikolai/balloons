@@ -1,5 +1,5 @@
 import styles from "./Portfolio.module.scss"
-import { FC} from "react"
+import { FC, useEffect} from "react"
 import { ICategory } from "@/types/category"
 import { useRouter } from "next/router"
 import { IGallery } from "@/types/gallery"
@@ -17,6 +17,13 @@ interface IProps {
 
 const Portfolio: FC<IProps> = ({categories, gallery})=>  {
   const router = useRouter()
+
+
+
+
+  useEffect(()=> {
+    router.push(`?category=${categories.data[0].attributes.slug}`)
+  }, [])
 
   
   const handleSelectCategory = (slug: string) => {
@@ -55,8 +62,8 @@ const Portfolio: FC<IProps> = ({categories, gallery})=>  {
                         <Image
                           src={staticUrl+url}
                           alt="Balloon"
-                          width={300}
-                          height={400}
+                          width={'100%'}
+                          height={'100%'}
                         />
                       </div>
                     )
