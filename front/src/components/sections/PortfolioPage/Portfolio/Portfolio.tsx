@@ -22,7 +22,7 @@ const Portfolio: FC<IProps> = ({categories, gallery})=>  {
 
 
   useEffect(()=> {
-    router.push(`?category=${categories.data[0].attributes.slug}`)
+    categories?.data[0]?.attributes?.slug && router.push(`?category=${categories?.data[0]?.attributes?.slug}`)
   }, [])
 
   
