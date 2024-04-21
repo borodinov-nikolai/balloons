@@ -35,7 +35,6 @@ interface IProps {
             сделать ваше планирование еще более удобным.
           </p>
           <ul className={styles.List}>
-            <div>{}</div>
             {categories?.data?.map(({attributes, id}) => {
               const {name, slug, image} = attributes
               return (

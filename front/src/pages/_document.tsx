@@ -3,10 +3,23 @@ import Document, { Html, Head, Main, NextScript } from "next/document"
 import type { DocumentContext } from 'next/document';
 import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs';
 
-const MyDocument = ()=> {
+const MyDocument = () => {
   return (
     <Html lang="ru">
       <Head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-T427NFX1P6"></script>
+        <script id='gtag' data-nscript='lazyOnLoad' dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+          
+            gtag('config', 'G-T427NFX1P6');
+              `,
+        }}
+        />
+
+
         <title>AirBalloonsUfa - гелиевые шары с доставкой в Уфе</title>
         <meta
           name="description"
